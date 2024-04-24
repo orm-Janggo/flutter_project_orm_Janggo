@@ -1,16 +1,16 @@
 # flutter_project_orm_janggo
 
-A new Flutter project.
+get_it+Provier+go_router 형식
+
+ver.1.0.0
+![](https://velog.velcdn.com/images/hee462/post/a374a11b-3511-47b1-97ca-f65a35b54693/image.png)
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+flutter pub add freezed
+flutter pub add get_it
+flutter pub add provider
+flutter pub add go_router
+flutter pub add http
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
