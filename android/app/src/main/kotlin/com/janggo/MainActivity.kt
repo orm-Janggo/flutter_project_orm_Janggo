@@ -1,4 +1,4 @@
-package com.example.flutter_project_orm_janggo
+package com.janggo
 
 import io.flutter.embedding.android.FlutterActivity
 
