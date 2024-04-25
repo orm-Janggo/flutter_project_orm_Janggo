@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "518067961305",
+    "project_id": "flutter-project-orm-janggo",
+    "storage_bucket": "flutter-project-orm-janggo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:518067961305:android:f87ecce7b9a3521566edc8",
+        "android_client_info": {
+          "package_name": "com.example.flutter_project_orm_janggo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDSKLzbkAZZtE4jehoOezJpL08i_wjNkuw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
