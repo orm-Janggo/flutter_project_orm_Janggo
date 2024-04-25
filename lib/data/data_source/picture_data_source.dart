@@ -10,7 +10,7 @@ class PictureDataSource {
 
   Future<PictureDto> getPictureData(String query) async {
     final response = await http
-        .get(Uri.parse('$_baseUrl$_key&q=$query&image_type=photo&pretty=true'));
+        .get(Uri.parse('$_baseUrl/?key=$_key&q=$query&image_type=photo&pretty=true'));
 
     return PictureDto.fromJson(jsonDecode(response.body));
   }
