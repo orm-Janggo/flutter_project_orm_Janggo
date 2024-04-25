@@ -1,15 +1,15 @@
 import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_project_orm_janggo/core/config/api_config.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter_project_orm_janggo/core/confige/chat_gpt_configue.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 
-void main() async {
-  test("gpt test", () async {
-    await dotenv.load(fileName: '.env');
-    final apiKey = ChatGptConfigue.apiKey;
-    final Uri baseUrl = Uri.parse(ChatGptConfigue.baseUrl);
+  void main() async {
+    test("gpt test", () async {
+      await dotenv.load(fileName: '.env');
+      final apiKey = ChatGptConfig.apiKey;
+      final Uri baseUrl = Uri.parse(ChatGptConfig.baseUrl);
 
     Map<String, dynamic> requestData = {
       'model': 'gpt-3.5-turbo',

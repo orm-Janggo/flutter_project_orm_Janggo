@@ -1,3 +1,1 @@
-class RepositoryImpl{
-
-}
+class RepositoryImpl {}

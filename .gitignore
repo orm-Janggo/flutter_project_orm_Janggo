@@ -7,8 +7,10 @@
 .atom/
 .buildlog/
 .history
+pubspec.lock
 .svn/
 .env
+*.lock
 migrate_working_dir/
 
 # IntelliJ related
@@ -42,3 +44,4 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
