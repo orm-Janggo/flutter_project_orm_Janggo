@@ -22,7 +22,7 @@ class AuthFunc extends StatelessWidget {
               onPressed: () {
                 !loggedIn ? context.push('/sign-in') : signOut();
               },
-              child: !loggedIn ? const Text('RSVP') : const Text('Logout')),
+              child: !loggedIn ? const Text('Sign in') : const Text('Logout')),
         ),
         Visibility(
           visible: loggedIn,
