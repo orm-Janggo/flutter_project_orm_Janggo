@@ -17,7 +17,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = context.watch<RecipeViewModel>();
+    // final viewModel = context.watch<RecipeViewModel>();
     return Scaffold(
       appBar: AppBar(
         title: Text('레시피'),
@@ -35,7 +35,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
                     padding: EdgeInsets.all(16.0),
                     margin: EdgeInsets.only(bottom: 16.0),
                     decoration: BoxDecoration(color: Colors.yellow),
-                    child: Image.network(picture.url),
+                    child: Container(),
                   ),
                 ),
                 Expanded(
