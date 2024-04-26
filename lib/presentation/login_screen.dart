@@ -12,7 +12,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final loginViewModel = LoginViewModel(isUnLogin: false, socialLogin: KakaoLogin());
+  final loginViewModel =
+      LoginViewModel(isUnLogin: false, socialLogin: KakaoLogin());
 
   @override
   Widget build(BuildContext context) {
@@ -21,9 +22,15 @@ class _LoginScreenState extends State<LoginScreen> {
         title: Text('장고처리'),
       ),
       body: Column(
-        children: [
-          Lottie.asset('assets/janggo_main2.json'),
 
+        children: [
+          Center(
+            child: SizedBox(
+              width: 300,
+              height: 300,
+              child: Lottie.asset('assets/images/janggo_main.json'),
+            ),
+          ),
         ],
       ),
     );
