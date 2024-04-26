@@ -6,7 +6,7 @@ class GetPictureUseCase {
 
   GetPictureUseCase(this._repository);
 
-  Future<PictureModel> execute(String query) async {
+  Future<List<PictureModel>> execute(String query) async {
     final photo = await _repository.getPicture(query);
 
     return photo;
