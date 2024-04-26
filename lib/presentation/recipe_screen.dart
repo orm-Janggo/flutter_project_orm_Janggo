@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_project_orm_janggo/domain/model/picture_model.dart';
+import 'package:flutter_project_orm_janggo/presentation/recipe_view_model.dart';
 
 class RecipeScreen extends StatefulWidget {
   final PictureModel picture;
@@ -13,8 +14,10 @@ class RecipeScreen extends StatefulWidget {
 }
 
 class _RecipeScreenState extends State<RecipeScreen> {
+
   @override
   Widget build(BuildContext context) {
+    final viewModel = context.watch<RecipeViewModel>();
     return Scaffold(
       appBar: AppBar(
         title: Text('레시피'),
@@ -32,7 +35,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
                     padding: EdgeInsets.all(16.0),
                     margin: EdgeInsets.only(bottom: 16.0),
                     decoration: BoxDecoration(color: Colors.yellow),
-                    child: Container(),
+                    child: Image.network(picture.url),
                   ),
                 ),
                 Expanded(
