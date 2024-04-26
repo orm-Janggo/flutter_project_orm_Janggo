@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_project_orm_janggo/presentation/login_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/sign/sign_state.dart';
-import 'package:flutter_project_orm_janggo/presentation/signup_screen.dart';
+import 'package:flutter_project_orm_janggo/router/router.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:provider/provider.dart';
 
@@ -28,13 +27,13 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: LoginScreen(),
+      routerConfig: router,
     );
   }
 }
