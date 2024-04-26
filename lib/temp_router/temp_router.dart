@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_project_orm_janggo/presentation/temp_main_screen.dart';
 import 'package:go_router/go_router.dart';
 
-final router = GoRouter(
+final tempRouter = GoRouter(
   routes: [
     GoRoute(
       path: '/',
