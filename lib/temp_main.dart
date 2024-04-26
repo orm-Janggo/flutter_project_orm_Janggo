@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_project_orm_janggo/presentation/sign/sign_state.dart';
-import 'package:flutter_project_orm_janggo/router/router.dart';
+import 'package:flutter_project_orm_janggo/temp_router/temp_router.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:provider/provider.dart';
 
@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      routerConfig: router,
+      routerConfig: tempRouter,
     );
   }
 }
