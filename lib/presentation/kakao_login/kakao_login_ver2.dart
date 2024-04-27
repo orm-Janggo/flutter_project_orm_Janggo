@@ -44,7 +44,7 @@ Widget getKakaoLoginButton() {
       signInWithKakao();
     },
     child: Container(
-
+color: Colors.yellow,
       child: SizedBox(
         width: 210,
         height: 50,

@@ -6,6 +6,11 @@ import 'package:http/http.dart' as http;
 class GptDataSource {
   final apiKey = ChatGptConfig.apiKey;
   final Uri baseUrl = Uri.parse(ChatGptConfig.baseUrl);
+  final String ingredients;
+
+  GptDataSource({
+    required this.ingredients,
+  });
 
   Map<String, dynamic> requestData = {
     'model': 'gpt-3.5-turbo',
@@ -46,4 +51,5 @@ class GptDataSource {
       print('Failed to get recipes. Status code: ${response.statusCode}');
     }
   }
+
 }
