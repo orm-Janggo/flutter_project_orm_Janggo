@@ -13,8 +13,8 @@ class PictureRepositoryImpl implements PictureRepository {
 
   @override
   Future<List<PictureModel>> getPicture(String query) async {
-    final dto = await _pictureDataSource.getPictureData(query);
+    final pictureDto = await _pictureDataSource.getPictureData(query);
 
-    return dto.hits!.map((e) => e.toPicture()).toList();
+    return pictureDto.hits!.map((e) => e.toPicture()).toList();
   }
 }
