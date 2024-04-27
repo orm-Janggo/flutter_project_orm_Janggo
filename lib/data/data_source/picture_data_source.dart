@@ -6,10 +6,9 @@ import 'package:http/http.dart' as http;
 import '../dto/picture_dto.dart';
 
 class PictureDataSource {
-  // final _baseUrl = PixabayConfig.baseUrl;
-  // final _key = PixabayConfig.apiKey;
-  final _baseUrl = 'https://pixabay.com/api';
-  final _key = '43565705-c9895710d0a4c1f822464b64';
+  final _baseUrl = PixabayConfig.baseUrl;
+  final _key = PixabayConfig.apiKey;
+
 
 
   Future<PictureDto> getPictureData(String query) async {
