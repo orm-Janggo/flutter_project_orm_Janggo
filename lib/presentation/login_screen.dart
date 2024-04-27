@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 import 'kakao_login/kakao_login_ver2.dart';
 
@@ -34,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
             SizedBox(
               height: 32,
             ),
-            getKakaoLoginButton(),
+            getKakaoLoginButton(context),
             SizedBox(
               height: 16,
             ),
@@ -44,7 +45,9 @@ class _LoginScreenState extends State<LoginScreen> {
               decoration: BoxDecoration(
                 color: Colors.cyan
               ),
-              child: TextButton(onPressed: () {  }, child: Text('Login',style: TextStyle(fontSize: 20),)
+              child: TextButton(onPressed: () {
+                context.push('/sign-in');
+              }, child: Text('Login',style: TextStyle(fontSize: 20),)
                 ,),
             ),
             SizedBox(
@@ -56,7 +59,9 @@ class _LoginScreenState extends State<LoginScreen> {
               decoration: BoxDecoration(
                   color: Colors.cyan
               ),
-              child: TextButton(onPressed: () {  }, child: Text('비회원사용하기',style: TextStyle(fontSize: 20),)
+              child: TextButton(onPressed: () {
+                context.push('/main');
+              }, child: Text('비회원사용하기',style: TextStyle(fontSize: 20),)
                 ,),
             )
           ],

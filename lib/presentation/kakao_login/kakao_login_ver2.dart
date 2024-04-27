@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
 Future<void> signInWithKakao() async {
@@ -18,7 +19,7 @@ Future<void> signInWithKakao() async {
   }
 }
 
-void logout() async{
+void logout() async {
   try {
     await UserApi.instance.logout();
     print('로그아웃 성공, SDK에서 토큰 삭제');
@@ -27,7 +28,7 @@ void logout() async{
   }
 }
 
-void userInfo() async{
+void userInfo() async {
   try {
     User user = await UserApi.instance.me();
     print('사용자 정보 요청 성공'
@@ -38,17 +39,18 @@ void userInfo() async{
     print('사용자 정보 요청 실패 $error');
   }
 }
-Widget getKakaoLoginButton() {
+
+Widget getKakaoLoginButton(BuildContext context) {
   return InkWell(
     onTap: () {
       signInWithKakao();
+      context.push('/main');
     },
     child: Container(
-color: Colors.yellow,
+      color: Colors.yellow,
       child: SizedBox(
         width: 210,
         height: 50,
-
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -57,7 +59,6 @@ color: Colors.yellow,
               width: 200,
               height: 150,
               fit: BoxFit.cover,
-
             ),
             SizedBox(width: 10),
           ],
@@ -66,4 +67,3 @@ color: Colors.yellow,
     ),
   );
 }
-

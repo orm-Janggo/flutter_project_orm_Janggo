@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project_orm_janggo/data/repository/chat_gpt_reopository_impl.dart';
+import 'package:go_router/go_router.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
 class MainScreen extends StatefulWidget {
@@ -112,7 +113,9 @@ class _MainScreenState extends State<StatefulWidget> {
               padding: const EdgeInsets.all(10.0),
               child: ElevatedButton(
                 onPressed: _onButtonPressed,
-                child: const Text("레시피 보기"),
+                child:  TextButton(onPressed: (){
+                  context.push('/recipe');
+                }, child: Text('레시피 보기')),
               ),
             ),
           ),
