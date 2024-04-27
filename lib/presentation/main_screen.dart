@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project_orm_janggo/data/repository/chat_gpt_reopository_impl.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart'; // go_router 임포트 추가
 
 class MainScreen extends StatefulWidget {
   State<StatefulWidget> createState() =>
@@ -9,7 +9,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<StatefulWidget> {
-  late User? _user;
+ late User? _user;
 
   @override
   void initState() {
@@ -48,11 +48,14 @@ class _MainScreenState extends State<StatefulWidget> {
     return _controllers.map((controller) => controller.text).toList();
   }
 
-  void _onButtonPressed() {
+  void _onButtonPressed(BuildContext context) {
     List<String> values = _getTextFieldValues();
     String concatenatedValues = values.join(", "); // 데이터를 문자열로 결합
     _impl.getRecipes(concatenatedValues); // 문자열로 레포지토리에 전달
     print(concatenatedValues);
+
+    // 레시피 보기 버튼을 누를 때 '/main/recipe' 경로로 이동
+    context.go('/main/recipe');
   }
 
   @override
@@ -68,18 +71,25 @@ class _MainScreenState extends State<StatefulWidget> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('냉장고 파먹기'),
-        leading: _user != null
-            ? Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // CircleAvatar(
-                  //   radius: 15,
-                  //   backgroundImage: NetworkImage(_user!.kakaoAccount!.profile!.profileImageUrl!),
-                  // ),
-                  Text(_user!.kakaoAccount!.profile!.nickname!),
-                ],
-              )
-            : const CircularProgressIndicator(),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        ),
+        actions: [
+          _user != null
+              ? Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(_user!.kakaoAccount!.profile!.nickname!),
+              ],
+            ),
+          )
+              : const CircularProgressIndicator(),
+        ],
       ),
       body: Stack(
         children: [
@@ -112,10 +122,8 @@ class _MainScreenState extends State<StatefulWidget> {
             child: Padding(
               padding: const EdgeInsets.all(10.0),
               child: ElevatedButton(
-                onPressed: _onButtonPressed,
-                child:  TextButton(onPressed: (){
-                  context.push('/main/recipe');
-                }, child: Text('레시피 보기')),
+                onPressed: () => _onButtonPressed(context), // 함수 호출 시 context 전달
+                child: Text('레시피 보기'), // TextButton 제거
               ),
             ),
           ),

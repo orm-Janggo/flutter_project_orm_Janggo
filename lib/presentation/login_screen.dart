@@ -61,6 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               child: TextButton(onPressed: () {
                 context.push('/main');
+                logout();
               }, child: Text('비회원사용하기',style: TextStyle(fontSize: 20),)
                 ,),
             )
