@@ -112,7 +112,7 @@ class _MainScreenState extends State<StatefulWidget> {
               padding: const EdgeInsets.all(10.0),
               child: ElevatedButton(
                 onPressed: _onButtonPressed,
-                child: const Text("래시피 보기"),
+                child: const Text("레시피 보기"),
               ),
             ),
           ),
