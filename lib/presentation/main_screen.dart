@@ -114,7 +114,7 @@ class _MainScreenState extends State<StatefulWidget> {
               child: ElevatedButton(
                 onPressed: _onButtonPressed,
                 child:  TextButton(onPressed: (){
-                  context.push('/recipe');
+                  context.push('/main/recipe');
                 }, child: Text('레시피 보기')),
               ),
             ),
