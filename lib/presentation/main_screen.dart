@@ -1,21 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project_orm_janggo/data/repository/chat_gpt_reopository_impl.dart';
+import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
 class MainScreen extends StatefulWidget {
-  const MainScreen({super.key});
-
-  @override
-  State<MainScreen> createState() => _MainScreenState(impl: ChatGptRepositoryImpl());
+  State<StatefulWidget> createState() =>
+      _MainScreenState(impl: ChatGptRepositoryImpl());
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _MainScreenState extends State<StatefulWidget> {
+  late User? _user;
+
+  @override
+  void initState() {
+    super.initState();
+    _initKakaoUser();
+  }
+
+  Future<void> _initKakaoUser() async {
+    _user = await UserApi.instance.me();
+    setState(() {});
+  }
+
   List<TextEditingController> _controllers = [TextEditingController()];
   final ChatGptRepositoryImpl _impl;
 
   _MainScreenState({
     required ChatGptRepositoryImpl impl,
   }) : _impl = impl;
-  
+
   void _addTextField() {
     setState(() {
       _controllers.add(TextEditingController());
@@ -23,7 +35,8 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   void _removeTextField(int index) {
-    if (_controllers.length > 1) { // 최소 1개 이상이 되도록 제한
+    if (_controllers.length > 1) {
+      // 최소 1개 이상이 되도록 제한
       setState(() {
         _controllers.removeAt(index);
       });
@@ -48,11 +61,24 @@ class _MainScreenState extends State<MainScreen> {
     }
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: const Text('냉장고 파먹기'),
+        leading: _user != null
+            ? Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // CircleAvatar(
+                  //   radius: 15,
+                  //   backgroundImage: NetworkImage(_user!.kakaoAccount!.profile!.profileImageUrl!),
+                  // ),
+                  Text(_user!.kakaoAccount!.profile!.nickname!),
+                ],
+              )
+            : const CircularProgressIndicator(),
       ),
       body: Stack(
         children: [
@@ -86,7 +112,7 @@ class _MainScreenState extends State<MainScreen> {
               padding: const EdgeInsets.all(10.0),
               child: ElevatedButton(
                 onPressed: _onButtonPressed,
-                child: const Text("재료 추가"),
+                child: const Text("레시피 보기"),
               ),
             ),
           ),
@@ -98,5 +124,4 @@ class _MainScreenState extends State<MainScreen> {
       ),
     );
   }
-
 }
