@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -8,8 +9,11 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
+  final _authentication = FirebaseAuth.instance;
+
   final _emailTextEditingController = TextEditingController();
   final _passwordTextEditingController = TextEditingController();
+
   bool isChecked = false;
 
   @override
@@ -78,7 +82,13 @@ class _SignInScreenState extends State<SignInScreen> {
               borderRadius: BorderRadius.circular(16.0),
             ),
             child: TextButton(
-              onPressed: () {},
+              onPressed: () async {
+                await _authentication.signInWithEmailAndPassword(
+                  email: _emailTextEditingController.text,
+                  password: _passwordTextEditingController.text,
+                );
+                debugPrint('로그인 성공');
+              },
               child: Text(
                 'Sign in',
                 style: TextStyle(fontSize: 20),
