@@ -5,7 +5,7 @@ import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart'; // go_route
 
 class MainScreen extends StatefulWidget {
   State<StatefulWidget> createState() =>
-      _MainScreenState(impl: ChatGptRepositoryImpl());
+      _MainScreenState();
 }
 
 class _MainScreenState extends State<StatefulWidget> {
@@ -22,20 +22,15 @@ class _MainScreenState extends State<StatefulWidget> {
     setState(() {});
   }
 
-  List<TextEditingController> _controllers = [TextEditingController()];
-  final ChatGptRepositoryImpl _impl;
+  List<TextEditingController> _controllers = [TextEditingController()]; // 재료 텍스트 필드 컨트롤러
 
-  _MainScreenState({
-    required ChatGptRepositoryImpl impl,
-  }) : _impl = impl;
-
-  void _addTextField() {
+  void _addTextField() { // 재료 추가
     setState(() {
       _controllers.add(TextEditingController());
     });
   }
 
-  void _removeTextField(int index) {
+  void _removeTextField(int index) { // 재료 삭제
     if (_controllers.length > 1) {
       // 최소 1개 이상이 되도록 제한
       setState(() {
@@ -51,11 +46,9 @@ class _MainScreenState extends State<StatefulWidget> {
   void _onButtonPressed(BuildContext context) {
     List<String> values = _getTextFieldValues();
     String concatenatedValues = values.join(", "); // 데이터를 문자열로 결합
-    _impl.getRecipes(concatenatedValues); // 문자열로 레포지토리에 전달
-    print(concatenatedValues);
 
     // 레시피 보기 버튼을 누를 때 '/main/recipe' 경로로 이동
-    context.go('/main/recipe');
+    context.go('/main/recipe', extra: concatenatedValues);
   }
 
   @override

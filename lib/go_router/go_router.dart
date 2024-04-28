@@ -3,8 +3,13 @@ import 'package:flutter_project_orm_janggo/presentation/login_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/main_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/sign/sign_in/sign_in_screen.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
+import '../data/data_source/picture_data_source.dart';
+import '../data/repository/picture_repository_impl.dart';
+import '../domain/use_case/get_picture_use_case.dart';
 import '../presentation/recipe_screen.dart';
+import '../presentation/recipe_view_model.dart';
 
 final router = GoRouter(
   routes: [
@@ -53,20 +58,27 @@ final router = GoRouter(
           },
         ),
         GoRoute(
-          path: 'main',
-          builder: (context, state) {
-            return MainScreen();
-          },
-          routes: [
-            GoRoute(
-              path: 'recipe',
-              builder: (context, state) {
-                return RecipeScreen();
-              },
-            ),
-          ]
-        ),
-
+            path: 'main',
+            builder: (context, state) {
+              return MainScreen();
+            },
+            routes: [
+              GoRoute(
+                path: 'recipe',
+                builder: (context, state) {
+                  return ChangeNotifierProvider(
+                    create: (_) => RecipeViewModel(
+                      getPictureUseCase: GetPictureUseCase(
+                        repository: PictureRepositoryImpl(
+                          pictureDataSource: PictureDataSource(),
+                        ),
+                      ), getRecipeUseCase: GetRecipeUseCase(chatGptRepositoryImpl: ChatGptRepositoryImpl(dataSource: GptDataSource())),
+                    ),
+                    child: RecipeScreen(ingredients: state.extra as String,),
+                  );
+                },
+              ),
+            ]),
       ],
     ),
   ],

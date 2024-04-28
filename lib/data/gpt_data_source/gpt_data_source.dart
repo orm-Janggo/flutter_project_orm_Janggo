@@ -6,11 +6,6 @@ import 'package:http/http.dart' as http;
 class GptDataSource {
   final apiKey = ChatGptConfig.apiKey;
   final Uri baseUrl = Uri.parse(ChatGptConfig.baseUrl);
-  final String ingredients;
-
-  GptDataSource({
-    required this.ingredients,
-  });
 
   Map<String, dynamic> requestData = {
     'model': 'gpt-3.5-turbo',
@@ -21,7 +16,7 @@ class GptDataSource {
       },
       {
         'role': 'user',
-        'content': '저에게 3가지 레시피를 추천해 주세요. 저는 달걀, 우유, 밀가루, 치즈, 토마토를 가지고 있습니다.'
+        'content': '재료 설명'
       },
       {
         'role': 'user',
@@ -32,7 +27,9 @@ class GptDataSource {
     'max_tokens': 800,  // 더 많은 레시피를 받기 위해 최대 토큰 수 증가
   };
 
-  Future<void> getRecipes() async {
+  Future<String> getRecipes(String ingredients) async {
+    requestData['messages'][1]['content'] =
+    '저에게 3가지 레시피를 추천해 주세요. 저는 $ingredients를 가지고 있습니다.';
     final response = await http.post(
       baseUrl,
       headers: {
@@ -46,10 +43,11 @@ class GptDataSource {
     if (response.statusCode == 200) {
       var responseData = jsonDecode(utf8.decode(response.bodyBytes));  // JSON 응답 파싱
       var assistantResponse = responseData['choices'][0]['message']['content'];
-      print('Recommended recipes: $assistantResponse');  // 결과 출력
+      return assistantResponse;
     } else {
-      print('Failed to get recipes. Status code: ${response.statusCode}');
+      return '값을 불러오는데 실패했습니다';
     }
+
   }
 
 }
