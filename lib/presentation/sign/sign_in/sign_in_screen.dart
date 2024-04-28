@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -89,6 +90,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     password: _passwordTextEditingController.text,
                   );
                   debugPrint('로그인 성공');
+                  context.push('/temp-screen');
                 } catch (e) {
                   debugPrint(e.toString());
                 }
