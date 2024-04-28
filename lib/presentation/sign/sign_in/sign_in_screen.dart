@@ -110,7 +110,7 @@ class _SignInScreenState extends State<SignInScreen> {
             width: 320,
             height: 50,
             decoration: BoxDecoration(
-              color: Colors.orange,
+              color: Colors.yellow,
               borderRadius: BorderRadius.circular(16.0),
             ),
             child: TextButton(
