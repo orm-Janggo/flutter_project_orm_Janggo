@@ -83,11 +83,15 @@ class _SignInScreenState extends State<SignInScreen> {
             ),
             child: TextButton(
               onPressed: () async {
-                await _authentication.signInWithEmailAndPassword(
-                  email: _emailTextEditingController.text,
-                  password: _passwordTextEditingController.text,
-                );
-                debugPrint('로그인 성공');
+                try {
+                  await _authentication.signInWithEmailAndPassword(
+                    email: _emailTextEditingController.text,
+                    password: _passwordTextEditingController.text,
+                  );
+                  debugPrint('로그인 성공');
+                } catch (e) {
+                  debugPrint(e.toString());
+                }
               },
               child: Text(
                 'Sign in',
