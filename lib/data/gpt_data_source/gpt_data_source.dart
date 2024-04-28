@@ -45,7 +45,7 @@ class GptDataSource {
       var assistantResponse = responseData['choices'][0]['message']['content'];
       return assistantResponse;
     } else {
-      return '값 못가져옴';
+      return '값을 불러오는데 실패했습니다';
     }
 
   }
