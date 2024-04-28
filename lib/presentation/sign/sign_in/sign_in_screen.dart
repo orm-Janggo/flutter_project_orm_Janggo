@@ -17,6 +17,9 @@ class SignInScreen extends StatelessWidget {
               child: Column(
             children: [
               TextFormField(),
+              SizedBox(
+                height: 8,
+              ),
               TextFormField(),
             ],
           )),
