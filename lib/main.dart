@@ -20,6 +20,7 @@ void main() async {
     javaScriptAppKey: KakaoConfig.javascriptKey,
   );
 
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
