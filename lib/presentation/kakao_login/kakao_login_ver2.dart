@@ -1,20 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
-Future<void> signInWithKakao() async {
+Future<bool> signInWithKakao() async {
   try {
     // 카카오 로그인 시도
-    await UserApi.instance.loginWithKakaoTalk();
-    print('카카오톡으로 로그인 성공');
+    OAuthToken token = await UserApi.instance.loginWithKakaoTalk();
+    print('카카오톡으로 로그인 성공 ${token.accessToken}');
+    User user = await UserApi.instance.me();
+    print('사용자 정보${user.id}');
+    return true; // 로그인 성공 시 true 반환
   } catch (error) {
     // 카카오톡 로그인 실패 시, 카카오 계정으로 로그인 시도
     print('카카오톡으로 로그인 실패: $error');
     try {
       await UserApi.instance.loginWithKakaoAccount();
       print('카카오계정으로 로그인 성공');
+      User user = await UserApi.instance.me();
+      print('사용자 정보${user.id}');
+      return true; // 로그인 성공 시 true 반환
     } catch (error) {
       print('카카오계정으로 로그인 실패: $error');
+      return false; // 로그인 실패 시 false 반환
     }
+  }
+}
+
+void navigateToMain(BuildContext context) async {
+  bool success = await signInWithKakao();
+  if (success) {
+    context.push('/main');
   }
 }
 
@@ -38,12 +52,10 @@ void userInfo() async {
     print('사용자 정보 요청 실패 $error');
   }
 }
-
 Widget getKakaoLoginButton(BuildContext context) {
   return InkWell(
     onTap: () {
-      signInWithKakao();
-      context.push('/main');
+      navigateToMain(context);
     },
     child: Container(
       color: Colors.yellow,
