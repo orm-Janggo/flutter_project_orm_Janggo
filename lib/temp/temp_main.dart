@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_project_orm_janggo/temp/temp_screen.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
 import '../core/config/api_config.dart';
@@ -94,6 +95,12 @@ final tempRouter = GoRouter(
             //     })),
             //   ],
             // );
+          },
+        ),
+        GoRoute(
+          path: 'temp-screen',
+          builder: (context, state) {
+            return TempScreen();
           },
         ),
         GoRoute(
