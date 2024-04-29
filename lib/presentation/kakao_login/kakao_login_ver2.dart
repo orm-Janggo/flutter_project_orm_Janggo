@@ -14,7 +14,7 @@ Future<bool> signInWithKakao() async {
     // 카카오톡 로그인 실패 시, 카카오 계정으로 로그인 시도
     print('카카오톡으로 로그인 실패: $error');
     try {
-      // Firebase 연동 기능 구현
+      // Firebase 연동 기능 구현 완료
       var provider = Auth.OAuthProvider("oidc.janggo");
       OAuthToken token = await UserApi.instance.loginWithKakaoAccount();
      var credential = provider.credential(
