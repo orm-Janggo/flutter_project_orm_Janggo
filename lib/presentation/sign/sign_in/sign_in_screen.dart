@@ -143,6 +143,16 @@ class _SignInScreenState extends State<SignInScreen> {
                   context.push('/main');
                 } catch (e) {
                   debugPrint(e.toString());
+
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                        '로그인이 정상적으로 이루어지지 않았습니다.\n입력하신 정보를 확인해 주세요.',
+                        textAlign: TextAlign.center,
+                      ),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
                 }
               },
               child: const Text(
