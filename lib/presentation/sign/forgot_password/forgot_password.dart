@@ -14,8 +14,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final _formKey = GlobalKey<FormState>();
 
   String? inputEmail;
-  String? inputPassword;
-  String? inputCheckPassword;
 
   @override
   Widget build(BuildContext context) {
@@ -54,48 +52,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 const SizedBox(
                   height: 16,
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextFormField(
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Enter your password',
-                    ),
-                    obscureText: true,
-                    validator: (value) {
-                      if (value?.isEmpty ?? false) {
-                        return '비밀번호를 입력해주세요.';
-                      }
-                      return null;
-                    },
-                    onSaved: (String? value) {
-                      inputPassword = value;
-                    },
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextFormField(
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Enter your password',
-                    ),
-                    obscureText: true,
-                    validator: (value) {
-                      if (value?.isEmpty ?? false) {
-                        return '확인 비밀번호를 입력해주세요.';
-                      }
-
-                      if (value != inputPassword) {
-                        return '위와 동일한 비밀번호를 입력해주세요.';
-                      }
-                      return null;
-                    },
-                    onSaved: (String? value) {
-                      inputCheckPassword = value;
-                    },
-                  ),
-                ),
               ],
             ),
           ),
@@ -107,9 +63,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               borderRadius: BorderRadius.circular(16.0),
             ),
             child: TextButton(
-              onPressed: () async {},
+              onPressed: () async {
+                await _authentication.setLanguageCode("fr");
+                await _authentication.sendPasswordResetEmail(
+                    email: inputEmail.toString());
+              },
               child: const Text(
-                '변경하기',
+                '재설정 이메일 보내기',
                 style: TextStyle(fontSize: 20),
               ),
             ),
