@@ -12,7 +12,6 @@ import '../data/repository/picture_repository_impl.dart';
 import '../domain/use_case/get_picture_use_case.dart';
 import '../presentation/recipe_screen.dart';
 import '../presentation/recipe_view_model.dart';
-import '../presentation/splash_screen.dart';
 
 final router = GoRouter(
   routes: [
@@ -75,9 +74,14 @@ final router = GoRouter(
                         repository: PictureRepositoryImpl(
                           pictureDataSource: PictureDataSource(),
                         ),
-                      ), getRecipeUseCase: GetRecipeUseCase(chatGptRepositoryImpl: ChatGptRepositoryImpl(dataSource: GptDataSource())),
+                      ),
+                      getRecipeUseCase: GetRecipeUseCase(
+                          chatGptRepositoryImpl: ChatGptRepositoryImpl(
+                              dataSource: GptDataSource())),
                     ),
-                    child: RecipeScreen(ingredients: state.extra as String,),
+                    child: RecipeScreen(
+                      ingredients: state.extra as String,
+                    ),
                   );
                 },
               ),
