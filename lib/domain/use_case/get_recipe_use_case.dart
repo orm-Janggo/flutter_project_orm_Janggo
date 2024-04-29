@@ -7,7 +7,7 @@ class GetRecipeUseCase {
     required ChatGptRepositoryImpl chatGptRepositoryImpl,
   }) : _chatGptRepositoryImpl = chatGptRepositoryImpl;
 
-  Future<String> execute(String ingredients) async {
+  Future<List<String>> execute(String ingredients) async {
     final recipe = await _chatGptRepositoryImpl.getRecipes(ingredients);
     return recipe;
   }

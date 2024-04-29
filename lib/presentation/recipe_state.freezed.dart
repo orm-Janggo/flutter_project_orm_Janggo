@@ -20,7 +20,8 @@ RecipeState _$RecipeStateFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$RecipeState {
-  String get recipe => throw _privateConstructorUsedError;
+  List<String> get recipe => throw _privateConstructorUsedError;
+  List<String> get url => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -34,7 +35,7 @@ abstract class $RecipeStateCopyWith<$Res> {
           RecipeState value, $Res Function(RecipeState) then) =
       _$RecipeStateCopyWithImpl<$Res, RecipeState>;
   @useResult
-  $Res call({String recipe});
+  $Res call({List<String> recipe, List<String> url});
 }
 
 /// @nodoc
@@ -51,12 +52,17 @@ class _$RecipeStateCopyWithImpl<$Res, $Val extends RecipeState>
   @override
   $Res call({
     Object? recipe = null,
+    Object? url = null,
   }) {
     return _then(_value.copyWith(
       recipe: null == recipe
           ? _value.recipe
           : recipe // ignore: cast_nullable_to_non_nullable
-              as String,
+              as List<String>,
+      url: null == url
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ) as $Val);
   }
 }
@@ -69,7 +75,7 @@ abstract class _$$RecipeStateImplCopyWith<$Res>
       __$$RecipeStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String recipe});
+  $Res call({List<String> recipe, List<String> url});
 }
 
 /// @nodoc
@@ -84,12 +90,17 @@ class __$$RecipeStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? recipe = null,
+    Object? url = null,
   }) {
     return _then(_$RecipeStateImpl(
       recipe: null == recipe
-          ? _value.recipe
+          ? _value._recipe
           : recipe // ignore: cast_nullable_to_non_nullable
-              as String,
+              as List<String>,
+      url: null == url
+          ? _value._url
+          : url // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -97,18 +108,35 @@ class __$$RecipeStateImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$RecipeStateImpl implements _RecipeState {
-  const _$RecipeStateImpl({this.recipe = ''});
+  const _$RecipeStateImpl(
+      {final List<String> recipe = const [], final List<String> url = const []})
+      : _recipe = recipe,
+        _url = url;
 
   factory _$RecipeStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$RecipeStateImplFromJson(json);
 
+  final List<String> _recipe;
   @override
   @JsonKey()
-  final String recipe;
+  List<String> get recipe {
+    if (_recipe is EqualUnmodifiableListView) return _recipe;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_recipe);
+  }
+
+  final List<String> _url;
+  @override
+  @JsonKey()
+  List<String> get url {
+    if (_url is EqualUnmodifiableListView) return _url;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_url);
+  }
 
   @override
   String toString() {
-    return 'RecipeState(recipe: $recipe)';
+    return 'RecipeState(recipe: $recipe, url: $url)';
   }
 
   @override
@@ -116,12 +144,16 @@ class _$RecipeStateImpl implements _RecipeState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RecipeStateImpl &&
-            (identical(other.recipe, recipe) || other.recipe == recipe));
+            const DeepCollectionEquality().equals(other._recipe, _recipe) &&
+            const DeepCollectionEquality().equals(other._url, _url));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, recipe);
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_recipe),
+      const DeepCollectionEquality().hash(_url));
 
   @JsonKey(ignore: true)
   @override
@@ -138,13 +170,16 @@ class _$RecipeStateImpl implements _RecipeState {
 }
 
 abstract class _RecipeState implements RecipeState {
-  const factory _RecipeState({final String recipe}) = _$RecipeStateImpl;
+  const factory _RecipeState(
+      {final List<String> recipe, final List<String> url}) = _$RecipeStateImpl;
 
   factory _RecipeState.fromJson(Map<String, dynamic> json) =
       _$RecipeStateImpl.fromJson;
 
   @override
-  String get recipe;
+  List<String> get recipe;
+  @override
+  List<String> get url;
   @override
   @JsonKey(ignore: true)
   _$$RecipeStateImplCopyWith<_$RecipeStateImpl> get copyWith =>

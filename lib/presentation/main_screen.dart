@@ -8,7 +8,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<StatefulWidget> {
-  late User? _user;
+ User? _user;
 
   @override
   void initState() {
@@ -21,9 +21,7 @@ class _MainScreenState extends State<StatefulWidget> {
     setState(() {});
   }
 
-
   final List<TextEditingController> _controllers = [TextEditingController()]; // 재료 텍스트 필드 컨트롤러
-
 
   void _addTextField() {
     // 재료 추가
