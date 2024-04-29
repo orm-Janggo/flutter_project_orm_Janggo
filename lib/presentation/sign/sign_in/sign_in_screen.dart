@@ -101,7 +101,9 @@ class _SignInScreenState extends State<SignInScreen> {
               ),
               const Text('Rember Me'),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  context.push('/forgot-password');
+                },
                 child: const Text('Forgot Password'),
               ),
             ],
