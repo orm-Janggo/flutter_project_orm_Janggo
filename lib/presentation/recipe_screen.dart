@@ -34,57 +34,53 @@ class _RecipeScreenState extends State<RecipeScreen> {
   Widget build(BuildContext context) {
     final viewModel = context.watch<RecipeViewModel>();
     final state = viewModel.state;
+    if (state.recipe != null) {
+      viewModel.getPicture(state.recipe);
+      setState(() {});
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text('레시피'),
       ),
-      body: PageView(
-        children: [
-          Padding(
-            padding: EdgeInsets.all(16.0),
+      body: PageView.builder(
+        itemCount: state.recipe.length, // 레시피 수에 따라 페이지 생성
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    width: double.infinity,
-                    padding: EdgeInsets.all(16.0),
-                    margin: EdgeInsets.only(bottom: 16.0),
-                    decoration: BoxDecoration(color: Colors.yellow),
-                    child: FutureBuilder<PictureModel>(
-                      future: viewModel.getPicture('사과'),
-                      builder: (context, snapshot) {
-                        if (snapshot.connectionState == ConnectionState.waiting) {
-                          return Center(child: CircularProgressIndicator());
-                        } else if (snapshot.hasError) {
-                          return Text('Error: ${snapshot.error}');
-                        } else {
-                          final PictureModel picture = snapshot.data!;
-                          return Image.network(
-                            picture.url,
-                          );
-                        }
-                      },
-                    ),
-                  ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: (state.url.isNotEmpty && index < state.url.length && state.url[index] != 'empty')
+                      ? Image.network(
+                          state.url[index], // 이미지 URL
+                          height: 400, // 이미지 높이
+                          width: 400,
+                          fit: BoxFit.cover,
+                        )
+                      : Image.asset('assets/images/empty_image.png'), // 이미지가 없을 경우 대체 이미지
                 ),
                 Expanded(
-                  flex: 2,
+                  // 스크롤뷰가 확장
                   child: SingleChildScrollView(
                     child: Container(
-                      width: double.infinity,
-                      padding: EdgeInsets.all(16.0),
+                      padding: const EdgeInsets.all(16.0),
                       decoration: BoxDecoration(
-                        color: Colors.blue,
+                        color: Colors.orange,
+                        borderRadius: BorderRadius.circular(10),
                       ),
-                      child: Text(state.recipe),
+                      child: Text(
+                        state.recipe[index], // 레시피 텍스트
+                        style: TextStyle(fontSize: 18, color: Colors.black, fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
                 ),
               ],
             ),
-          ),
-        ],
+          );
+        },
       ),
     );
   }

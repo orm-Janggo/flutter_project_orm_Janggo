@@ -9,7 +9,7 @@ class ChatGptRepositoryImpl implements ChatGptrepository {
   }) : _dataSource = dataSource;
 
   @override
-  Future<String> getRecipes(String ingredients) async {
+  Future<List<String>> getRecipes(String ingredients) async {
     final recipe = await _dataSource.getRecipes(ingredients);
     return recipe;
   }

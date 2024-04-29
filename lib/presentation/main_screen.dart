@@ -8,7 +8,7 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<StatefulWidget> {
- late User? _user;
+ User? _user;
 
   @override
   void initState() {
