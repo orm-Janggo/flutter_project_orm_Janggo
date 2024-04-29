@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -73,6 +74,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                 await _authentication.setLanguageCode("kr");
                 await _authentication.sendPasswordResetEmail(
                     email: inputEmail.toString());
+
+                // check mount
+                if (!context.mounted) return;
+
+                context.pushReplacement('/');
               },
               child: const Text(
                 '재설정 이메일 보내기',
