@@ -119,7 +119,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
                   if (!context.mounted) return;
 
-                  context.push('/temp-screen');
+                  context.push('/main');
                 } catch (e) {
                   debugPrint(e.toString());
                 }
