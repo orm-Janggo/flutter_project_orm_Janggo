@@ -20,6 +20,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     return Scaffold(
       body: Column(
         children: [
+          SizedBox(
+            height: 128,
+          ),
           const Text(
             'Forgot Password?',
             style: TextStyle(fontSize: 32),
