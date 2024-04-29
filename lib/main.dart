@@ -2,10 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_project_orm_janggo/go_router/go_router.dart';
-import 'package:flutter_project_orm_janggo/presentation/login_screen.dart';
-import 'package:flutter_project_orm_janggo/presentation/main_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/sign/sign_state.dart';
-import 'package:flutter_project_orm_janggo/presentation/signup_screen.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:provider/provider.dart';
 
