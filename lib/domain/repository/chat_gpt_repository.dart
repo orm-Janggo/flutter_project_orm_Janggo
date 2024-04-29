@@ -1,3 +1,3 @@
 abstract interface class ChatGptrepository {
-  Future<String> getRecipes(String ingredients);
+  Future<List<String>> getRecipes(String ingredients);
 }
