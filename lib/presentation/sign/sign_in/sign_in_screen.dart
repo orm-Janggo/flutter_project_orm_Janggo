@@ -16,18 +16,7 @@ class _SignInScreenState extends State<SignInScreen> {
   String? inputEmail;
   String? inputPassword;
 
-  final _emailTextEditingController = TextEditingController();
-  final _passwordTextEditingController = TextEditingController();
-
   bool isChecked = false;
-
-  @override
-  void dispose() {
-    _emailTextEditingController.dispose();
-    _passwordTextEditingController.dispose();
-
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
