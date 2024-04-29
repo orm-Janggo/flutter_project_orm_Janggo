@@ -1,11 +1,18 @@
 import 'package:firebase_auth/firebase_auth.dart' as Auth;
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart' ;
+import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+
 Future<bool> signInWithKakao() async {
   try {
     // 카카오 로그인 시도
+    var provider = Auth.OAuthProvider("oidc.janggo");
     OAuthToken token = await UserApi.instance.loginWithKakaoTalk();
+    var credential = provider.credential(
+      idToken: token.idToken,
+      accessToken: token.accessToken,
+    );
+    await Auth.FirebaseAuth.instance.signInWithCredential(credential);
     print('카카오톡으로 로그인 성공 ${token.accessToken}');
     User user = await UserApi.instance.me();
     print('사용자 정보${user.id}');
@@ -17,11 +24,11 @@ Future<bool> signInWithKakao() async {
       // Firebase 연동 기능 구현 완료
       var provider = Auth.OAuthProvider("oidc.janggo");
       OAuthToken token = await UserApi.instance.loginWithKakaoAccount();
-     var credential = provider.credential(
-       idToken: token.idToken,
-       accessToken: token.accessToken,
-     );
-     Auth.FirebaseAuth.instance.signInWithCredential(credential);
+      var credential = provider.credential(
+        idToken: token.idToken,
+        accessToken: token.accessToken,
+      );
+      await Auth.FirebaseAuth.instance.signInWithCredential(credential);
       print('카카오계정으로 로그인 성공');
       User user = await UserApi.instance.me();
       print('사용자 정보${user.id}');
@@ -60,6 +67,7 @@ void userInfo() async {
     print('사용자 정보 요청 실패 $error');
   }
 }
+
 Widget getKakaoLoginButton(BuildContext context) {
   return InkWell(
     onTap: () {
