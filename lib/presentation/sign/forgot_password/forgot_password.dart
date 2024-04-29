@@ -64,7 +64,11 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             ),
             child: TextButton(
               onPressed: () async {
-                await _authentication.setLanguageCode("fr");
+                if (_formKey.currentState?.validate() ?? false) {
+                  _formKey.currentState?.save();
+                }
+
+                await _authentication.setLanguageCode("kr");
                 await _authentication.sendPasswordResetEmail(
                     email: inputEmail.toString());
               },
