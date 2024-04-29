@@ -1,6 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart' as Auth;
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart' ;
 Future<bool> signInWithKakao() async {
   try {
     // 카카오 로그인 시도
@@ -13,7 +14,13 @@ Future<bool> signInWithKakao() async {
     // 카카오톡 로그인 실패 시, 카카오 계정으로 로그인 시도
     print('카카오톡으로 로그인 실패: $error');
     try {
-      await UserApi.instance.loginWithKakaoAccount();
+      var provider = Auth.OAuthProvider("oidc.janggo");
+      OAuthToken token = await UserApi.instance.loginWithKakaoAccount();
+     var credential = provider.credential(
+       idToken: token.idToken,
+       accessToken: token.accessToken,
+     );
+     Auth.FirebaseAuth.instance.signInWithCredential(credential);
       print('카카오계정으로 로그인 성공');
       User user = await UserApi.instance.me();
       print('사용자 정보${user.id}');

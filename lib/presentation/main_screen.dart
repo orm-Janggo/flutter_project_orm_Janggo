@@ -4,12 +4,11 @@ import 'package:go_router/go_router.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart'; // go_router 임포트 추가
 
 class MainScreen extends StatefulWidget {
-  State<StatefulWidget> createState() =>
-      _MainScreenState();
+  State<StatefulWidget> createState() => _MainScreenState();
 }
 
 class _MainScreenState extends State<StatefulWidget> {
- late User? _user;
+  late User? _user;
 
   @override
   void initState() {
@@ -22,15 +21,19 @@ class _MainScreenState extends State<StatefulWidget> {
     setState(() {});
   }
 
-  List<TextEditingController> _controllers = [TextEditingController()]; // 재료 텍스트 필드 컨트롤러
+  List<TextEditingController> _controllers = [
+    TextEditingController()
+  ]; // 재료 텍스트 필드 컨트롤러
 
-  void _addTextField() { // 재료 추가
+  void _addTextField() {
+    // 재료 추가
     setState(() {
       _controllers.add(TextEditingController());
     });
   }
 
-  void _removeTextField(int index) { // 재료 삭제
+  void _removeTextField(int index) {
+    // 재료 삭제
     if (_controllers.length > 1) {
       // 최소 1개 이상이 되도록 제한
       setState(() {
@@ -73,14 +76,14 @@ class _MainScreenState extends State<StatefulWidget> {
         actions: [
           _user != null
               ? Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(_user!.kakaoAccount!.profile!.nickname!),
-              ],
-            ),
-          )
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(_user!.kakaoAccount!.profile!.nickname!),
+                    ],
+                  ),
+                )
               : const CircularProgressIndicator(),
         ],
       ),
@@ -115,7 +118,8 @@ class _MainScreenState extends State<StatefulWidget> {
             child: Padding(
               padding: const EdgeInsets.all(10.0),
               child: ElevatedButton(
-                onPressed: () => _onButtonPressed(context), // 함수 호출 시 context 전달
+                onPressed: () => _onButtonPressed(context),
+                // 함수 호출 시 context 전달
                 child: Text('레시피 보기'), // TextButton 제거
               ),
             ),
