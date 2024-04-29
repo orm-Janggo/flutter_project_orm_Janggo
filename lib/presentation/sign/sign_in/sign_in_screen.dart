@@ -34,48 +34,68 @@ class _SignInScreenState extends State<SignInScreen> {
     return Scaffold(
       body: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 128,
           ),
-          Text('Hi, Welcome Back 🙌'),
-          Text('Hello again, you\'ve been missed!'),
-          SizedBox(
+          const Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Hi, Welcome Back 🙌',
+                style: TextStyle(fontSize: 32),
+              ),
+              Text(
+                'Hello again, you\'ve been missed!',
+                style: TextStyle(fontSize: 16),
+              ),
+            ],
+          ),
+          const SizedBox(
             height: 16,
           ),
           Form(
             key: _formKey,
             child: Column(
               children: [
-                TextFormField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'e.g. emailAddress@gmail.com',
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextFormField(
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'e.g. emailAddress@gmail.com',
+                    ),
+                    validator: (value) {
+                      if (value?.isEmpty ?? false) {
+                        return '이메일을 입력해주세요.';
+                      }
+                      return null;
+                    },
+                    onSaved: (String? value) {
+                      email = value;
+                    },
                   ),
-                  validator: (value) {
-                    if (value?.isEmpty ?? false) {
-                      return '이메일을 입력해주세요.';
-                    }
-                    return null;
-                  },
-                  onSaved: (String? value) {
-                    email = value;
-                  },
                 ),
-                TextFormField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Enter your password',
+                const SizedBox(
+                  height: 16,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextFormField(
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Enter your password',
+                    ),
+                    obscureText: true,
+                    validator: (value) {
+                      if (value?.isEmpty ?? false) {
+                        return '비밀번호를 입력해주세요.';
+                      }
+                      return null;
+                    },
+                    onSaved: (String? value) {
+                      password = value;
+                    },
                   ),
-                  obscureText: true,
-                  validator: (value) {
-                    if (value?.isEmpty ?? false) {
-                      return '비밀번호를 입력해주세요.';
-                    }
-                    return null;
-                  },
-                  onSaved: (String? value) {
-                    password = value;
-                  },
                 ),
               ],
             ),
@@ -90,10 +110,10 @@ class _SignInScreenState extends State<SignInScreen> {
                   });
                 },
               ),
-              Text('Rember Me'),
+              const Text('Rember Me'),
               TextButton(
                 onPressed: () {},
-                child: Text('Forgot Password'),
+                child: const Text('Forgot Password'),
               ),
             ],
           ),
@@ -124,13 +144,13 @@ class _SignInScreenState extends State<SignInScreen> {
                   debugPrint(e.toString());
                 }
               },
-              child: Text(
+              child: const Text(
                 'Sign in',
                 style: TextStyle(fontSize: 20),
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 16,
           ),
           Container(
@@ -142,13 +162,13 @@ class _SignInScreenState extends State<SignInScreen> {
             ),
             child: TextButton(
               onPressed: () {},
-              child: Text(
+              child: const Text(
                 'Sign in With Google',
                 style: TextStyle(fontSize: 20),
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 16,
           ),
           Container(
@@ -160,21 +180,21 @@ class _SignInScreenState extends State<SignInScreen> {
             ),
             child: TextButton(
               onPressed: () {},
-              child: Text(
+              child: const Text(
                 'Sign in With KAKAO',
                 style: TextStyle(fontSize: 20),
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 80,
           ),
-          Container(
+          SizedBox(
             width: 320,
             height: 50,
             child: TextButton(
               onPressed: () {},
-              child: Text(
+              child: const Text(
                 'Don\'t have an account? Sign Up',
                 style: TextStyle(fontSize: 20),
               ),
