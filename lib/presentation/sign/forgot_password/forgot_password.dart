@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -8,10 +10,112 @@ class ForgotPasswordScreen extends StatefulWidget {
 }
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
+  final _authentication = FirebaseAuth.instance;
+  final _formKey = GlobalKey<FormState>();
+
+  String? inputEmail;
+  String? inputPassword;
+  String? inputCheckPassword;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(),
+      body: Column(
+        children: [
+          Text(
+            'Forgot Password?',
+            style: TextStyle(fontSize: 32),
+          ),
+          const SizedBox(
+            height: 16,
+          ),
+          Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextFormField(
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'e.g. emailAddress@gmail.com',
+                    ),
+                    validator: (value) {
+                      if (value?.isEmpty ?? false) {
+                        return '이메일을 입력해주세요.';
+                      }
+                      return null;
+                    },
+                    onSaved: (String? value) {
+                      inputEmail = value;
+                    },
+                  ),
+                ),
+                const SizedBox(
+                  height: 16,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextFormField(
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Enter your password',
+                    ),
+                    obscureText: true,
+                    validator: (value) {
+                      if (value?.isEmpty ?? false) {
+                        return '비밀번호를 입력해주세요.';
+                      }
+                      return null;
+                    },
+                    onSaved: (String? value) {
+                      inputPassword = value;
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: TextFormField(
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'Enter your password',
+                    ),
+                    obscureText: true,
+                    validator: (value) {
+                      if (value?.isEmpty ?? false) {
+                        return '확인 비밀번호를 입력해주세요.';
+                      }
+
+                      if (value != inputPassword) {
+                        return '위와 동일한 비밀번호를 입력해주세요.';
+                      }
+                      return null;
+                    },
+                    onSaved: (String? value) {
+                      inputCheckPassword = value;
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            width: 320,
+            height: 50,
+            decoration: BoxDecoration(
+              color: Colors.orange,
+              borderRadius: BorderRadius.circular(16.0),
+            ),
+            child: TextButton(
+              onPressed: () async {},
+              child: const Text(
+                '변경하기',
+                style: TextStyle(fontSize: 20),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
