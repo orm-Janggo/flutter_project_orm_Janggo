@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -163,6 +164,7 @@ class SplashScreen5 extends StatelessWidget {
               child: TextButton(
                 onPressed: () {
                   // Sign In 버튼 눌렀을 때 처리
+                  context.push('/sign-in');
                 },
                 child: Text(
                   "Sign In",
