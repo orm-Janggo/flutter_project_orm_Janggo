@@ -4,6 +4,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_project_orm_janggo/go_router/go_router.dart';
 import 'package:flutter_project_orm_janggo/presentation/login_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/main_screen.dart';
+import 'package:flutter_project_orm_janggo/presentation/sign/sign_state.dart';
 import 'package:flutter_project_orm_janggo/presentation/signup_screen.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:provider/provider.dart';
@@ -19,8 +20,10 @@ void main() async {
     nativeAppKey: KakaoConfig.nativeAppKey,
     javaScriptAppKey: KakaoConfig.javascriptKey,
   );
-
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(
+    create: (context) => SignState(),
+    builder: ((context, child) => const MyApp()),
+  ));
 }
 
 class MyApp extends StatelessWidget {
