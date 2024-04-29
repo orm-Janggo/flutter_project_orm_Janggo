@@ -13,8 +13,8 @@ class _SignInScreenState extends State<SignInScreen> {
   final _authentication = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
 
-  String? email;
-  String? password;
+  String? inputEmail;
+  String? inputPassword;
 
   final _emailTextEditingController = TextEditingController();
   final _passwordTextEditingController = TextEditingController();
@@ -71,7 +71,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       return null;
                     },
                     onSaved: (String? value) {
-                      email = value;
+                      inputEmail = value;
                     },
                   ),
                 ),
@@ -93,7 +93,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       return null;
                     },
                     onSaved: (String? value) {
-                      password = value;
+                      inputPassword = value;
                     },
                   ),
                 ),
@@ -132,11 +132,12 @@ class _SignInScreenState extends State<SignInScreen> {
 
                 try {
                   await _authentication.signInWithEmailAndPassword(
-                    email: email.toString(),
-                    password: password.toString(),
+                    email: inputEmail.toString(),
+                    password: inputPassword.toString(),
                   );
                   debugPrint('로그인 성공');
 
+                  // check mount
                   if (!context.mounted) return;
 
                   context.push('/main');
