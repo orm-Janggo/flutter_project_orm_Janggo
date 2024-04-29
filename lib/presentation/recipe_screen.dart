@@ -67,7 +67,14 @@ class _RecipeScreenState extends State<RecipeScreen> {
                     child: Container(
                       padding: const EdgeInsets.all(16.0),
                       decoration: BoxDecoration(
-                        color: Colors.orange,
+                        color: Colors.white70,
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.8),
+                            blurRadius: 8.0,
+                            offset: const Offset(3, 3),
+                          ),
+                        ],
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Text(
