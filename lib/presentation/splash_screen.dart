@@ -207,6 +207,7 @@ class SplashScreen5 extends StatelessWidget {
             child: TextButton(
               onPressed: () {
                 // SKIP 버튼 눌렀을 때 처리
+                context.push('/main');
               },
               child: Text(
                 "SKIP",
