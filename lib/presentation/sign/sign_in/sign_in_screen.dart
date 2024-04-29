@@ -90,6 +90,9 @@ class _SignInScreenState extends State<SignInScreen> {
                     password: _passwordTextEditingController.text,
                   );
                   debugPrint('로그인 성공');
+
+                  if (!context.mounted) return;
+
                   context.push('/temp-screen');
                 } catch (e) {
                   debugPrint(e.toString());
