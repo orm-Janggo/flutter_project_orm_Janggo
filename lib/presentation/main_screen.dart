@@ -67,7 +67,7 @@ class _MainScreenState extends State<StatefulWidget> {
       appBar: AppBar(
         title: const Text('냉장고 파먹기'),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back),
           onPressed: () {
             Navigator.of(context).pop();
           },
@@ -115,13 +115,13 @@ class _MainScreenState extends State<StatefulWidget> {
                         // 배경 채우기 활성화
                         fillColor: Colors.white,
                         // 입력란 배경 색깔
-                        border: OutlineInputBorder(
+                        border: const OutlineInputBorder(
                           borderSide: BorderSide(
                               color: Colors.green, // 기본 테두리 색깔
                               width: 3.0),
                         ),
                         focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
+                          borderSide: const BorderSide(
                             color: Colors.blue, // 활성화된 테두리 색깔
                             width: 4.0, // 테두리 두께
                           ),
@@ -129,14 +129,14 @@ class _MainScreenState extends State<StatefulWidget> {
                         ),
                         // 비활성화된 테두리 색깔 변경
                         enabledBorder: OutlineInputBorder(
-                          borderSide: BorderSide(
+                          borderSide: const BorderSide(
                             color: Colors.white70, // 비활성화된 테두리 색깔
                             width: 3.0,
                           ),
                           borderRadius: BorderRadius.circular(12.0),
                         ),
                       ),
-                      style: TextStyle(
+                      style: const TextStyle(
                         color: Colors.black,
                       ),
                     ),
@@ -158,7 +158,7 @@ class _MainScreenState extends State<StatefulWidget> {
                 ),
                 child: TextButton(
                   onPressed: () => _onButtonPressed(context), // 버튼 클릭 시 함수 호출
-                  child: Row(
+                  child: const Row(
                     // 텍스트와 아이콘을 나란히 배치하기 위해 Row 사용
                     mainAxisSize: MainAxisSize.min, // Row의 크기를 자식 위젯에 맞추기
                     children: [
