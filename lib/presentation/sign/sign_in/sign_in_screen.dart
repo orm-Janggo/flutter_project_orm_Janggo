@@ -11,6 +11,10 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   final _authentication = FirebaseAuth.instance;
+  final _formKey = GlobalKey<FormState>();
+
+  String? email;
+  String? password;
 
   final _emailTextEditingController = TextEditingController();
   final _passwordTextEditingController = TextEditingController();
@@ -38,24 +42,42 @@ class _SignInScreenState extends State<SignInScreen> {
           SizedBox(
             height: 16,
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              controller: _emailTextEditingController,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'e.g. emailAddress@gmail.com',
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              controller: _passwordTextEditingController,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Enter your password',
-              ),
+          Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                TextFormField(
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'e.g. emailAddress@gmail.com',
+                  ),
+                  validator: (value) {
+                    if (value?.isEmpty ?? false) {
+                      return '이메일을 입력해주세요.';
+                    }
+                    return null;
+                  },
+                  onSaved: (String? value) {
+                    email = value;
+                  },
+                ),
+                TextFormField(
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Enter your password',
+                  ),
+                  obscureText: true,
+                  validator: (value) {
+                    if (value?.isEmpty ?? false) {
+                      return '비밀번호를 입력해주세요.';
+                    }
+                    return null;
+                  },
+                  onSaved: (String? value) {
+                    password = value;
+                  },
+                ),
+              ],
             ),
           ),
           Row(
@@ -84,10 +106,14 @@ class _SignInScreenState extends State<SignInScreen> {
             ),
             child: TextButton(
               onPressed: () async {
+                if (_formKey.currentState?.validate() ?? false) {
+                  _formKey.currentState?.save();
+                }
+
                 try {
                   await _authentication.signInWithEmailAndPassword(
-                    email: _emailTextEditingController.text,
-                    password: _passwordTextEditingController.text,
+                    email: email.toString(),
+                    password: password.toString(),
                   );
                   debugPrint('로그인 성공');
 
