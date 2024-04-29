@@ -59,12 +59,14 @@ final router = GoRouter(
             //   ],
             // );
           },
-        ),
-        GoRoute(
-          path: 'forgot-password',
-          builder: (context, state) {
-            return ForgotPasswordScreen();
-          },
+          routes: [
+            GoRoute(
+              path: 'forgot-password',
+              builder: (context, state) {
+                return ForgotPasswordScreen();
+              },
+            ),
+          ],
         ),
         GoRoute(
             path: 'main',
