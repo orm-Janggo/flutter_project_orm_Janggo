@@ -22,7 +22,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     return Scaffold(
       body: Column(
         children: [
-          Text(
+          const Text(
             'Forgot Password?',
             style: TextStyle(fontSize: 32),
           ),
