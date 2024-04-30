@@ -55,6 +55,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextFormField(
+                        key: const ValueKey(1),
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(),
                           hintText: '이메일 e.g. emailAddress@gmail.com',
@@ -76,6 +77,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextFormField(
+                        key: const ValueKey(2),
                         decoration: const InputDecoration(
                           border: OutlineInputBorder(),
                           hintText: '비밀번호',
@@ -195,7 +197,8 @@ class _SignInScreenState extends State<SignInScreen> {
                 // ),
                 child: InkWell(
                   onTap: () {},
-                  child: Image.asset('assets/images/kakao_login_large_wide.png'),
+                  child:
+                      Image.asset('assets/images/kakao_login_large_wide.png'),
                 ),
               ),
               const SizedBox(
