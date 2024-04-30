@@ -2,6 +2,7 @@ import 'package:flutter_project_orm_janggo/data/gpt_data_source/gpt_data_source.
 import 'package:flutter_project_orm_janggo/data/repository/chat_gpt_reopository_impl.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/get_recipe_use_case.dart';
 import 'package:flutter_project_orm_janggo/presentation/main_screen.dart';
+import 'package:flutter_project_orm_janggo/presentation/mypage_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/sign/forgot_password/forgot_password.dart';
 import 'package:flutter_project_orm_janggo/presentation/sign/sign_in/sign_in_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/sign/sign_up/sign_up_screen.dart';
@@ -65,6 +66,12 @@ final router = GoRouter(
                       ingredients: state.extra as String,
                     ),
                   );
+                },
+              ),
+              GoRoute(
+                path: 'my-page',
+                builder: (context, state) {
+                  return MypageScreen();
                 },
               ),
             ]),
