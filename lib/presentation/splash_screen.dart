@@ -141,7 +141,7 @@ class SplashScreen5 extends StatelessWidget {
                   // Create Account 버튼 눌렀을 때 처리
                 },
                 child: const Text(
-                  "Create Account",
+                  "회원 가입",
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -167,7 +167,7 @@ class SplashScreen5 extends StatelessWidget {
                   context.push('/sign-in');
                 },
                 child: const Text(
-                  "Sign In",
+                  "로그인",
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -210,7 +210,7 @@ class SplashScreen5 extends StatelessWidget {
                 context.push('/main');
               },
               child: const Text(
-                "SKIP",
+                "둘러보기",
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
