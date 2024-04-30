@@ -180,12 +180,16 @@ class _SignInScreenState extends State<SignInScreen> {
               color: Colors.yellow,
               borderRadius: BorderRadius.circular(16.0),
             ),
-            child: TextButton(
-              onPressed: () {},
-              child: const Text(
-                'Sign in With KAKAO',
-                style: TextStyle(fontSize: 20),
-              ),
+            // child: TextButton(
+            //   onPressed: () {},
+            //   child: const Text(
+            //     'Sign in With KAKAO',
+            //     style: TextStyle(fontSize: 20),
+            //   ),
+            // ),
+            child: InkWell(
+              onTap: () {},
+              child: Image.asset('assets/images/kakao_login_large_wide.png'),
             ),
           ),
           const SizedBox(
