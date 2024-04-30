@@ -105,7 +105,7 @@ class _MainScreenState extends State<StatefulWidget> {
           Align(
             alignment: Alignment.topCenter,
             child: Container(
-              padding: EdgeInsets.only(top: 110),
+                padding: EdgeInsets.only(top: 110),
                 width: 200,
                 height: 200,
                 child: Text(
