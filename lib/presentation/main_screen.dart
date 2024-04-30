@@ -65,14 +65,6 @@ class _MainScreenState extends State<StatefulWidget> {
 
   @override
   Widget build(BuildContext context) {
-    // 화면 크기 가져오기
-    final Size screenSize = MediaQuery.of(context).size;
-
-    // 일정한 간격 정의
-    const double paddingValue = 16.0;
-    const double buttonWidth = 300.0;
-    const double buttonHeight = 50.0;
-
     return Scaffold(
       // 키보드에 의한 UI 이동방지
       resizeToAvoidBottomInset: false,
@@ -87,14 +79,14 @@ class _MainScreenState extends State<StatefulWidget> {
         actions: [
           _user != null
               ? Padding(
-            padding: const EdgeInsets.symmetric(horizontal: paddingValue),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(_user!.kakaoAccount!.profile!.nickname!),
-              ],
-            ),
-          )
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(_user!.kakaoAccount!.profile!.nickname!),
+                    ],
+                  ),
+                )
               : const Icon(Icons.face),
           SizedBox(
             width: 10,
@@ -105,38 +97,37 @@ class _MainScreenState extends State<StatefulWidget> {
         children: [
           Container(
             decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/images/main_background.png'),
-                fit: BoxFit.cover,
-              ),
-            ),
+                image: DecorationImage(
+              image: AssetImage('assets/images/main_background.png'),
+              fit: BoxFit.cover,
+            )),
           ),
           Align(
             alignment: Alignment.topCenter,
             child: Container(
-              padding: EdgeInsets.only(top: screenSize.height * 0.2),
-              width: screenSize.width * 0.4,
-              height: screenSize.height * 0.2,
-              child: Text(
-                '재료를 넣어주세요!',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-              ),
-            ),
+              padding: EdgeInsets.only(top: 110),
+                width: 200,
+                height: 200,
+                child: Text(
+                  '재료를 넣어주세요!',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                )),
           ),
+
           Center(
             child: Padding(
-              padding: EdgeInsets.only(top: screenSize.height * 0.26),
+              padding: const EdgeInsets.only(top: 160.0),
               child: SizedBox(
-                height: screenSize.height * 0.5, // 스크롤 가능한 영역의 높이를 설정합니다.
+                height: 340, // 스크롤 가능한 영역의 높이를 설정합니다.
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
                       // 첫 번째 영역의 텍스트 폼 필드들
                       for (var i = 0; i < _controllers.length; i++)
                         Padding(
-                          padding: const EdgeInsets.all(paddingValue),
+                          padding: const EdgeInsets.all(8.0),
                           child: SizedBox(
-                            height: screenSize.height * 0.1, // 텍스트 폼 필드의 고정된 높이 설정
+                            height: 70, // 텍스트 폼 필드의 고정된 높이 설정
                             child: TextField(
                               keyboardType: TextInputType.text,
                               onTapOutside: (event) =>
@@ -187,6 +178,7 @@ class _MainScreenState extends State<StatefulWidget> {
               ),
             ),
           ),
+
           // 버튼을 화면 맨 아래에 고정시킴
           GestureDetector(
             onTap: () {
@@ -198,9 +190,9 @@ class _MainScreenState extends State<StatefulWidget> {
                 mainAxisAlignment: MainAxisAlignment.end, // 하단에 배치
                 children: [
                   Container(
-                    width: buttonWidth,
-                    height: buttonHeight,
-                    margin: EdgeInsets.only(bottom: paddingValue),
+                    width: 300,
+                    height: 50,
+                    margin: EdgeInsets.only(bottom: 16),
                     // 아래 여백 추가
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(24),
@@ -226,9 +218,9 @@ class _MainScreenState extends State<StatefulWidget> {
                     ),
                   ),
                   Container(
-                    width: buttonWidth,
-                    height: buttonHeight,
-                    margin: EdgeInsets.only(bottom: paddingValue),
+                    width: 300,
+                    height: 50,
+                    margin: EdgeInsets.only(bottom: 16),
                     // 아래 여백 추가
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(24),
