@@ -89,7 +89,7 @@ class _MainScreenState extends State<StatefulWidget> {
                 )
               : const Icon(Icons.face),
           SizedBox(
-            width: 10,
+            width: 16,
           ),
         ],
       ),
@@ -98,25 +98,27 @@ class _MainScreenState extends State<StatefulWidget> {
           Container(
             decoration: const BoxDecoration(
                 image: DecorationImage(
-              image: AssetImage('assets/images/main_background.png'),
+              image: AssetImage('assets/images/main-background.png'),
               fit: BoxFit.cover,
             )),
           ),
           Align(
             alignment: Alignment.topCenter,
             child: Container(
-                padding: EdgeInsets.only(top: 110),
+                padding: EdgeInsets.only(top: 10),
                 width: 200,
                 height: 200,
                 child: Text(
                   '재료를 넣어주세요!',
                   style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                 )),
+
           ),
+
 
           Center(
             child: Padding(
-              padding: const EdgeInsets.only(top: 160.0),
+              padding: const EdgeInsets.only(top: 155.0),
               child: SizedBox(
                 height: 340, // 스크롤 가능한 영역의 높이를 설정합니다.
                 child: SingleChildScrollView(
@@ -227,7 +229,43 @@ class _MainScreenState extends State<StatefulWidget> {
                       color: Colors.orange,
                     ),
                     child: TextButton(
-                      onPressed: () => _onButtonPressed(context),
+                      onPressed: () {
+                        // 재료가 입력되지 않은 경우
+                        if (_controllers.any((controller) => controller.text.isEmpty)) {
+                          // 알럿 대화상자 표시
+                          showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              title: Text(
+                                '알림',
+                                style: TextStyle(fontSize: 16),
+                                textAlign: TextAlign.center,
+                              ),
+
+                              content: Padding(
+                                padding: const EdgeInsets.only(top: 16.0),
+                                child: const Text(
+                                  '재료가 없습니다!',
+                                  style: TextStyle(fontSize: 18),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('확인'),
+                                ),
+                              ],
+                            ),
+
+                          );
+                        } else {
+
+                          _onButtonPressed(context);
+                        }
+                      },
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -244,6 +282,7 @@ class _MainScreenState extends State<StatefulWidget> {
                         ],
                       ),
                     ),
+
                   ),
                 ],
               ),
