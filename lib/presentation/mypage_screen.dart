@@ -235,11 +235,15 @@ class _MypageScreenState extends State<MypageScreen> {
 
                         if (originUserDisplayName != userDisplayName) {
                           await _emailUser?.updateDisplayName(userDisplayName);
-
-                          if (!context.mounted) return;
-
-                          context.push('/main');
                         }
+
+                        if (userPassword != '') {
+                          await _emailUser?.updatePassword(userPassword);
+                        }
+
+                        if (!context.mounted) return;
+
+                        context.push('/main');
                       },
                       child: const SizedBox(
                         width: double.infinity,
