@@ -106,7 +106,9 @@ class _MainScreenState extends State<StatefulWidget> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              context.push('/main/my-page');
+                            },
                             child: Text(_emailUser!.displayName!),
                           )
                         ],
