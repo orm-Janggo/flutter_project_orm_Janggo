@@ -41,8 +41,8 @@ class _MypageScreenState extends State<MypageScreen> {
 
   void getSetUserInfo() async {
     await getEmailUser();
-    _accountController.text = _emailUser!.email!;
-    _nickNameController.text = _emailUser!.displayName!;
+    _accountController.text = userEmail!;
+    _nickNameController.text = userDisplayName!;
   }
 
   // DB에서 받아온 개인정보로 초기화하고 그 내용이 처음 화면에 보입니다.
@@ -224,7 +224,10 @@ class _MypageScreenState extends State<MypageScreen> {
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xfffb8c00)),
-                      onPressed: () {},
+                      onPressed: () async {
+                        // if(user)
+
+                      },
                       child: const SizedBox(
                         width: double.infinity,
                         child: Center(
