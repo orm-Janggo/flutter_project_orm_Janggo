@@ -4,6 +4,7 @@ import 'package:flutter_project_orm_janggo/domain/use_case/get_recipe_use_case.d
 import 'package:flutter_project_orm_janggo/presentation/main_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/sign/forgot_password/forgot_password.dart';
 import 'package:flutter_project_orm_janggo/presentation/sign/sign_in/sign_in_screen.dart';
+import 'package:flutter_project_orm_janggo/presentation/sign/sign_up/sign_up_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/splash_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -24,40 +25,6 @@ final router = GoRouter(
           path: 'sign-in',
           builder: (context, state) {
             return SignInScreen();
-            // return SignInScreen(
-            //   actions: [
-            //     ForgotPasswordAction(((context, email) {
-            //       final uri = Uri(
-            //         path: '/sign-in/forgot-password',
-            //         queryParameters: <String, String?>{
-            //           'email': email,
-            //         },
-            //       );
-            //       context.push(uri.toString());
-            //     })),
-            //     AuthStateChangeAction(((context, state) {
-            //       final user = switch (state) {
-            //         SignedIn state => state.user,
-            //         UserCreated state => state.credential.user,
-            //         _ => null
-            //       };
-            //       if (user == null) {
-            //         return;
-            //       }
-            //       if (state is UserCreated) {
-            //         user.updateDisplayName(user.email!.split('@')[0]);
-            //       }
-            //       if (!user.emailVerified) {
-            //         user.sendEmailVerification();
-            //         const snackBar = SnackBar(
-            //             content: Text(
-            //                 'Please check your email to verify your email address'));
-            //         ScaffoldMessenger.of(context).showSnackBar(snackBar);
-            //       }
-            //       context.pushReplacement('/');
-            //     })),
-            //   ],
-            // );
           },
           routes: [
             GoRoute(
@@ -67,6 +34,12 @@ final router = GoRouter(
               },
             ),
           ],
+        ),
+        GoRoute(
+          path: 'sign-up',
+          builder: (context, state) {
+            return SignUpScreen();
+          },
         ),
         GoRoute(
             path: 'main',
