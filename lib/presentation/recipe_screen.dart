@@ -31,9 +31,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
   @override
   void initState() {
     super.initState();
-
     final ingredients = widget.ingredients;
-
     context.read<RecipeViewModel>().getRecipe(ingredients);
     setState(() {});
   }
@@ -42,99 +40,155 @@ class _RecipeScreenState extends State<RecipeScreen> {
   Widget build(BuildContext context) {
     final viewModel = context.watch<RecipeViewModel>();
     final state = viewModel.state;
+
     if (state.recipe != null) {
       viewModel.getPicture(state.recipe);
       setState(() {});
     }
     return Scaffold(
       appBar: AppBar(
-        title: Text('레시피'),
+        title: Text(
+          '레시피',
+          style: TextStyle(fontSize: 20),
+        ),
+        actions: [
+          // 페이지 전체 개수와 현재 페이지 인덱스를 표시
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                '${_currentPage + 1} / ${state.recipe.length}',
+                style:
+                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              ),
+              const SizedBox(width: 130), // 공백 추가
+            ],
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: Icon(Icons.face),
+          ),
+          SizedBox(
+            width: 10,
+          )
+        ],
       ),
-      body: Column(
-        children: [
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 16.0),
-            height: 4.0,
-            child: Center(
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: state.recipe.length,
-                itemBuilder: (context, index) {
-                  return Container(
-                    width: MediaQuery.of(context).size.width / 3 - 10,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.rectangle,
-                      color: _currentPage == index
-                          ? const Color(0xfffb8c00)
-                          : Colors.grey.shade200, // 현재 페이지에 따라 색상 변경
-                    ),
-                  );
-                },
+      body: SafeArea(
+        child: Column(
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              height: 4.0,
+              child: Center(
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: state.recipe.length,
+                  itemBuilder: (context, index) {
+                    return Container(
+                      width: MediaQuery.of(context).size.width / 3 - 10,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.rectangle,
+                        color: _currentPage == index
+                            ? const Color(0xfffb8c00)
+                            : Colors.grey.shade200,
+                      ),
+                    );
+                  },
+                ),
               ),
             ),
-          ),
-          Expanded(
-            child: PageView.builder(
-              itemCount: state.recipe.length, // 레시피 수에 따라 페이지 생성
-              controller: _pageController,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: (state.url.isNotEmpty &&
-                                index < state.url.length &&
-                                state.url[index] != 'empty')
-                            ? Image.network(
-                                state.url[index], // 이미지 URL
-                                height: 400, // 이미지 높이
-                                width: 400,
-                                fit: BoxFit.cover,
-                              )
-                            : Image.asset(
-                                'assets/images/empty_image.png'), // 이미지가 없을 경우 대체 이미지
-                      ),
-                      Expanded(
-                        // 스크롤뷰가 확장
-                        child: SingleChildScrollView(
-                          child: Container(
-                            padding: const EdgeInsets.all(16.0),
-                            decoration: BoxDecoration(
-                              color: Colors.white70,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.8),
-                                  blurRadius: 8.0,
-                                  offset: const Offset(3, 3),
+            Expanded(
+              child: PageView.builder(
+                itemCount: state.recipe.length,
+                controller: _pageController,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: SizedBox(
+                            height: 265,
+                            width: 400,
+                            child: (state.url.isNotEmpty &&
+                                    index < state.url.length &&
+                                    state.url[index] != 'empty')
+                                ? ClipRRect(
+                                    borderRadius: BorderRadius.circular(15),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: Colors.black,
+                                          width: 1,
+                                        ),
+                                      ),
+                                      child: Image.network(
+                                        state.url[index],
+                                        height: 265,
+                                        width: 400,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  )
+                                : ClipRRect(
+                                    borderRadius: BorderRadius.circular(15),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: Colors.white70,
+                                          width: 1,
+                                        ),
+                                      ),
+                                      child: Image.asset(
+                                        'assets/images/empty_image.png',
+                                        height: 265,
+                                        width: 400,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                          ),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Scrollbar(
+                            child: SingleChildScrollView(
+                              scrollDirection: Axis.vertical,
+                              child: Container(
+                                width: MediaQuery.of(context).size.width,
+                                decoration: BoxDecoration(
+                                  color: Colors.amber[50],
+                                  borderRadius: BorderRadius.circular(10),
+
                                 ),
-                              ],
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Text(
-                              state.recipe[index], // 레시피 텍스트
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold),
+                                padding: const EdgeInsets.all(16.0),
+                                child: Text(
+                                  state.recipe[index],
+                                  style: const TextStyle(
+                                    fontSize: 18,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                );
-              },
-              onPageChanged: (index) {
-                setState(() {
-                  _currentPage = index;
-                });
-              },
+                      ],
+                    ),
+                  );
+                },
+                onPageChanged: (index) {
+                  setState(() {
+                    _currentPage = index;
+                  });
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
