@@ -93,38 +93,122 @@ class _MypageScreenState extends State<MypageScreen> {
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                editMypageInfo(
-                  const Text(
-                    '계정',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16.0,
-                    ),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0, vertical: 16.0),
+                  margin: const EdgeInsets.symmetric(
+                      horizontal: 16.0, vertical: 16.0),
+                  decoration: BoxDecoration(
+                    color: const Color(0xfff8f8f8),
+                    borderRadius: BorderRadius.circular(16.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.3),
+                        blurRadius: 8.0,
+                        offset: const Offset(3, 3),
+                      ),
+                    ],
                   ),
-                  _accountController,
-                  isChanged,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        '이메일',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16.0,
+                        ),
+                      ),
+                      TextFormField(
+                        controller: _accountController,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          enabled: isChanged,
+                        ),
+                        onChanged: (String? value) {
+                          userEmail = value;
+                        },
+                      ),
+                    ],
+                  ),
                 ),
-                editMypageInfo(
-                  const Text(
-                    '닉네임',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16.0,
-                    ),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0, vertical: 16.0),
+                  margin: const EdgeInsets.symmetric(
+                      horizontal: 16.0, vertical: 16.0),
+                  decoration: BoxDecoration(
+                    color: const Color(0xfff8f8f8),
+                    borderRadius: BorderRadius.circular(16.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.3),
+                        blurRadius: 8.0,
+                        offset: const Offset(3, 3),
+                      ),
+                    ],
                   ),
-                  _nickNameController,
-                  isChanged,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        '닉네임',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16.0,
+                        ),
+                      ),
+                      TextFormField(
+                        controller: _nickNameController,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          enabled: isChanged,
+                        ),
+                        onChanged: (String? value) {
+                          userDisplayName = value;
+                        },
+                      ),
+                    ],
+                  ),
                 ),
-                editMypageInfo(
-                  const Text(
-                    '비밀번호',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16.0,
-                    ),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0, vertical: 16.0),
+                  margin: const EdgeInsets.symmetric(
+                      horizontal: 16.0, vertical: 16.0),
+                  decoration: BoxDecoration(
+                    color: const Color(0xfff8f8f8),
+                    borderRadius: BorderRadius.circular(16.0),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.3),
+                        blurRadius: 8.0,
+                        offset: const Offset(3, 3),
+                      ),
+                    ],
                   ),
-                  _passwordController,
-                  isChanged,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        '비밀번호',
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16.0,
+                        ),
+                      ),
+                      TextFormField(
+                        controller: _passwordController,
+                        decoration: InputDecoration(
+                          border: InputBorder.none,
+                          enabled: isChanged,
+                        ),
+                        onChanged: (String? value) {
+                          userPassword = value!;
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
@@ -139,7 +223,6 @@ class _MypageScreenState extends State<MypageScreen> {
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xfffb8c00)),
-                      // 뒤로 가기 기능 넣으시면 됩니다!
                       onPressed: () {},
                       child: const SizedBox(
                         width: double.infinity,
@@ -163,7 +246,8 @@ class _MypageScreenState extends State<MypageScreen> {
                       style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xfff8f8f8)),
                       // 뒤로 가기 기능 넣으시면 됩니다!
-                      onPressed: () {},
+                      onPressed: () {
+                      },
                       child: const SizedBox(
                         width: double.infinity,
                         child: Center(
@@ -189,34 +273,40 @@ class _MypageScreenState extends State<MypageScreen> {
   }
 }
 
-Widget editMypageInfo(Widget widgetName,
-    TextEditingController textEditingController, bool isChanged) {
-  return Container(
-    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-    margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-    decoration: BoxDecoration(
-      color: const Color(0xfff8f8f8),
-      borderRadius: BorderRadius.circular(16.0),
-      boxShadow: [
-        BoxShadow(
-          color: Colors.grey.withOpacity(0.3),
-          blurRadius: 8.0,
-          offset: const Offset(3, 3),
-        ),
-      ],
-    ),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        widgetName,
-        TextFormField(
-          controller: textEditingController,
-          decoration: InputDecoration(
-            border: InputBorder.none,
-            enabled: isChanged,
-          ),
-        ),
-      ],
-    ),
-  );
-}
+// Widget editMypageInfo(
+//     Widget widgetName,
+//     TextEditingController textEditingController,
+//     bool isChanged,
+//     String? editVal) {
+//   return Container(
+//     padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+//     margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+//     decoration: BoxDecoration(
+//       color: const Color(0xfff8f8f8),
+//       borderRadius: BorderRadius.circular(16.0),
+//       boxShadow: [
+//         BoxShadow(
+//           color: Colors.grey.withOpacity(0.3),
+//           blurRadius: 8.0,
+//           offset: const Offset(3, 3),
+//         ),
+//       ],
+//     ),
+//     child: Column(
+//       crossAxisAlignment: CrossAxisAlignment.start,
+//       children: [
+//         widgetName,
+//         TextFormField(
+//           controller: textEditingController,
+//           decoration: InputDecoration(
+//             border: InputBorder.none,
+//             enabled: isChanged,
+//           ),
+//           onChanged: (String? value) {
+//             editVal = value;
+//           },
+//         ),
+//       ],
+//     ),
+//   );
+// }
