@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart'; // go_router 임포트 추가
 
@@ -63,9 +65,19 @@ class _MainScreenState extends State<StatefulWidget> {
 
   @override
   Widget build(BuildContext context) {
+    // 화면 크기 가져오기
+    final Size screenSize = MediaQuery.of(context).size;
+
+    // 일정한 간격 정의
+    const double paddingValue = 16.0;
+    const double buttonWidth = 300.0;
+    const double buttonHeight = 50.0;
+
     return Scaffold(
+      // 키보드에 의한 UI 이동방지
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title: const Text('냉장고 파먹기'),
+        backgroundColor: Colors.orange[600],
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
@@ -75,116 +87,177 @@ class _MainScreenState extends State<StatefulWidget> {
         actions: [
           _user != null
               ? Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(_user!.kakaoAccount!.profile!.nickname!),
-                    ],
-                  ),
-                )
-              : const CircularProgressIndicator(),
+            padding: const EdgeInsets.symmetric(horizontal: paddingValue),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(_user!.kakaoAccount!.profile!.nickname!),
+              ],
+            ),
+          )
+              : const Icon(Icons.face),
+          SizedBox(
+            width: 10,
+          ),
         ],
       ),
       body: Stack(
         children: [
           Container(
             decoration: const BoxDecoration(
-                image: DecorationImage(
-              image: AssetImage('assets/images/main_background.png'),
-              fit: BoxFit.cover,
-            )),
-          ),
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                for (var i = 0; i < _controllers.length; i++)
-                  Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: TextField(
-                      controller: _controllers[i],
-                      decoration: InputDecoration(
-                        suffixIcon: IconButton(
-                          icon: const Icon(Icons.delete),
-                          onPressed: () {
-                            _removeTextField(i);
-                          },
-                        ),
-                        labelText: '재료 ${i + 1}',
-                        filled: true,
-                        // 배경 채우기 활성화
-                        fillColor: Colors.white,
-                        // 입력란 배경 색깔
-                        border: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Colors.green, // 기본 테두리 색깔
-                              width: 3.0),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Colors.blue, // 활성화된 테두리 색깔
-                            width: 4.0, // 테두리 두께
-                          ),
-                          borderRadius: BorderRadius.circular(12.0),
-                        ),
-                        // 비활성화된 테두리 색깔 변경
-                        enabledBorder: OutlineInputBorder(
-                          borderSide: const BorderSide(
-                            color: Colors.white70, // 비활성화된 테두리 색깔
-                            width: 3.0,
-                          ),
-                          borderRadius: BorderRadius.circular(12.0),
-                        ),
-                      ),
-                      style: const TextStyle(
-                        color: Colors.black,
-                      ),
-                    ),
-                  ),
-              ],
+              image: DecorationImage(
+                image: AssetImage('assets/images/main_background.png'),
+                fit: BoxFit.cover,
+              ),
             ),
           ),
-          // 버튼을 화면 맨 아래에 고정시킴
           Align(
-            alignment: Alignment.bottomCenter,
+            alignment: Alignment.topCenter,
+            child: Container(
+              padding: EdgeInsets.only(top: screenSize.height * 0.2),
+              width: screenSize.width * 0.4,
+              height: screenSize.height * 0.2,
+              child: Text(
+                '재료를 넣어주세요!',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
+            ),
+          ),
+          Center(
             child: Padding(
-              padding: const EdgeInsets.all(10.0),
-              child: Container(
-                width: 320,
-                height: 50,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(24),
-                  color: Colors.orange,
-                ),
-                child: TextButton(
-                  onPressed: () => _onButtonPressed(context), // 버튼 클릭 시 함수 호출
-                  child: const Row(
-                    // 텍스트와 아이콘을 나란히 배치하기 위해 Row 사용
-                    mainAxisSize: MainAxisSize.min, // Row의 크기를 자식 위젯에 맞추기
+              padding: EdgeInsets.only(top: screenSize.height * 0.26),
+              child: SizedBox(
+                height: screenSize.height * 0.5, // 스크롤 가능한 영역의 높이를 설정합니다.
+                child: SingleChildScrollView(
+                  child: Column(
                     children: [
-                      Text(
-                        'Next', // 텍스트 부분
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                      // 첫 번째 영역의 텍스트 폼 필드들
+                      for (var i = 0; i < _controllers.length; i++)
+                        Padding(
+                          padding: const EdgeInsets.all(paddingValue),
+                          child: SizedBox(
+                            height: screenSize.height * 0.1, // 텍스트 폼 필드의 고정된 높이 설정
+                            child: TextField(
+                              keyboardType: TextInputType.text,
+                              onTapOutside: (event) =>
+                                  FocusScope.of(context).unfocus(),
+                              controller: _controllers[i],
+                              decoration: InputDecoration(
+                                suffixIcon: IconButton(
+                                  icon: const Icon(Icons.delete),
+                                  onPressed: () {
+                                    _removeTextField(i);
+                                  },
+                                ),
+                                hintText: '재료를 입력해주세요',
+                                filled: true,
+                                fillColor: Colors.white,
+                                border: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                    color: Colors.white,
+                                    width: 4.0,
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: Colors.orange,
+                                    width: 4.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(12.0),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide: const BorderSide(
+                                    color: Colors.white70,
+                                    width: 4.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(20.0),
+                                ),
+                              ),
+                              style: const TextStyle(
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
                         ),
-                      ),
-                      SizedBox(width: 8),
-                      // 텍스트와 아이콘 사이에 간격 두기
-                      Icon(Icons.arrow_forward, color: Colors.black),
-                      // 원하는 아이콘 추가
+                      // 다른 영역의 추가되는 텍스트 폼 필드들
+                      // 이 영역은 특정 높이 이상일 때만 스크롤됩니다.
                     ],
                   ),
                 ),
               ),
             ),
           ),
+          // 버튼을 화면 맨 아래에 고정시킴
+          GestureDetector(
+            onTap: () {
+              FocusScope.of(context).unfocus();
+            },
+            child: Align(
+              alignment: Alignment.bottomCenter, // 화면 아래 중앙에 배치
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end, // 하단에 배치
+                children: [
+                  Container(
+                    width: buttonWidth,
+                    height: buttonHeight,
+                    margin: EdgeInsets.only(bottom: paddingValue),
+                    // 아래 여백 추가
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(24),
+                      color: Colors.white70,
+                    ),
+                    child: TextButton(
+                      onPressed: _addTextField,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            '재료 추가',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                          SizedBox(width: 8),
+                          Icon(Icons.add, color: Colors.black),
+                        ],
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: buttonWidth,
+                    height: buttonHeight,
+                    margin: EdgeInsets.only(bottom: paddingValue),
+                    // 아래 여백 추가
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(24),
+                      color: Colors.orange,
+                    ),
+                    child: TextButton(
+                      onPressed: () => _onButtonPressed(context),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            '레시피 보기',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
+                            ),
+                          ),
+                          SizedBox(width: 8),
+                          Icon(Icons.arrow_forward, color: Colors.black),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _addTextField,
-        child: const Icon(Icons.add),
       ),
     );
   }
