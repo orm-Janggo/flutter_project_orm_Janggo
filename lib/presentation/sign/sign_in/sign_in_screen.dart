@@ -201,7 +201,9 @@ class _SignInScreenState extends State<SignInScreen> {
               width: 320,
               height: 50,
               child: TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  context.push('/sign-up');
+                },
                 child: const Text(
                   '계정이 없으신가요? 회원가입',
                   style: TextStyle(fontSize: 20),
