@@ -203,7 +203,7 @@ class _SignInScreenState extends State<SignInScreen> {
               child: TextButton(
                 onPressed: () {},
                 child: const Text(
-                  'Don\'t have an account? Sign Up',
+                  '계정이 없으신가요? 회원가입',
                   style: TextStyle(fontSize: 20),
                 ),
               ),
