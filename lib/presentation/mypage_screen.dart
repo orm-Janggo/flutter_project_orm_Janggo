@@ -15,6 +15,9 @@ class _MypageScreenState extends State<MypageScreen> {
   final _authentication = fba.FirebaseAuth.instance;
 
   fba.User? _emailUser;
+
+  String? originUserEmail;
+  String? originUserDisplayName;
   String? userEmail;
   String? userDisplayName;
   String userPassword = '';
@@ -225,8 +228,18 @@ class _MypageScreenState extends State<MypageScreen> {
                       style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xfffb8c00)),
                       onPressed: () async {
-                        // if(user)
+                        // deprecated
+                        // if(originUserEmail != userEmail) {
+                        //   await _emailUser?.updateEmail(userEmail);
+                        // }
 
+                        if (originUserDisplayName != userDisplayName) {
+                          await _emailUser?.updateDisplayName(userDisplayName);
+
+                          if (!context.mounted) return;
+
+                          context.push('/main');
+                        }
                       },
                       child: const SizedBox(
                         width: double.infinity,
