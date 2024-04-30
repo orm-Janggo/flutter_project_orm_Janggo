@@ -32,11 +32,11 @@ class _SignInScreenState extends State<SignInScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Hi, Welcome Back 🙌',
+                  '안녕하세요! 🙌',
                   style: TextStyle(fontSize: 32),
                 ),
                 Text(
-                  'Hello again, you\'ve been missed!',
+                  '장고처리 어플을 사용해보세요!',
                   style: TextStyle(fontSize: 16),
                 ),
               ],
@@ -53,7 +53,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     child: TextFormField(
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        hintText: 'e.g. emailAddress@gmail.com',
+                        hintText: '이메일 e.g. emailAddress@gmail.com',
                       ),
                       validator: (value) {
                         if (value?.isEmpty ?? false) {
@@ -74,7 +74,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     child: TextFormField(
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
-                        hintText: 'Enter your password',
+                        hintText: '비밀번호',
                       ),
                       obscureText: true,
                       validator: (value) {
@@ -101,12 +101,12 @@ class _SignInScreenState extends State<SignInScreen> {
                     });
                   },
                 ),
-                const Text('Rember Me'),
+                const Text('자동 로그인'),
                 TextButton(
                   onPressed: () {
                     context.push('/sign-in/forgot-password');
                   },
-                  child: const Text('Forgot Password'),
+                  child: const Text('비밀번호 찾기'),
                 ),
               ],
             ),
@@ -149,7 +149,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   }
                 },
                 child: const Text(
-                  'Sign in',
+                  '로그인',
                   style: TextStyle(fontSize: 20),
                 ),
               ),
@@ -167,7 +167,7 @@ class _SignInScreenState extends State<SignInScreen> {
               child: TextButton(
                 onPressed: () {},
                 child: const Text(
-                  'Sign in With Google',
+                  '구글로 로그인',
                   style: TextStyle(fontSize: 20),
                 ),
               ),
