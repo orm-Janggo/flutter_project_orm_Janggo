@@ -15,9 +15,9 @@ class _MypageScreenState extends State<MypageScreen> {
 
   fba.User? _emailUser;
 
-  late TextEditingController _accountController;
-  late TextEditingController _nickNameController;
-  late TextEditingController _passwordController;
+  final _accountController = TextEditingController();
+  final _nickNameController = TextEditingController();
+  final _passwordController = TextEditingController();
 
   // 설정 버튼 눌렀을때 수정 가능여부  => true : textFormField 수정 가능, false : textFormField 수정 불가능
   bool isChanged = false;
@@ -37,9 +37,9 @@ class _MypageScreenState extends State<MypageScreen> {
   void initState() {
     super.initState();
     // TextEditingController(text: ''); 이 곳에 불러온 개인정보 넣으시면 돼요.
-    _accountController = TextEditingController(text: 'test@test.com');
-    _nickNameController = TextEditingController(text: 'test');
-    _passwordController = TextEditingController(text: 'testtest');
+    _accountController.text = _emailUser!.email!;
+    _nickNameController.text = _emailUser!.displayName!;
+    _passwordController.text = '';
   }
 
   @override
