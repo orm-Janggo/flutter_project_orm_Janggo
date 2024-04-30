@@ -63,10 +63,6 @@ class _MypageScreenState extends State<MypageScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {},
-        ),
         actions: [
           // 우측 상단 설정 버튼 누르면 수정 가능하게 바뀌는 버튼
           IconButton(
