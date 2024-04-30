@@ -72,7 +72,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   _formKey.currentState?.save();
                 }
 
-                await _authentication.setLanguageCode("kr");
+                await _authentication.setLanguageCode("ko");
                 await _authentication.sendPasswordResetEmail(
                     email: inputEmail.toString());
 
