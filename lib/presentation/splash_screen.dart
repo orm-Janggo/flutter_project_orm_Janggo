@@ -139,9 +139,10 @@ class SplashScreen5 extends StatelessWidget {
               child: TextButton(
                 onPressed: () {
                   // Create Account 버튼 눌렀을 때 처리
+                  context.push('/sign-up');
                 },
                 child: const Text(
-                  "회원 가입",
+                  "회원가입",
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
