@@ -14,6 +14,9 @@ class _MypageScreenState extends State<MypageScreen> {
   final _authentication = fba.FirebaseAuth.instance;
 
   fba.User? _emailUser;
+  String? userEmail;
+  String? userDisplayName;
+  String userPassword = '';
 
   final _accountController = TextEditingController();
   final _nickNameController = TextEditingController();
@@ -22,26 +25,30 @@ class _MypageScreenState extends State<MypageScreen> {
   // 설정 버튼 눌렀을때 수정 가능여부  => true : textFormField 수정 가능, false : textFormField 수정 불가능
   bool isChanged = false;
 
-  void getEmailUser() {
+  Future<void> getEmailUser() async {
     _authentication.authStateChanges().listen((fba.User? emailUser) {
       if (emailUser != null) {
         _emailUser = emailUser;
         debugPrint('마이페이지');
-        debugPrint(_emailUser.toString());
+        debugPrint('${_emailUser?.email}, ${_emailUser?.displayName}');
         setState(() {});
+        userEmail = _emailUser!.email;
+        userDisplayName = _emailUser!.displayName;
       }
     });
+  }
+
+  void getSetUserInfo() async {
+    await getEmailUser();
+    _accountController.text = _emailUser!.email!;
+    _nickNameController.text = _emailUser!.displayName!;
   }
 
   // DB에서 받아온 개인정보로 초기화하고 그 내용이 처음 화면에 보입니다.
   @override
   void initState() {
     super.initState();
-    getEmailUser();
-    // TextEditingController(text: ''); 이 곳에 불러온 개인정보 넣으시면 돼요.
-    _accountController.text = _emailUser!.email!;
-    _nickNameController.text = _emailUser!.displayName!;
-    _passwordController.text = '';
+    getSetUserInfo();
   }
 
   @override
