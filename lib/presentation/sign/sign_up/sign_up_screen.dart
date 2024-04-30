@@ -2,14 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
-class SingUpUiScreen extends StatefulWidget {
-  const SingUpUiScreen({super.key});
+class SingUpScreen extends StatefulWidget {
+  const SingUpScreen({super.key});
 
   @override
-  State<SingUpUiScreen> createState() => _SingUpUiScreenState();
+  State<SingUpScreen> createState() => _SingUpScreenState();
 }
 
-class _SingUpUiScreenState extends State<SingUpUiScreen> {
+class _SingUpScreenState extends State<SingUpScreen> {
   bool _isObscure = true;
   bool _isChecked = false;
 
