@@ -1,18 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart'; // go_router 임포트 추가
+import 'package:firebase_auth/firebase_auth.dart' as fba;
 
 class MainScreen extends StatefulWidget {
   State<StatefulWidget> createState() => _MainScreenState();
 }
 
 class _MainScreenState extends State<StatefulWidget> {
+  final _authentication = fba.FirebaseAuth.instance;
+
+  fba.User? _emailUser;
+
   User? _user;
 
   @override
   void initState() {
     super.initState();
     _initKakaoUser();
+    getEmailUser();
+  }
+
+  void getEmailUser() {
+    _authentication.authStateChanges().listen((fba.User? emailUser) {
+      if (emailUser != null) {
+        _emailUser = emailUser;
+        debugPrint(_emailUser.toString());
+        setState(() {});
+      }
+    });
   }
 
   Future<void> _initKakaoUser() async {
@@ -83,7 +99,22 @@ class _MainScreenState extends State<StatefulWidget> {
                     ],
                   ),
                 )
-              : const CircularProgressIndicator(),
+              : _emailUser != null
+                  ? Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          TextButton(
+                            onPressed: () {
+                              context.push('/main/my-page');
+                            },
+                            child: Text(_emailUser!.displayName!),
+                          )
+                        ],
+                      ),
+                    )
+                  : const CircularProgressIndicator(),
         ],
       ),
       body: Stack(
