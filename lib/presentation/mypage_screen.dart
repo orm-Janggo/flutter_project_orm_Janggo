@@ -79,216 +79,222 @@ class _MypageScreenState extends State<MypageScreen> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              width: double.infinity,
-              padding:
-                  const EdgeInsets.symmetric(vertical: 32.0, horizontal: 16.0),
-              child: const Text(
-                '마이페이지',
-                style: TextStyle(
-                  fontSize: 32.0,
-                  fontWeight: FontWeight.bold,
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(
+                    vertical: 32.0, horizontal: 16.0),
+                child: const Text(
+                  '마이페이지',
+                  style: TextStyle(
+                    fontSize: 32.0,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 16.0, vertical: 16.0),
-                  margin: const EdgeInsets.symmetric(
-                      horizontal: 16.0, vertical: 16.0),
-                  decoration: BoxDecoration(
-                    color: const Color(0xfff8f8f8),
-                    borderRadius: BorderRadius.circular(16.0),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.3),
-                        blurRadius: 8.0,
-                        offset: const Offset(3, 3),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        '이메일',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16.0,
-                        ),
-                      ),
-                      TextFormField(
-                        controller: _accountController,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          enabled: isChanged,
-                        ),
-                        onChanged: (String? value) {
-                          userEmail = value;
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 16.0, vertical: 16.0),
-                  margin: const EdgeInsets.symmetric(
-                      horizontal: 16.0, vertical: 16.0),
-                  decoration: BoxDecoration(
-                    color: const Color(0xfff8f8f8),
-                    borderRadius: BorderRadius.circular(16.0),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.3),
-                        blurRadius: 8.0,
-                        offset: const Offset(3, 3),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        '닉네임',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16.0,
-                        ),
-                      ),
-                      TextFormField(
-                        controller: _nickNameController,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          enabled: isChanged,
-                        ),
-                        onChanged: (String? value) {
-                          userDisplayName = value;
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: 16.0, vertical: 16.0),
-                  margin: const EdgeInsets.symmetric(
-                      horizontal: 16.0, vertical: 16.0),
-                  decoration: BoxDecoration(
-                    color: const Color(0xfff8f8f8),
-                    borderRadius: BorderRadius.circular(16.0),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.grey.withOpacity(0.3),
-                        blurRadius: 8.0,
-                        offset: const Offset(3, 3),
-                      ),
-                    ],
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        '비밀번호',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16.0,
-                        ),
-                      ),
-                      TextFormField(
-                        controller: _passwordController,
-                        decoration: InputDecoration(
-                          border: InputBorder.none,
-                          enabled: isChanged,
-                        ),
-                        onChanged: (String? value) {
-                          userPassword = value!;
-                        },
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 16.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Padding(
+                  Container(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 16.0, vertical: 4.0),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xfffb8c00)),
-                      onPressed: () async {
-                        // deprecated
-                        // if(originUserEmail != userEmail) {
-                        //   await _emailUser?.updateEmail(userEmail);
-                        // }
-
-                        if (originUserDisplayName != userDisplayName) {
-                          await _emailUser?.updateDisplayName(userDisplayName);
-                        }
-
-                        if (userPassword != '') {
-                          await _emailUser?.updatePassword(userPassword);
-                        }
-
-                        if (!context.mounted) return;
-
-                        context.push('/main');
-                      },
-                      child: const SizedBox(
-                        width: double.infinity,
-                        child: Center(
-                          child: Text(
-                            '수정하기',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20.0,
-                              color: Colors.black,
-                            ),
+                        horizontal: 16.0, vertical: 16.0),
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 16.0, vertical: 16.0),
+                    decoration: BoxDecoration(
+                      color: const Color(0xfff8f8f8),
+                      borderRadius: BorderRadius.circular(16.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.3),
+                          blurRadius: 8.0,
+                          offset: const Offset(3, 3),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          '이메일',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.0,
                           ),
                         ),
-                      ),
+                        TextFormField(
+                          controller: _accountController,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            enabled: isChanged,
+                          ),
+                          onChanged: (String? value) {
+                            userEmail = value;
+                          },
+                        ),
+                      ],
                     ),
                   ),
-                  Padding(
+                  Container(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 16.0, vertical: 8.0),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xfff8f8f8)),
-                      // 뒤로 가기 기능 넣으시면 됩니다!
-                      onPressed: () {
-                        context.push('/main');
-                      },
-                      child: const SizedBox(
-                        width: double.infinity,
-                        child: Center(
-                          child: Text(
-                            '뒤로가기',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18.0,
-                              color: Colors.black,
-                            ),
+                        horizontal: 16.0, vertical: 16.0),
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 16.0, vertical: 16.0),
+                    decoration: BoxDecoration(
+                      color: const Color(0xfff8f8f8),
+                      borderRadius: BorderRadius.circular(16.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.3),
+                          blurRadius: 8.0,
+                          offset: const Offset(3, 3),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          '닉네임',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.0,
                           ),
                         ),
-                      ),
+                        TextFormField(
+                          controller: _nickNameController,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            enabled: isChanged,
+                          ),
+                          onChanged: (String? value) {
+                            userDisplayName = value;
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0, vertical: 16.0),
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 16.0, vertical: 16.0),
+                    decoration: BoxDecoration(
+                      color: const Color(0xfff8f8f8),
+                      borderRadius: BorderRadius.circular(16.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.3),
+                          blurRadius: 8.0,
+                          offset: const Offset(3, 3),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          '비밀번호',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.0,
+                          ),
+                        ),
+                        TextFormField(
+                          controller: _passwordController,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            enabled: isChanged,
+                          ),
+                          onChanged: (String? value) {
+                            userPassword = value!;
+                          },
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
-            ),
-          ],
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 16.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 4.0),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xfffb8c00)),
+                        onPressed: () async {
+                          // deprecated
+                          // if(originUserEmail != userEmail) {
+                          //   await _emailUser?.updateEmail(userEmail);
+                          // }
+
+                          if (originUserDisplayName != userDisplayName) {
+                            await _emailUser
+                                ?.updateDisplayName(userDisplayName);
+                          }
+
+                          if (userPassword != '') {
+                            await _emailUser?.updatePassword(userPassword);
+                          }
+
+                          if (!context.mounted) return;
+
+                          context.push('/main');
+                        },
+                        child: const SizedBox(
+                          width: double.infinity,
+                          child: Center(
+                            child: Text(
+                              '수정하기',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20.0,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 8.0),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xfff8f8f8)),
+                        // 뒤로 가기 기능 넣으시면 됩니다!
+                        onPressed: () {
+                          context.push('/main');
+                        },
+                        child: const SizedBox(
+                          width: double.infinity,
+                          child: Center(
+                            child: Text(
+                              '뒤로가기',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18.0,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
