@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart' as fba;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -10,6 +11,10 @@ class MypageScreen extends StatefulWidget {
 }
 
 class _MypageScreenState extends State<MypageScreen> {
+  final _authentication = fba.FirebaseAuth.instance;
+
+  fba.User? _emailUser;
+
   late TextEditingController _accountController;
   late TextEditingController _nickNameController;
   late TextEditingController _passwordController;
@@ -33,6 +38,16 @@ class _MypageScreenState extends State<MypageScreen> {
     _nickNameController.dispose();
     _passwordController.dispose();
     super.dispose();
+  }
+
+  void getEmailUser() {
+    _authentication.authStateChanges().listen((fba.User? emailUser) {
+      if (emailUser != null) {
+        _emailUser = emailUser;
+        debugPrint(_emailUser.toString());
+        setState(() {});
+      }
+    });
   }
 
   @override
