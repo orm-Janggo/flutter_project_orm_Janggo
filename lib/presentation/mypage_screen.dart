@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart' as fba;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:go_router/go_router.dart';
 
 class MypageScreen extends StatefulWidget {
   const MypageScreen({super.key});
@@ -247,6 +248,7 @@ class _MypageScreenState extends State<MypageScreen> {
                           backgroundColor: const Color(0xfff8f8f8)),
                       // 뒤로 가기 기능 넣으시면 됩니다!
                       onPressed: () {
+                        context.push('/main');
                       },
                       child: const SizedBox(
                         width: double.infinity,
