@@ -2,7 +2,9 @@ import 'package:flutter_project_orm_janggo/data/gpt_data_source/gpt_data_source.
 import 'package:flutter_project_orm_janggo/data/repository/chat_gpt_reopository_impl.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/get_recipe_use_case.dart';
 import 'package:flutter_project_orm_janggo/presentation/main_screen.dart';
+import 'package:flutter_project_orm_janggo/presentation/sign/forgot_password/forgot_password.dart';
 import 'package:flutter_project_orm_janggo/presentation/sign/sign_in/sign_in_screen.dart';
+import 'package:flutter_project_orm_janggo/presentation/sign/sign_up/sign_up_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/splash_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -12,7 +14,6 @@ import '../data/repository/picture_repository_impl.dart';
 import '../domain/use_case/get_picture_use_case.dart';
 import '../presentation/recipe_screen.dart';
 import '../presentation/recipe_view_model.dart';
-import '../presentation/splash_screen.dart';
 
 final router = GoRouter(
   routes: [
@@ -24,40 +25,20 @@ final router = GoRouter(
           path: 'sign-in',
           builder: (context, state) {
             return SignInScreen();
-            // return SignInScreen(
-            //   actions: [
-            //     ForgotPasswordAction(((context, email) {
-            //       final uri = Uri(
-            //         path: '/sign-in/forgot-password',
-            //         queryParameters: <String, String?>{
-            //           'email': email,
-            //         },
-            //       );
-            //       context.push(uri.toString());
-            //     })),
-            //     AuthStateChangeAction(((context, state) {
-            //       final user = switch (state) {
-            //         SignedIn state => state.user,
-            //         UserCreated state => state.credential.user,
-            //         _ => null
-            //       };
-            //       if (user == null) {
-            //         return;
-            //       }
-            //       if (state is UserCreated) {
-            //         user.updateDisplayName(user.email!.split('@')[0]);
-            //       }
-            //       if (!user.emailVerified) {
-            //         user.sendEmailVerification();
-            //         const snackBar = SnackBar(
-            //             content: Text(
-            //                 'Please check your email to verify your email address'));
-            //         ScaffoldMessenger.of(context).showSnackBar(snackBar);
-            //       }
-            //       context.pushReplacement('/');
-            //     })),
-            //   ],
-            // );
+          },
+          routes: [
+            GoRoute(
+              path: 'forgot-password',
+              builder: (context, state) {
+                return ForgotPasswordScreen();
+              },
+            ),
+          ],
+        ),
+        GoRoute(
+          path: 'sign-up',
+          builder: (context, state) {
+            return SignUpScreen();
           },
         ),
         GoRoute(
@@ -75,9 +56,14 @@ final router = GoRouter(
                         repository: PictureRepositoryImpl(
                           pictureDataSource: PictureDataSource(),
                         ),
-                      ), getRecipeUseCase: GetRecipeUseCase(chatGptRepositoryImpl: ChatGptRepositoryImpl(dataSource: GptDataSource())),
+                      ),
+                      getRecipeUseCase: GetRecipeUseCase(
+                          chatGptRepositoryImpl: ChatGptRepositoryImpl(
+                              dataSource: GptDataSource())),
                     ),
-                    child: RecipeScreen(ingredients: state.extra as String,),
+                    child: RecipeScreen(
+                      ingredients: state.extra as String,
+                    ),
                   );
                 },
               ),

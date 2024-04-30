@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -15,13 +16,13 @@ class _SplashScreenState extends State<SplashScreen> {
     SplashScreen2(),
     SplashScreen3(),
     SplashScreen4(),
-    SplashScreen5(),
+    const SplashScreen5(),
   ];
 
   @override
   void initState() {
     super.initState();
-    Timer.periodic(Duration(milliseconds: 150), (timer) {
+    Timer.periodic(const Duration(milliseconds: 150), (timer) {
       setState(() {
         if (_currentIndex < splashScreens.length - 1) {
           _currentIndex++;
@@ -36,7 +37,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: AnimatedSwitcher(
-        duration: Duration(milliseconds: 2000),
+        duration: const Duration(milliseconds: 2000),
         transitionBuilder: (Widget child, Animation<double> animation) {
           return FadeTransition(
             opacity: animation,
@@ -56,7 +57,7 @@ class SplashScreen1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         image: DecorationImage(
           image: AssetImage('assets/images/Splash Screen - 1.png'),
           fit: BoxFit.cover,
@@ -70,7 +71,7 @@ class SplashScreen2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         image: DecorationImage(
           image: AssetImage('assets/images/Splash Screen - 2.png'),
           fit: BoxFit.cover,
@@ -84,7 +85,7 @@ class SplashScreen3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         image: DecorationImage(
           image: AssetImage('assets/images/Splash Screen - 3.png'),
           fit: BoxFit.cover,
@@ -98,7 +99,7 @@ class SplashScreen4 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         image: DecorationImage(
           image: AssetImage('assets/images/Splash Screen - 4.png'),
           fit: BoxFit.cover,
@@ -117,7 +118,7 @@ class SplashScreen5 extends StatelessWidget {
       body: Stack(
         children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage('assets/images/Splash Screen - 5.png'),
                 fit: BoxFit.cover,
@@ -138,9 +139,10 @@ class SplashScreen5 extends StatelessWidget {
               child: TextButton(
                 onPressed: () {
                   // Create Account 버튼 눌렀을 때 처리
+                  context.push('/sign-up');
                 },
-                child: Text(
-                  "Create Account",
+                child: const Text(
+                  "회원가입",
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -163,9 +165,10 @@ class SplashScreen5 extends StatelessWidget {
               child: TextButton(
                 onPressed: () {
                   // Sign In 버튼 눌렀을 때 처리
+                  context.push('/sign-in');
                 },
-                child: Text(
-                  "Sign In",
+                child: const Text(
+                  "로그인",
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
@@ -185,12 +188,12 @@ class SplashScreen5 extends StatelessWidget {
                   height: 2,
                   color: Colors.black,
                 ),
-                SizedBox(width: 10),
-                Text(
+                const SizedBox(width: 10),
+                const Text(
                   'or',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 Container(
                   width: 130,
                   height: 2,
@@ -205,9 +208,10 @@ class SplashScreen5 extends StatelessWidget {
             child: TextButton(
               onPressed: () {
                 // SKIP 버튼 눌렀을 때 처리
+                context.push('/main');
               },
-              child: Text(
-                "SKIP",
+              child: const Text(
+                "둘러보기",
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
