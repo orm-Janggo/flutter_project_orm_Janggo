@@ -26,6 +26,7 @@ class _MypageScreenState extends State<MypageScreen> {
     _authentication.authStateChanges().listen((fba.User? emailUser) {
       if (emailUser != null) {
         _emailUser = emailUser;
+        debugPrint('마이페이지');
         debugPrint(_emailUser.toString());
         setState(() {});
       }
@@ -36,6 +37,7 @@ class _MypageScreenState extends State<MypageScreen> {
   @override
   void initState() {
     super.initState();
+    getEmailUser();
     // TextEditingController(text: ''); 이 곳에 불러온 개인정보 넣으시면 돼요.
     _accountController.text = _emailUser!.email!;
     _nickNameController.text = _emailUser!.displayName!;
