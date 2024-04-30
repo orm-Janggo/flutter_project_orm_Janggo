@@ -108,12 +108,14 @@ class SplashScreen4 extends StatelessWidget {
     );
   }
 }
-
 class SplashScreen5 extends StatelessWidget {
   const SplashScreen5({Key? key});
 
   @override
   Widget build(BuildContext context) {
+    final Size screenSize = MediaQuery.of(context).size;
+    const double paddingValue = 16.0;
+
     return Scaffold(
       body: Stack(
         children: [
@@ -127,10 +129,10 @@ class SplashScreen5 extends StatelessWidget {
             // 첫 번째 Container 안에 배치되는 위젯들
           ),
           Positioned(
-            bottom: 170, // 원하는 위치로 조정
-            left: 50, // 원하는 위치로 조정
+            bottom: screenSize.height * 0.19, // 원하는 위치로 조정
+            left: paddingValue, // 원하는 위치로 조정
             child: Container(
-              width: 320,
+              width: screenSize.width - (paddingValue * 2),
               height: 50,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(24),
@@ -153,10 +155,10 @@ class SplashScreen5 extends StatelessWidget {
             ),
           ),
           Positioned(
-            bottom: 80, // 원하는 위치로 조정
-            left: 50, // 원하는 위치로 조정
+            bottom: screenSize.height * 0.09, // 원하는 위치로 조정
+            left: paddingValue, // 원하는 위치로 조정
             child: Container(
-              width: 320,
+              width: screenSize.width - (paddingValue * 2),
               height: 50,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(24),
@@ -179,12 +181,12 @@ class SplashScreen5 extends StatelessWidget {
             ),
           ),
           Positioned(
-            bottom: 140,
-            left: 60,
+            bottom: screenSize.height * 0.16,
+            left: screenSize.width * 0.06,
             child: Row(
               children: [
                 Container(
-                  width: 130,
+                  width: screenSize.width * 0.4,
                   height: 2,
                   color: Colors.black,
                 ),
@@ -195,7 +197,7 @@ class SplashScreen5 extends StatelessWidget {
                 ),
                 const SizedBox(width: 10),
                 Container(
-                  width: 130,
+                  width: screenSize.width * 0.4,
                   height: 2,
                   color: Colors.black,
                 ),
@@ -203,8 +205,8 @@ class SplashScreen5 extends StatelessWidget {
             ),
           ),
           Positioned(
-            bottom: 20,
-            right: 170,
+            bottom: screenSize.height * 0.03,
+            right: screenSize.width * 0.39,
             child: TextButton(
               onPressed: () {
                 // SKIP 버튼 눌렀을 때 처리
@@ -225,3 +227,4 @@ class SplashScreen5 extends StatelessWidget {
     );
   }
 }
+

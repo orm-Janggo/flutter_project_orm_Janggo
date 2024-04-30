@@ -36,7 +36,7 @@ class HomeScreen extends StatelessWidget {
                   context.push('/main');
                 },
                 child: Text(
-                  "Let's go",
+                  "시작하기",
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color: Colors.black),
                 ),
               ),
@@ -55,7 +55,7 @@ class HomeScreen extends StatelessWidget {
               child: TextButton(
                 onPressed: () {},
                 child: Text(
-                  "Login",
+                  "로그인",
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color: Colors.black),
                 ),
               ),

@@ -1,7 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart' as fba;
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart'; // go_router 임포트 추가
+import 'package:firebase_auth/firebase_auth.dart' as fba;
 
 class MainScreen extends StatefulWidget {
   State<StatefulWidget> createState() => _MainScreenState();
@@ -16,14 +16,9 @@ class _MainScreenState extends State<StatefulWidget> {
 
   @override
   void initState() {
-    getEmailUser();
     super.initState();
     _initKakaoUser();
-  }
-
-  Future<void> _initKakaoUser() async {
-    _user = await UserApi.instance.me();
-    setState(() {});
+    getEmailUser();
   }
 
   void getEmailUser() {
@@ -34,6 +29,11 @@ class _MainScreenState extends State<StatefulWidget> {
         setState(() {});
       }
     });
+  }
+
+  Future<void> _initKakaoUser() async {
+    _user = await UserApi.instance.me();
+    setState(() {});
   }
 
   final List<TextEditingController> _controllers = [
