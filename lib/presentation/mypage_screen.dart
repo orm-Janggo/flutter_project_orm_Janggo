@@ -22,6 +22,16 @@ class _MypageScreenState extends State<MypageScreen> {
   // 설정 버튼 눌렀을때 수정 가능여부  => true : textFormField 수정 가능, false : textFormField 수정 불가능
   bool isChanged = false;
 
+  void getEmailUser() {
+    _authentication.authStateChanges().listen((fba.User? emailUser) {
+      if (emailUser != null) {
+        _emailUser = emailUser;
+        debugPrint(_emailUser.toString());
+        setState(() {});
+      }
+    });
+  }
+
   // DB에서 받아온 개인정보로 초기화하고 그 내용이 처음 화면에 보입니다.
   @override
   void initState() {
@@ -38,16 +48,6 @@ class _MypageScreenState extends State<MypageScreen> {
     _nickNameController.dispose();
     _passwordController.dispose();
     super.dispose();
-  }
-
-  void getEmailUser() {
-    _authentication.authStateChanges().listen((fba.User? emailUser) {
-      if (emailUser != null) {
-        _emailUser = emailUser;
-        debugPrint(_emailUser.toString());
-        setState(() {});
-      }
-    });
   }
 
   @override
@@ -129,8 +129,8 @@ class _MypageScreenState extends State<MypageScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0, vertical: 4.0),
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           backgroundColor: const Color(0xfffb8c00)),
