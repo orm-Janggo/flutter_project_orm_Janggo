@@ -18,13 +18,14 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: Column(
         children: [
           const SizedBox(
             height: 128,
           ),
           const Text(
-            'Forgot Password?',
+            '비밀번호 찾기',
             style: TextStyle(fontSize: 32),
           ),
           const SizedBox(
