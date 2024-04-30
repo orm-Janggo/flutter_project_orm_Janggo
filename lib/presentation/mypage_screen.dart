@@ -271,6 +271,34 @@ class _MypageScreenState extends State<MypageScreen> {
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xfff8f8f8)),
+                        onPressed: () async {
+                          await _authentication.signOut();
+
+                          if (!context.mounted) return;
+
+                          context.push('/');
+                        },
+                        child: const SizedBox(
+                          width: double.infinity,
+                          child: Center(
+                            child: Text(
+                              '로그아웃',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18.0,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 8.0),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xfff8f8f8)),
                         // 뒤로 가기 기능 넣으시면 됩니다!
                         onPressed: () {
                           context.push('/main');
