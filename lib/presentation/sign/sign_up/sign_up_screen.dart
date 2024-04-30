@@ -25,7 +25,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               padding:
                   const EdgeInsets.symmetric(vertical: 32.0, horizontal: 16.0),
               child: const Text(
-                'Create an account',
+                '계정 생성',
                 style: TextStyle(
                   fontSize: 32.0,
                   fontWeight: FontWeight.bold,
@@ -35,11 +35,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
             Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                editTextField('user@gmail.com'),
-                editTextField('Enter your number'),
+                editTextField('이메일 e.g. user@gmail.com'),
+                editTextField('비밀번호를 입력하세요'),
                 Stack(
                   children: [
-                    editPasswordTextField('Enter your password', _isObscure),
+                    editPasswordTextField('비밀번호를 입력하세요', _isObscure),
                     Positioned(
                       right: 24.0,
                       bottom: 16.0,
@@ -74,7 +74,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       width: 2.0,
                     ),
                   ),
-                  Text('Remember Me'),
+                  Text('자동 로그인'),
                 ],
               ),
             ),
@@ -95,7 +95,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         width: double.infinity,
                         child: Center(
                           child: Text(
-                            'Sign Up',
+                            '회원 가입',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 20.0,
@@ -148,7 +148,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         width: double.infinity,
                         child: Center(
                           child: Text(
-                            'Sign Up with Google',
+                            '구글 계정으로 회원 가입',
                             style: TextStyle(
                               fontWeight: FontWeight.bold,
                               fontSize: 18.0,
