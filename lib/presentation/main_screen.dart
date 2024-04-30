@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart' as fba;
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart'; // go_router 임포트 추가
@@ -8,15 +7,10 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<StatefulWidget> {
-  final _authentication = fba.FirebaseAuth.instance;
-
-  fba.User? _emailUser;
-
   User? _user;
 
   @override
   void initState() {
-    getEmailUser();
     super.initState();
     _initKakaoUser();
   }
@@ -24,16 +18,6 @@ class _MainScreenState extends State<StatefulWidget> {
   Future<void> _initKakaoUser() async {
     _user = await UserApi.instance.me();
     setState(() {});
-  }
-
-  void getEmailUser() {
-    _authentication.authStateChanges().listen((fba.User? emailUser) {
-      if (emailUser != null) {
-        _emailUser = emailUser;
-        debugPrint(_emailUser.toString());
-        setState(() {});
-      }
-    });
   }
 
   final List<TextEditingController> _controllers = [
@@ -99,22 +83,7 @@ class _MainScreenState extends State<StatefulWidget> {
                     ],
                   ),
                 )
-              : _emailUser != null
-                  ? Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          TextButton(
-                            onPressed: () {
-                              context.push('/main/my-page');
-                            },
-                            child: Text(_emailUser!.displayName!),
-                          )
-                        ],
-                      ),
-                    )
-                  : const CircularProgressIndicator(),
+              : const CircularProgressIndicator(),
         ],
       ),
       body: Stack(
