@@ -89,6 +89,11 @@ class _MainScreenState extends State<StatefulWidget> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
+            if(_emailUser != null) {
+              context.push('/');
+              return;
+            }
+
             Navigator.of(context).pop();
           },
         ),
