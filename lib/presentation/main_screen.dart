@@ -32,6 +32,7 @@ class _MainScreenState extends State<StatefulWidget> {
       }
     });
   }
+
   Future<void> _initKakaoUser() async {
     _user = await UserApi.instance.me();
     setState(() {});
@@ -94,30 +95,30 @@ class _MainScreenState extends State<StatefulWidget> {
         actions: [
           _user != null
               ? Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(_user!.kakaoAccount!.profile!.nickname!),
-              ],
-            ),
-          )
-              : _emailUser != null
-              ? Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TextButton(
-                  onPressed: () {
-                    context.push('/main/my-page');
-                  },
-                  child: Text(_emailUser!.displayName!),
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(_user!.kakaoAccount!.profile!.nickname!),
+                    ],
+                  ),
                 )
-              ],
-            ),
-          )
-              : const Text('비회원'),
+              : _emailUser != null
+                  ? Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          TextButton(
+                            onPressed: () {
+                              context.push('/main/my-page');
+                            },
+                            child: Text(_emailUser!.displayName!),
+                          )
+                        ],
+                      ),
+                    )
+                  : const Text('비회원'),
           SizedBox(
             width: 16,
           ),
@@ -289,7 +290,6 @@ class _MainScreenState extends State<StatefulWidget> {
                             ),
                           );
                         } else {
-                          context.push('/main/loading');
                           _onButtonPressed(context);
                         }
                       },

@@ -1,7 +1,6 @@
 import 'package:flutter_project_orm_janggo/data/gpt_data_source/gpt_data_source.dart';
 import 'package:flutter_project_orm_janggo/data/repository/chat_gpt_reopository_impl.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/get_recipe_use_case.dart';
-import 'package:flutter_project_orm_janggo/presentation/loading_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/main_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/mypage_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/sign/forgot_password/forgot_password.dart';
@@ -75,12 +74,7 @@ final router = GoRouter(
                   return MypageScreen();
                 },
               ),
-              GoRoute(
-                path: 'loading',
-                builder: (context, state) {
-                  return LoadingScreen();
-                },
-              ),
+
             ]),
       ],
     ),
