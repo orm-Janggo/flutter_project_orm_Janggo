@@ -131,7 +131,7 @@ class _MypageScreenState extends State<MypageScreen> {
                           controller: _accountController,
                           decoration: InputDecoration(
                             border: InputBorder.none,
-                            enabled: isChanged,
+                            enabled: false,
                           ),
                           onChanged: (String? value) {
                             userEmail = value;
