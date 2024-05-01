@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart'; // go_router 임포트 추가
-import 'package:firebase_auth/firebase_auth.dart' as fba;
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 
 class MainScreen extends StatefulWidget {
   State<StatefulWidget> createState() => _MainScreenState();
 }
 
 class _MainScreenState extends State<StatefulWidget> {
-  final _authentication = fba.FirebaseAuth.instance;
+  final _authentication = firebase_auth.FirebaseAuth.instance;
 
-  fba.User? _emailUser;
+  firebase_auth.User? _emailUser;
 
   User? _user;
 
@@ -24,7 +24,7 @@ class _MainScreenState extends State<StatefulWidget> {
   }
 
   void getEmailUser() {
-    _authentication.authStateChanges().listen((fba.User? emailUser) {
+    _authentication.authStateChanges().listen((firebase_auth.User? emailUser) {
       if (emailUser != null) {
         _emailUser = emailUser;
         debugPrint(_emailUser.toString());
@@ -89,6 +89,11 @@ class _MainScreenState extends State<StatefulWidget> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
+            if(_emailUser != null) {
+              context.push('/');
+              return;
+            }
+
             Navigator.of(context).pop();
           },
         ),
@@ -113,7 +118,7 @@ class _MainScreenState extends State<StatefulWidget> {
                             onPressed: () {
                               context.push('/main/my-page');
                             },
-                            child: Text(_emailUser!.displayName!),
+                            child: Text(_emailUser?.displayName ?? _emailUser!.email.toString()),
                           )
                         ],
                       ),

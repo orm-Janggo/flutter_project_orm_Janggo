@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -11,12 +12,13 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
   int _currentIndex = 0;
+
   List<Widget> splashScreens = [
     SplashScreen1(),
     SplashScreen2(),
     SplashScreen3(),
     SplashScreen4(),
-    const SplashScreen5(),
+    SplashScreen5(),
   ];
 
   @override
@@ -51,7 +53,6 @@ class _SplashScreenState extends State<SplashScreen> {
     );
   }
 }
-
 
 class SplashScreen1 extends StatelessWidget {
   @override
@@ -108,13 +109,35 @@ class SplashScreen4 extends StatelessWidget {
     );
   }
 }
-class SplashScreen5 extends StatelessWidget {
-  const SplashScreen5({Key? key});
+
+class SplashScreen5 extends StatefulWidget {
+  SplashScreen5({Key? key});
+
+  @override
+  State<SplashScreen5> createState() => _SplashScreen5State();
+}
+
+class _SplashScreen5State extends State<SplashScreen5> {
+  final _authentication = firebase_auth.FirebaseAuth.instance;
+
+  firebase_auth.User? _emailUser;
+
+  void getCurrentUser() {
+    _emailUser = _authentication.currentUser;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getCurrentUser();
+  }
 
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
     const double paddingValue = 16.0;
+
+    debugPrint(_emailUser.toString());
 
     return Scaffold(
       body: Stack(
@@ -164,20 +187,38 @@ class SplashScreen5 extends StatelessWidget {
                 borderRadius: BorderRadius.circular(24),
                 color: Colors.white70,
               ),
-              child: TextButton(
-                onPressed: () {
-                  // Sign In 버튼 눌렀을 때 처리
-                  context.push('/sign-in');
-                },
-                child: const Text(
-                  "로그인",
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
+              child: _emailUser == null
+                  ? TextButton(
+                      onPressed: () {
+                        // Sign In 버튼 눌렀을 때 처리
+                        context.push('/sign-in');
+                      },
+                      child: const Text(
+                        "로그인",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                    )
+                  : TextButton(
+                      onPressed: () async {
+                        await _authentication.signOut();
+
+                        if (!context.mounted) return;
+
+                        context.push('/');
+                      },
+                      child: const Text(
+                        "로그아웃",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ),
             ),
           ),
           Positioned(
@@ -227,4 +268,3 @@ class SplashScreen5 extends StatelessWidget {
     );
   }
 }
-
