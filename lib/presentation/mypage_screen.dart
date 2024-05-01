@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart' as fba;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:go_router/go_router.dart';
 
 class MypageScreen extends StatefulWidget {
   const MypageScreen({super.key});
@@ -10,21 +12,47 @@ class MypageScreen extends StatefulWidget {
 }
 
 class _MypageScreenState extends State<MypageScreen> {
-  late TextEditingController _accountController;
-  late TextEditingController _nickNameController;
-  late TextEditingController _passwordController;
+  final _authentication = fba.FirebaseAuth.instance;
+
+  fba.User? _emailUser;
+
+  String? originUserEmail;
+  String? originUserDisplayName;
+  String? userEmail;
+  String? userDisplayName;
+  String userPassword = '';
+
+  final _accountController = TextEditingController();
+  final _nickNameController = TextEditingController();
+  final _passwordController = TextEditingController();
 
   // 설정 버튼 눌렀을때 수정 가능여부  => true : textFormField 수정 가능, false : textFormField 수정 불가능
   bool isChanged = false;
+
+  Future<void> getEmailUser() async {
+    _authentication.authStateChanges().listen((fba.User? emailUser) {
+      if (emailUser != null) {
+        _emailUser = emailUser;
+        debugPrint('마이페이지');
+        debugPrint('${_emailUser?.email}, ${_emailUser?.displayName}');
+        setState(() {});
+        userEmail = _emailUser!.email;
+        userDisplayName = _emailUser!.displayName;
+      }
+    });
+  }
+
+  void getSetUserInfo() async {
+    await getEmailUser();
+    _accountController.text = userEmail!;
+    _nickNameController.text = userDisplayName!;
+  }
 
   // DB에서 받아온 개인정보로 초기화하고 그 내용이 처음 화면에 보입니다.
   @override
   void initState() {
     super.initState();
-    // TextEditingController(text: ''); 이 곳에 불러온 개인정보 넣으시면 돼요.
-    _accountController = TextEditingController(text: 'test@test.com');
-    _nickNameController = TextEditingController(text: 'test');
-    _passwordController = TextEditingController(text: 'testtest');
+    getSetUserInfo();
   }
 
   @override
@@ -39,10 +67,6 @@ class _MypageScreenState extends State<MypageScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {},
-        ),
         actions: [
           // 우측 상단 설정 버튼 누르면 수정 가능하게 바뀌는 버튼
           IconButton(
@@ -55,148 +79,290 @@ class _MypageScreenState extends State<MypageScreen> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              width: double.infinity,
-              padding:
-                  const EdgeInsets.symmetric(vertical: 32.0, horizontal: 16.0),
-              child: const Text(
-                '마이페이지',
-                style: TextStyle(
-                  fontSize: 32.0,
-                  fontWeight: FontWeight.bold,
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(
+                    vertical: 32.0, horizontal: 16.0),
+                child: const Text(
+                  '마이페이지',
+                  style: TextStyle(
+                    fontSize: 32.0,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-            ),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                editMypageInfo(
-                  const Text(
-                    '계정',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16.0,
-                    ),
-                  ),
-                  _accountController,
-                  isChanged,
-                ),
-                editMypageInfo(
-                  const Text(
-                    '닉네임',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16.0,
-                    ),
-                  ),
-                  _nickNameController,
-                  isChanged,
-                ),
-                editMypageInfo(
-                  const Text(
-                    '비밀번호',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16.0,
-                    ),
-                  ),
-                  _passwordController,
-                  isChanged,
-                ),
-              ],
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 16.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xfffb8c00)),
-                      // 뒤로 가기 기능 넣으시면 됩니다!
-                      onPressed: () {},
-                      child: const SizedBox(
-                        width: double.infinity,
-                        child: Center(
-                          child: Text(
-                            '수정하기',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20.0,
-                              color: Colors.black,
-                            ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0, vertical: 16.0),
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 16.0, vertical: 16.0),
+                    decoration: BoxDecoration(
+                      color: const Color(0xfff8f8f8),
+                      borderRadius: BorderRadius.circular(16.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.3),
+                          blurRadius: 8.0,
+                          offset: const Offset(3, 3),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          '이메일',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.0,
                           ),
                         ),
-                      ),
+                        TextFormField(
+                          controller: _accountController,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            enabled: false,
+                          ),
+                          onChanged: (String? value) {
+                            userEmail = value;
+                          },
+                        ),
+                      ],
                     ),
                   ),
-                  Padding(
+                  Container(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 16.0, vertical: 8.0),
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xfff8f8f8)),
-                      // 뒤로 가기 기능 넣으시면 됩니다!
-                      onPressed: () {},
-                      child: const SizedBox(
-                        width: double.infinity,
-                        child: Center(
-                          child: Text(
-                            '뒤로가기',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18.0,
-                              color: Colors.black,
-                            ),
+                        horizontal: 16.0, vertical: 16.0),
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 16.0, vertical: 16.0),
+                    decoration: BoxDecoration(
+                      color: const Color(0xfff8f8f8),
+                      borderRadius: BorderRadius.circular(16.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.3),
+                          blurRadius: 8.0,
+                          offset: const Offset(3, 3),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          '닉네임',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.0,
                           ),
                         ),
-                      ),
+                        TextFormField(
+                          controller: _nickNameController,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            enabled: isChanged,
+                          ),
+                          onChanged: (String? value) {
+                            userDisplayName = value;
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0, vertical: 16.0),
+                    margin: const EdgeInsets.symmetric(
+                        horizontal: 16.0, vertical: 16.0),
+                    decoration: BoxDecoration(
+                      color: const Color(0xfff8f8f8),
+                      borderRadius: BorderRadius.circular(16.0),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.grey.withOpacity(0.3),
+                          blurRadius: 8.0,
+                          offset: const Offset(3, 3),
+                        ),
+                      ],
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          '비밀번호',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16.0,
+                          ),
+                        ),
+                        TextFormField(
+                          controller: _passwordController,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            enabled: isChanged,
+                          ),
+                          onChanged: (String? value) {
+                            userPassword = value!;
+                          },
+                        ),
+                      ],
                     ),
                   ),
                 ],
               ),
-            ),
-          ],
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 16.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 4.0),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xfffb8c00)),
+                        onPressed: () async {
+                          // deprecated
+                          // if(originUserEmail != userEmail) {
+                          //   await _emailUser?.updateEmail(userEmail);
+                          // }
+
+                          if (originUserDisplayName != userDisplayName) {
+                            await _emailUser
+                                ?.updateDisplayName(userDisplayName);
+                          }
+
+                          if (userPassword != '') {
+                            await _emailUser?.updatePassword(userPassword);
+                          }
+
+                          if (!context.mounted) return;
+
+                          context.push('/main');
+                        },
+                        child: const SizedBox(
+                          width: double.infinity,
+                          child: Center(
+                            child: Text(
+                              '수정하기',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20.0,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 8.0),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xfff8f8f8)),
+                        onPressed: () async {
+                          await _authentication.signOut();
+
+                          if (!context.mounted) return;
+
+                          context.push('/');
+                        },
+                        child: const SizedBox(
+                          width: double.infinity,
+                          child: Center(
+                            child: Text(
+                              '로그아웃',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18.0,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16.0, vertical: 8.0),
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xfff8f8f8)),
+                        // 뒤로 가기 기능 넣으시면 됩니다!
+                        onPressed: () {
+                          context.push('/main');
+                        },
+                        child: const SizedBox(
+                          width: double.infinity,
+                          child: Center(
+                            child: Text(
+                              '뒤로가기',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18.0,
+                                color: Colors.black,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-Widget editMypageInfo(Widget widgetName,
-    TextEditingController textEditingController, bool isChanged) {
-  return Container(
-    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-    margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-    decoration: BoxDecoration(
-      color: const Color(0xfff8f8f8),
-      borderRadius: BorderRadius.circular(16.0),
-      boxShadow: [
-        BoxShadow(
-          color: Colors.grey.withOpacity(0.3),
-          blurRadius: 8.0,
-          offset: const Offset(3, 3),
-        ),
-      ],
-    ),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        widgetName,
-        TextFormField(
-          controller: textEditingController,
-          decoration: InputDecoration(
-            border: InputBorder.none,
-            enabled: isChanged,
-          ),
-        ),
-      ],
-    ),
-  );
-}
+// Widget editMypageInfo(
+//     Widget widgetName,
+//     TextEditingController textEditingController,
+//     bool isChanged,
+//     String? editVal) {
+//   return Container(
+//     padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+//     margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
+//     decoration: BoxDecoration(
+//       color: const Color(0xfff8f8f8),
+//       borderRadius: BorderRadius.circular(16.0),
+//       boxShadow: [
+//         BoxShadow(
+//           color: Colors.grey.withOpacity(0.3),
+//           blurRadius: 8.0,
+//           offset: const Offset(3, 3),
+//         ),
+//       ],
+//     ),
+//     child: Column(
+//       crossAxisAlignment: CrossAxisAlignment.start,
+//       children: [
+//         widgetName,
+//         TextFormField(
+//           controller: textEditingController,
+//           decoration: InputDecoration(
+//             border: InputBorder.none,
+//             enabled: isChanged,
+//           ),
+//           onChanged: (String? value) {
+//             editVal = value;
+//           },
+//         ),
+//       ],
+//     ),
+//   );
+// }
