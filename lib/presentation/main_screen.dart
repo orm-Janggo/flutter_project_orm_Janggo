@@ -118,7 +118,7 @@ class _MainScreenState extends State<StatefulWidget> {
                             onPressed: () {
                               context.push('/main/my-page');
                             },
-                            child: Text(_emailUser!.displayName!),
+                            child: Text(_emailUser?.displayName ?? _emailUser!.email.toString()),
                           )
                         ],
                       ),
