@@ -81,6 +81,7 @@ class _MainScreenState extends State<StatefulWidget> {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('kakao user ${_user.toString()}');
     return Scaffold(
       // 키보드에 의한 UI 이동방지
       resizeToAvoidBottomInset: false,
@@ -89,7 +90,7 @@ class _MainScreenState extends State<StatefulWidget> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            if(_emailUser != null) {
+            if (_emailUser != null) {
               context.push('/');
               return;
             }
@@ -118,7 +119,8 @@ class _MainScreenState extends State<StatefulWidget> {
                             onPressed: () {
                               context.push('/main/my-page');
                             },
-                            child: Text(_emailUser?.displayName ?? _emailUser!.email.toString()),
+                            child: Text(_emailUser?.displayName ??
+                                _emailUser!.email.toString()),
                           )
                         ],
                       ),
