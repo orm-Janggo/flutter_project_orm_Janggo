@@ -19,6 +19,8 @@ class _SignInScreenState extends State<SignInScreen> {
 
   bool isChecked = false;
 
+  bool isObsecure = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -99,6 +101,14 @@ class _SignInScreenState extends State<SignInScreen> {
                       child: TextFormField(
                         key: const ValueKey(2),
                         decoration: InputDecoration(
+                          suffixIcon: IconButton(
+                            icon: const Icon(Icons.remove_red_eye),
+                            onPressed: () {
+                              setState(() {
+                                isObsecure = !isObsecure;
+                              });
+                            },
+                          ),
                           hintText: '비밀번호',
                           filled: true,
                           fillColor: const Color(0xfff8f8f8),
@@ -116,7 +126,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             ),
                           ),
                         ),
-                        obscureText: true,
+                        obscureText: isObsecure,
                         validator: (value) {
                           if (value?.isEmpty ?? false) {
                             return '비밀번호를 입력해주세요.';
