@@ -55,9 +55,9 @@ class _RecipeScreenState extends State<RecipeScreen> {
                 state.recipe.isNotEmpty
                     ? '${_currentPage + 1} / ${state.recipe.length}'
                     : '',
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
-              const SizedBox(width: 142), // 공백 추가
+              const SizedBox(width: 150), // 공백 추가
             ],
           ),
           IconButton(
@@ -185,7 +185,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
                                         child: Text(
                                           state.recipe[index],
                                           style: const TextStyle(
-                                            fontSize: 18,
+                                            fontSize: 20,
                                             color: Colors.black,
                                             fontWeight: FontWeight.bold,
                                             fontFamily: 'hand_font',
