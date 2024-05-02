@@ -40,7 +40,6 @@ class _RecipeScreenState extends State<RecipeScreen> {
   Widget build(BuildContext context) {
     final viewModel = context.watch<RecipeViewModel>();
     final state = viewModel.state;
-
     if (state.recipe != null) {
       viewModel.getPicture(state.recipe);
       setState(() {});
@@ -53,11 +52,12 @@ class _RecipeScreenState extends State<RecipeScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                '${_currentPage + 1} / ${state.recipe.length}',
+                state.recipe != [] ?
+                '${_currentPage + 1} / ${state.recipe.length}': '',
                 style:
                     const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
-              const SizedBox(width: 130), // 공백 추가
+              const SizedBox(width: 142), // 공백 추가
             ],
           ),
           IconButton(
@@ -182,6 +182,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
                                             fontSize: 18,
                                             color: Colors.black,
                                             fontWeight: FontWeight.bold,
+                                            fontFamily: 'hand_font',
                                           ),
                                         ),
                                       ),

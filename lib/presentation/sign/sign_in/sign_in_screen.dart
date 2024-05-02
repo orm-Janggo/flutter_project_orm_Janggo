@@ -213,7 +213,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   },
                   child: const Text(
                     '계정이 없으신가요? 회원가입',
-                    style: TextStyle(fontSize: 20),
+                    style: TextStyle(fontSize: 20, fontFamily: 'school_font'),
                   ),
                 ),
               ),
