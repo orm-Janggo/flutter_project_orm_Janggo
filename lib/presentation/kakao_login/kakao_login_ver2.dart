@@ -69,28 +69,18 @@ void userInfo() async {
 }
 
 Widget getKakaoLoginButton(BuildContext context) {
-  return InkWell(
-    onTap: () {
-      navigateToMain(context);
-    },
-    child: Container(
+  return Container(
+    width: 320,
+    height: 50,
+    decoration: BoxDecoration(
       color: Colors.yellow,
-      child: SizedBox(
-        width: 210,
-        height: 50,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              'assets/images/kakao_login_large_wide.png',
-              width: 200,
-              height: 150,
-              fit: BoxFit.cover,
-            ),
-            SizedBox(width: 10),
-          ],
-        ),
-      ),
+      borderRadius: BorderRadius.circular(16.0),
+    ),
+    child: InkWell(
+      onTap: () {
+        navigateToMain(context);
+      },
+      child: Image.asset('assets/images/kakao_login_large_wide.png'),
     ),
   );
 }
