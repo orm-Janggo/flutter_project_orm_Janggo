@@ -40,7 +40,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
   Widget build(BuildContext context) {
     final viewModel = context.watch<RecipeViewModel>();
     final state = viewModel.state;
-    if (state.recipe != null) {
+    if (state.recipe != []) {
       viewModel.getPicture(state.recipe);
       setState(() {});
     }
@@ -52,7 +52,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                state.recipe != [] ?
+                state.url != [] ?
                 '${_currentPage + 1} / ${state.recipe.length}': '',
                 style:
                     const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
@@ -73,11 +73,17 @@ class _RecipeScreenState extends State<RecipeScreen> {
         child: state.recipe.isEmpty
             ? Center(
                 child: Container(
-                  width: 200,
-                  height: 120,
-                  child: Image.asset(
-                    'assets/images/book.gif',
-                    fit: BoxFit.fill,
+                  width: 300,
+                  height: 150,
+                  child: Column(
+                    children: [
+                      Image.asset(
+                        'assets/images/book.gif',
+                        fit: BoxFit.fill,
+                      ),
+                      const Text('레시피를 찾고있어요 잠시만 기다려주세요!', style: TextStyle(fontFamily: 'school_font', fontSize: 15),),
+                      const Text('Ai가 항상 정확하진 않아요..!', style: TextStyle(fontFamily: 'school_font', fontSize: 15),),
+                    ],
                   ),
                 ),
               )
