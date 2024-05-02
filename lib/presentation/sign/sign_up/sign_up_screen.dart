@@ -205,26 +205,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ],
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0),
-                child: Row(
-                  children: [
-                    Checkbox(
-                      value: _isChecked,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          _isChecked = value!;
-                        });
-                      },
-                      checkColor: Colors.white,
-                      activeColor: const Color(0xfffb8c00),
-                      side: const BorderSide(
-                        color: Color(0xfffb8c00),
-                        width: 2.0,
-                      ),
-                    ),
-                    Text('자동 로그인'),
-                  ],
+              SizedBox(
+                width: 320,
+                height: 50,
+                child: TextButton(
+                  onPressed: () {
+                    context.push('/sign-in');
+                  },
+                  child: const Text(
+                    '계정이 있으신가요? 로그인',
+                    style: TextStyle(fontSize: 16, fontFamily: 'school_font'),
+                  ),
                 ),
               ),
               Container(
