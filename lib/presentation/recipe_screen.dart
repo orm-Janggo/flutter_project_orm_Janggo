@@ -52,10 +52,10 @@ class _RecipeScreenState extends State<RecipeScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                state.url != [] ?
-                '${_currentPage + 1} / ${state.recipe.length}': '',
-                style:
-                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                state.recipe.isNotEmpty
+                    ? '${_currentPage + 1} / ${state.recipe.length}'
+                    : '',
+                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               ),
               const SizedBox(width: 142), // 공백 추가
             ],
