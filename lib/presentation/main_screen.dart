@@ -119,13 +119,12 @@ class _MainScreenState extends State<StatefulWidget> {
                             onPressed: () {
                               context.push('/main/my-page');
                             },
-                            child: Text(_emailUser?.displayName ??
-                                _emailUser!.email.toString()),
+                            child: Text(_emailUser?.displayName ?? _emailUser!.email.toString(), style: TextStyle(fontFamily: 'school_font',),),
                           )
                         ],
                       ),
                     )
-                  : const Text('비회원'),
+                  : const Text('비회원', style: TextStyle(fontFamily: 'school_font',),),
           SizedBox(
             width: 16,
           ),
@@ -148,7 +147,7 @@ class _MainScreenState extends State<StatefulWidget> {
                 height: 200,
                 child: Text(
                   '재료를 넣어주세요!',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, fontFamily: 'school_font',),
                 )),
           ),
 
@@ -179,6 +178,7 @@ class _MainScreenState extends State<StatefulWidget> {
                                   },
                                 ),
                                 hintText: '재료를 입력해주세요',
+                                hintStyle: TextStyle(fontFamily: 'school_font',),
                                 filled: true,
                                 fillColor: Colors.white,
                                 border: const OutlineInputBorder(
@@ -204,6 +204,7 @@ class _MainScreenState extends State<StatefulWidget> {
                               ),
                               style: const TextStyle(
                                 color: Colors.black,
+                                fontFamily: 'school_font',
                               ),
                             ),
                           ),
@@ -247,6 +248,7 @@ class _MainScreenState extends State<StatefulWidget> {
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
+                              fontFamily: 'school_font',
                             ),
                           ),
                           SizedBox(width: 8),
@@ -275,14 +277,14 @@ class _MainScreenState extends State<StatefulWidget> {
                             builder: (context) => AlertDialog(
                               title: Text(
                                 '알림',
-                                style: TextStyle(fontSize: 16),
+                                style: TextStyle(fontSize: 16, fontFamily: 'school_font',),
                                 textAlign: TextAlign.center,
                               ),
                               content: Padding(
                                 padding: const EdgeInsets.only(top: 16.0),
                                 child: const Text(
                                   '재료가 없습니다!',
-                                  style: TextStyle(fontSize: 18),
+                                  style: TextStyle(fontSize: 18, fontFamily: 'school_font',),
                                   textAlign: TextAlign.center,
                                 ),
                               ),
@@ -291,7 +293,7 @@ class _MainScreenState extends State<StatefulWidget> {
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                   },
-                                  child: Text('확인'),
+                                  child: Text('확인', style: TextStyle(fontFamily: 'school_font',),),
                                 ),
                               ],
                             ),
@@ -309,6 +311,7 @@ class _MainScreenState extends State<StatefulWidget> {
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
+                              fontFamily: 'school_font',
                             ),
                           ),
                           SizedBox(width: 8),

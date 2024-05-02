@@ -176,6 +176,7 @@ class _SplashScreen5State extends State<SplashScreen5> {
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
+                    fontFamily: 'school_font',
                   ),
                 ),
               ),
@@ -203,6 +204,7 @@ class _SplashScreen5State extends State<SplashScreen5> {
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
+                          fontFamily: 'school_font',
                         ),
                       ),
                     )
@@ -226,6 +228,7 @@ class _SplashScreen5State extends State<SplashScreen5> {
                           fontSize: 16,
                           fontWeight: FontWeight.bold,
                           color: Colors.black,
+                          fontFamily: 'school_font',
                         ),
                       ),
                     ),
@@ -244,7 +247,7 @@ class _SplashScreen5State extends State<SplashScreen5> {
                 const SizedBox(width: 10),
                 const Text(
                   'or',
-                  style: TextStyle(fontWeight: FontWeight.bold),
+                  style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'school_font',),
                 ),
                 const SizedBox(width: 10),
                 Container(
@@ -257,7 +260,7 @@ class _SplashScreen5State extends State<SplashScreen5> {
           ),
           Positioned(
             bottom: screenSize.height * 0.03,
-            right: screenSize.width * 0.39,
+            right: screenSize.width * 0.40,
             child: TextButton(
               onPressed: () {
                 // SKIP 버튼 눌렀을 때 처리
@@ -269,6 +272,7 @@ class _SplashScreen5State extends State<SplashScreen5> {
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
+                  fontFamily: 'school_font',
                 ),
               ),
             ),
