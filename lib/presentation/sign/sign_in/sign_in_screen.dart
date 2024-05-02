@@ -30,21 +30,45 @@ class _SignInScreenState extends State<SignInScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const SizedBox(
-                height: 64,
-              ),
-              const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '안녕하세요! 🙌',
-                    style: TextStyle(fontSize: 32),
-                  ),
-                  Text(
-                    '장고처리 어플을 사용해보세요!',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                ],
+              // const SizedBox(
+              //   height: 64,
+              // ),
+              // const Column(
+              //   crossAxisAlignment: CrossAxisAlignment.start,
+              //   children: [
+              //     Text(
+              //       '안녕하세요! 🙌',
+              //       style: TextStyle(fontSize: 32),
+              //     ),
+              //     Text(
+              //       '장고처리 어플을 사용해보세요!',
+              //       style: TextStyle(fontSize: 16),
+              //     ),
+              //   ],
+              // ),
+              Container(
+                alignment: Alignment.topLeft,
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(
+                    vertical: 32.0, horizontal: 16.0),
+                child: const Column(
+                  children: [
+                    Text(
+                      '안녕하세요! 👋',
+                      style: TextStyle(
+                        fontSize: 32.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      '장고처리 어플을 사용해보세요!',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(
                 height: 16,
