@@ -17,7 +17,7 @@ class _SignInScreenState extends State<SignInScreen> {
   String? inputEmail;
   String? inputPassword;
 
-  bool isChecked = false;
+  bool isChecked = true;
 
   bool isObsecure = true;
 
@@ -240,7 +240,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   },
                   child: const Text(
                     '계정이 없으신가요? 회원가입',
-                    style: TextStyle(fontSize: 20, fontFamily: 'school_font'),
+                    style: TextStyle(fontSize: 16, fontFamily: 'school_font'),
                   ),
                 ),
               ),
