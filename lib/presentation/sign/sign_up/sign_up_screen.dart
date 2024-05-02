@@ -20,7 +20,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   String? inputCheckPassword;
 
   bool _isObscure = true;
-  bool _isChecked = false;
 
   @override
   Widget build(BuildContext context) {
