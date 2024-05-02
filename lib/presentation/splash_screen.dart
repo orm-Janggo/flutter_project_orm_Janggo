@@ -2,6 +2,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
+import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart' as kakao;
+
+import 'kakao_login/kakao_login_ver2.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -121,6 +124,7 @@ class _SplashScreen5State extends State<SplashScreen5> {
   final _authentication = firebase_auth.FirebaseAuth.instance;
 
   firebase_auth.User? _emailUser;
+  kakao.User? kakaoUser;
 
   void getCurrentUser() {
     _emailUser = _authentication.currentUser;
@@ -206,7 +210,13 @@ class _SplashScreen5State extends State<SplashScreen5> {
                     )
                   : TextButton(
                       onPressed: () async {
-                        await _authentication.signOut();
+                        if (_emailUser != null) {
+                          await _authentication.signOut();
+                        }
+
+                        if (kakaoUser != null) {
+                          logout();
+                        }
 
                         if (!context.mounted) return;
 
