@@ -178,7 +178,6 @@ class _SignInScreenState extends State<SignInScreen> {
                   ),
                 ),
               ),
-
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
@@ -226,6 +225,36 @@ class _SignInScreenState extends State<SignInScreen> {
                   ),
                 ),
               ),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Divider(
+                        color: Colors.grey,
+                        height: 36,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Text(
+                        'or',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Divider(
+                        color: Colors.grey,
+                        height: 36,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
@@ -238,7 +267,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   child: TextButton(
                     onPressed: () {},
                     child: const Text(
-                      '구글로 로그인',
+                      '구글 계정으로 로그인',
                       style: TextStyle(fontSize: 20),
                     ),
                   ),
