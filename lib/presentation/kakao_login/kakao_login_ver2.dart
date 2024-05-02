@@ -82,7 +82,7 @@ Widget getKakaoLoginButton(BuildContext context) {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset(
-              'assets/images/kakao_login_button.png',
+              'assets/images/kakao_login_large_wide.png',
               width: 200,
               height: 150,
               fit: BoxFit.cover,
