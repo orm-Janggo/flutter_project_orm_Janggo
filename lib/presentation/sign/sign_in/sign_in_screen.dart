@@ -142,16 +142,21 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Checkbox(
-                    value: isChecked,
-                    onChanged: (bool? value) {
-                      setState(() {
-                        isChecked = value!;
-                      });
-                    },
+                  Row(
+                    children: [
+                      Checkbox(
+                        value: isChecked,
+                        onChanged: (bool? value) {
+                          setState(() {
+                            isChecked = value!;
+                          });
+                        },
+                      ),
+                      const Text('자동 로그인'),
+                    ],
                   ),
-                  const Text('자동 로그인'),
                   TextButton(
                     onPressed: () {
                       context.push('/sign-in/forgot-password');
@@ -159,77 +164,6 @@ class _SignInScreenState extends State<SignInScreen> {
                     child: const Text('비밀번호 찾기'),
                   ),
                 ],
-              ),
-              Container(
-                width: 320,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Colors.orange,
-                  borderRadius: BorderRadius.circular(16.0),
-                ),
-                child: TextButton(
-                  onPressed: () async {
-                    if (_formKey.currentState?.validate() ?? false) {
-                      _formKey.currentState?.save();
-                    }
-
-                    try {
-                      await _authentication.signInWithEmailAndPassword(
-                        email: inputEmail.toString(),
-                        password: inputPassword.toString(),
-                      );
-                      debugPrint('로그인 성공');
-
-                      // check mount
-                      if (!context.mounted) return;
-
-                      context.push('/main');
-                    } catch (e) {
-                      debugPrint(e.toString());
-
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text(
-                            '로그인이 정상적으로 이루어지지 않았습니다.\n입력하신 정보를 확인해 주세요.',
-                            textAlign: TextAlign.center,
-                          ),
-                          backgroundColor: Colors.red,
-                        ),
-                      );
-                    }
-                  },
-                  child: const Text(
-                    '로그인',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              Container(
-                width: 320,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Colors.grey,
-                  borderRadius: BorderRadius.circular(16.0),
-                ),
-                child: TextButton(
-                  onPressed: () {},
-                  child: const Text(
-                    '구글로 로그인',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              getKakaoLoginButton(
-                context,
-              ),
-              const SizedBox(
-                height: 80,
               ),
               SizedBox(
                 width: 320,
@@ -242,6 +176,78 @@ class _SignInScreenState extends State<SignInScreen> {
                     '계정이 없으신가요? 회원가입',
                     style: TextStyle(fontSize: 16, fontFamily: 'school_font'),
                   ),
+                ),
+              ),
+
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  width: 320,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: Colors.orange,
+                    borderRadius: BorderRadius.circular(16.0),
+                  ),
+                  child: TextButton(
+                    onPressed: () async {
+                      if (_formKey.currentState?.validate() ?? false) {
+                        _formKey.currentState?.save();
+                      }
+
+                      try {
+                        await _authentication.signInWithEmailAndPassword(
+                          email: inputEmail.toString(),
+                          password: inputPassword.toString(),
+                        );
+                        debugPrint('로그인 성공');
+
+                        // check mount
+                        if (!context.mounted) return;
+
+                        context.push('/main');
+                      } catch (e) {
+                        debugPrint(e.toString());
+
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              '로그인이 정상적으로 이루어지지 않았습니다.\n입력하신 정보를 확인해 주세요.',
+                              textAlign: TextAlign.center,
+                            ),
+                            backgroundColor: Colors.red,
+                          ),
+                        );
+                      }
+                    },
+                    child: const Text(
+                      '로그인',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  width: 320,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: Colors.grey,
+                    borderRadius: BorderRadius.circular(16.0),
+                  ),
+                  child: TextButton(
+                    onPressed: () {},
+                    child: const Text(
+                      '구글로 로그인',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: getKakaoLoginButton(
+                  context,
                 ),
               ),
             ],
