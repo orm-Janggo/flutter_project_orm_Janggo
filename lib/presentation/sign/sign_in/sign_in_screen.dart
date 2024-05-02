@@ -81,9 +81,23 @@ class _SignInScreenState extends State<SignInScreen> {
                       padding: const EdgeInsets.all(8.0),
                       child: TextFormField(
                         key: const ValueKey(1),
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
+                        decoration: InputDecoration(
                           hintText: '이메일 e.g. emailAddress@gmail.com',
+                          filled: true,
+                          fillColor: const Color(0xfff8f8f8),
+                          border: InputBorder.none,
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(16.0),
+                            borderSide: const BorderSide(
+                              color: Colors.transparent,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(16.0),
+                            borderSide: const BorderSide(
+                              color: Color(0xfffb8c00),
+                            ),
+                          ),
                         ),
                         validator: (value) {
                           if (value?.isEmpty ?? false) {
