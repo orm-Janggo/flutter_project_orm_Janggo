@@ -205,16 +205,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ],
                 ),
               ),
-              SizedBox(
-                width: 320,
-                height: 50,
-                child: TextButton(
-                  onPressed: () {
-                    context.push('/sign-in');
-                  },
-                  child: const Text(
-                    '계정이 있으신가요? 로그인',
-                    style: TextStyle(fontSize: 16, fontFamily: 'school_font'),
+              Padding(
+                padding: const EdgeInsets.only(
+                  top: 16.0,
+                ),
+                child: SizedBox(
+                  width: 320,
+                  height: 50,
+                  child: TextButton(
+                    onPressed: () {
+                      context.push('/sign-in');
+                    },
+                    child: const Text(
+                      '계정이 있으신가요? 로그인',
+                      style: TextStyle(fontSize: 16, fontFamily: 'school_font'),
+                    ),
                   ),
                 ),
               ),
@@ -277,69 +282,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               ),
                             ),
                           ),
-                        ),
-                      ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: Divider(
-                              color: Colors.grey,
-                              height: 36,
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Text(
-                              'or',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Divider(
-                              color: Colors.grey,
-                              height: 36,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16.0, vertical: 8.0),
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xfff8f8f8)),
-                        // 뒤로 가기 기능 넣으시면 됩니다!
-                        onPressed: () {},
-                        child: const SizedBox(
-                          width: double.infinity,
-                          child: Center(
-                            child: Text(
-                              '구글 계정으로 회원 가입',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18.0,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16.0, vertical: 8.0),
-                      child: InkWell(
-                        onTap: () {},
-                        child: Image.asset(
-                          'assets/images/kakao_login_large_wide.png',
                         ),
                       ),
                     ),
