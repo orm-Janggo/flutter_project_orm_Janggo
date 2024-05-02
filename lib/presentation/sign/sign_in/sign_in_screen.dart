@@ -17,7 +17,9 @@ class _SignInScreenState extends State<SignInScreen> {
   String? inputEmail;
   String? inputPassword;
 
-  bool isChecked = false;
+  bool isChecked = true;
+
+  bool isObsecure = true;
 
   @override
   Widget build(BuildContext context) {
@@ -30,21 +32,29 @@ class _SignInScreenState extends State<SignInScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              const SizedBox(
-                height: 64,
-              ),
-              const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '안녕하세요! 🙌',
-                    style: TextStyle(fontSize: 32),
-                  ),
-                  Text(
-                    '장고처리 어플을 사용해보세요!',
-                    style: TextStyle(fontSize: 16),
-                  ),
-                ],
+              Container(
+                alignment: Alignment.topLeft,
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(
+                    vertical: 32.0, horizontal: 16.0),
+                child: const Column(
+                  children: [
+                    Text(
+                      '안녕하세요! 👋',
+                      style: TextStyle(
+                        fontSize: 32.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      '장고처리 어플을 사용해보세요!',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(
                 height: 16,
@@ -57,9 +67,23 @@ class _SignInScreenState extends State<SignInScreen> {
                       padding: const EdgeInsets.all(8.0),
                       child: TextFormField(
                         key: const ValueKey(1),
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
+                        decoration: InputDecoration(
                           hintText: '이메일 e.g. emailAddress@gmail.com',
+                          filled: true,
+                          fillColor: const Color(0xfff8f8f8),
+                          border: InputBorder.none,
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(16.0),
+                            borderSide: const BorderSide(
+                              color: Colors.transparent,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(16.0),
+                            borderSide: const BorderSide(
+                              color: Color(0xfffb8c00),
+                            ),
+                          ),
                         ),
                         validator: (value) {
                           if (value?.isEmpty ?? false) {
@@ -72,18 +96,37 @@ class _SignInScreenState extends State<SignInScreen> {
                         },
                       ),
                     ),
-                    const SizedBox(
-                      height: 16,
-                    ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: TextFormField(
                         key: const ValueKey(2),
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
+                        decoration: InputDecoration(
+                          suffixIcon: IconButton(
+                            icon: const Icon(Icons.remove_red_eye),
+                            onPressed: () {
+                              setState(() {
+                                isObsecure = !isObsecure;
+                              });
+                            },
+                          ),
                           hintText: '비밀번호',
+                          filled: true,
+                          fillColor: const Color(0xfff8f8f8),
+                          border: InputBorder.none,
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(16.0),
+                            borderSide: const BorderSide(
+                              color: Colors.transparent,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(16.0),
+                            borderSide: const BorderSide(
+                              color: Color(0xfffb8c00),
+                            ),
+                          ),
                         ),
-                        obscureText: true,
+                        obscureText: isObsecure,
                         validator: (value) {
                           if (value?.isEmpty ?? false) {
                             return '비밀번호를 입력해주세요.';
@@ -99,16 +142,21 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
               ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Checkbox(
-                    value: isChecked,
-                    onChanged: (bool? value) {
-                      setState(() {
-                        isChecked = value!;
-                      });
-                    },
+                  Row(
+                    children: [
+                      Checkbox(
+                        value: isChecked,
+                        onChanged: (bool? value) {
+                          setState(() {
+                            isChecked = value!;
+                          });
+                        },
+                      ),
+                      const Text('자동 로그인'),
+                    ],
                   ),
-                  const Text('자동 로그인'),
                   TextButton(
                     onPressed: () {
                       context.push('/sign-in/forgot-password');
@@ -116,77 +164,6 @@ class _SignInScreenState extends State<SignInScreen> {
                     child: const Text('비밀번호 찾기'),
                   ),
                 ],
-              ),
-              Container(
-                width: 320,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Colors.orange,
-                  borderRadius: BorderRadius.circular(16.0),
-                ),
-                child: TextButton(
-                  onPressed: () async {
-                    if (_formKey.currentState?.validate() ?? false) {
-                      _formKey.currentState?.save();
-                    }
-
-                    try {
-                      await _authentication.signInWithEmailAndPassword(
-                        email: inputEmail.toString(),
-                        password: inputPassword.toString(),
-                      );
-                      debugPrint('로그인 성공');
-
-                      // check mount
-                      if (!context.mounted) return;
-
-                      context.push('/main');
-                    } catch (e) {
-                      debugPrint(e.toString());
-
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text(
-                            '로그인이 정상적으로 이루어지지 않았습니다.\n입력하신 정보를 확인해 주세요.',
-                            textAlign: TextAlign.center,
-                          ),
-                          backgroundColor: Colors.red,
-                        ),
-                      );
-                    }
-                  },
-                  child: const Text(
-                    '로그인',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              Container(
-                width: 320,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Colors.grey,
-                  borderRadius: BorderRadius.circular(16.0),
-                ),
-                child: TextButton(
-                  onPressed: () {},
-                  child: const Text(
-                    '구글로 로그인',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 16,
-              ),
-              getKakaoLoginButton(
-                context,
-              ),
-              const SizedBox(
-                height: 80,
               ),
               SizedBox(
                 width: 320,
@@ -197,8 +174,109 @@ class _SignInScreenState extends State<SignInScreen> {
                   },
                   child: const Text(
                     '계정이 없으신가요? 회원가입',
-                    style: TextStyle(fontSize: 20, fontFamily: 'school_font'),
+                    style: TextStyle(fontSize: 16, fontFamily: 'school_font'),
                   ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  width: 320,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: Colors.orange,
+                    borderRadius: BorderRadius.circular(16.0),
+                  ),
+                  child: TextButton(
+                    onPressed: () async {
+                      if (_formKey.currentState?.validate() ?? false) {
+                        _formKey.currentState?.save();
+                      }
+
+                      try {
+                        await _authentication.signInWithEmailAndPassword(
+                          email: inputEmail.toString(),
+                          password: inputPassword.toString(),
+                        );
+                        debugPrint('로그인 성공');
+
+                        // check mount
+                        if (!context.mounted) return;
+
+                        context.push('/main');
+                      } catch (e) {
+                        debugPrint(e.toString());
+
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              '로그인이 정상적으로 이루어지지 않았습니다.\n입력하신 정보를 확인해 주세요.',
+                              textAlign: TextAlign.center,
+                            ),
+                            backgroundColor: Colors.red,
+                          ),
+                        );
+                      }
+                    },
+                    child: const Text(
+                      '로그인',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Divider(
+                        color: Colors.grey,
+                        height: 36,
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 8.0),
+                      child: Text(
+                        'or',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Divider(
+                        color: Colors.grey,
+                        height: 36,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  width: 320,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: Colors.grey,
+                    borderRadius: BorderRadius.circular(16.0),
+                  ),
+                  child: TextButton(
+                    onPressed: () {},
+                    child: const Text(
+                      '구글 계정으로 로그인',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: getKakaoLoginButton(
+                  context,
                 ),
               ),
             ],
