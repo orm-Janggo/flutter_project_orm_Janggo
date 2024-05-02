@@ -124,7 +124,7 @@ class _SplashScreen5State extends State<SplashScreen5> {
   final _authentication = firebase_auth.FirebaseAuth.instance;
 
   firebase_auth.User? _emailUser;
-  kakao.User? kakaoUser;
+  kakao.User? _kakaouser;
 
   void getCurrentUser() {
     _emailUser = _authentication.currentUser;
@@ -214,8 +214,8 @@ class _SplashScreen5State extends State<SplashScreen5> {
                           await _authentication.signOut();
                         }
 
-                        if (kakaoUser != null) {
-                          logout();
+                        if (_kakaouser != null) {
+                        await Kakaologout(context);
                         }
 
                         if (!context.mounted) return;
