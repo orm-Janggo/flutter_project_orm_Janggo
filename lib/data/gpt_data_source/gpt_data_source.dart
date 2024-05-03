@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_project_orm_janggo/core/config/api_config.dart';
-import 'package:flutter_project_orm_janggo/data/gpt_data_source/requestData.dart';
+import 'package:flutter_project_orm_janggo/data/gpt_data_source/request_data.dart';
 import 'package:http/http.dart' as http;
 
 class GptDataSource {
