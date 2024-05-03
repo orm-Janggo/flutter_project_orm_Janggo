@@ -61,7 +61,9 @@ class _RecipeScreenState extends State<RecipeScreen> {
             ],
           ),
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              context.push('/main/my-page');
+            },
             icon: Icon(Icons.face),
           ),
           SizedBox(
