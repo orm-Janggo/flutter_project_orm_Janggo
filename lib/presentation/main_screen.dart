@@ -69,8 +69,6 @@ class _MainScreenState extends State<StatefulWidget> {
     context.go('/main/recipe', extra: concatenatedValues);
   }
 
-
-
   @override
   void dispose() {
     for (var controller in _controllers) {
@@ -82,6 +80,13 @@ class _MainScreenState extends State<StatefulWidget> {
   @override
   Widget build(BuildContext context) {
     debugPrint('kakao user ${_kakaoUser.toString()}');
+
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
+
+    final double centerX = screenWidth / 2;
+    final double centerY = screenHeight / 2;
+
     return Scaffold(
       // 키보드에 의한 UI 이동방지
       resizeToAvoidBottomInset: false,
@@ -160,11 +165,10 @@ class _MainScreenState extends State<StatefulWidget> {
             ),
             Align(
               alignment: Alignment.topCenter,
-              child: Container(
-                padding: EdgeInsets.only(top: 10),
-                width: 200,
-                height: 200,
-                child: Text(
+              child: Positioned(
+                left: centerX - 50,
+                top: centerY - 50,
+                child: const Text(
                   '재료를 넣어주세요!',
                   style: TextStyle(
                     fontSize: 24,
@@ -245,12 +249,12 @@ class _MainScreenState extends State<StatefulWidget> {
                 FocusScope.of(context).unfocus();
               },
               child: Align(
-                alignment: Alignment.bottomCenter,
+                alignment: Alignment.bottomCenter, // 화면 아래 가운데 정렬
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Container(
-                      width: 300,
+                      width: screenWidth * 0.7,
                       height: 50,
                       margin: EdgeInsets.only(bottom: 16),
                       decoration: BoxDecoration(
@@ -278,7 +282,7 @@ class _MainScreenState extends State<StatefulWidget> {
                       ),
                     ),
                     Container(
-                      width: 300,
+                      width: screenWidth * 0.7,
                       height: 50,
                       margin: EdgeInsets.only(bottom: 16),
                       decoration: BoxDecoration(
