@@ -1,4 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart' as fba;
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -12,9 +12,9 @@ class MypageScreen extends StatefulWidget {
 }
 
 class _MypageScreenState extends State<MypageScreen> {
-  final _authentication = fba.FirebaseAuth.instance;
+  final _authentication = firebase_auth.FirebaseAuth.instance;
 
-  fba.User? _emailUser;
+  firebase_auth.User? _emailUser;
 
   String? originUserEmail;
   String? originUserDisplayName;
@@ -30,7 +30,7 @@ class _MypageScreenState extends State<MypageScreen> {
   bool isChanged = false;
 
   Future<void> getEmailUser() async {
-    _authentication.authStateChanges().listen((fba.User? emailUser) {
+    _authentication.authStateChanges().listen((firebase_auth.User? emailUser) {
       if (emailUser != null) {
         _emailUser = emailUser;
         debugPrint('마이페이지');
