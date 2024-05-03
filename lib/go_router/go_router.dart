@@ -3,7 +3,7 @@ import 'package:flutter_project_orm_janggo/data/repository/chat_gpt_reopository_
 import 'package:flutter_project_orm_janggo/domain/use_case/get_recipe_use_case.dart';
 import 'package:flutter_project_orm_janggo/presentation/main_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/mypage_screen.dart';
-import 'package:flutter_project_orm_janggo/presentation/sign/forgot_password/forgot_password.dart';
+import 'package:flutter_project_orm_janggo/presentation/sign/forgot_password/forgot_password_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/sign/sign_in/sign_in_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/sign/sign_up/sign_up_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/splash_screen.dart';
