@@ -6,6 +6,6 @@ class SignInViewModel with ChangeNotifier {
   // SignInState get signInState => _signInState;
 
   // void signInWithFirebaseAuth(String inputEmail, String inputPassword) {
-  //
+  //   signInWithEmailAndPassword
   // }
 }
