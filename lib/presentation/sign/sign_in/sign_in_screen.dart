@@ -13,7 +13,6 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-  final _authentication = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
 
   String? inputEmail;
