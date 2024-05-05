@@ -1,11 +1,11 @@
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_project_orm_janggo/domain/model/user_info_model/user_info_model.dart';
 
 abstract interface class FirebaseAuthRepository {
-  Future<UserCredential> callSignInWithEmailAndPassword(
+  Future<UserInfoModel> callSignInWithEmailAndPassword(
       String inputEmail, String inputPassword);
 
-  Future<UserCredential> callCreateUserWithEmailAndPassword(
+  Future<UserInfoModel> callCreateUserWithEmailAndPassword(
       String inputEmail, String inputPassword);
 
-  Stream<User?> callAuthStateChanges();
+  Stream<UserInfoModel?> callAuthStateChanges();
 }
