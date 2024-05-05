@@ -8,7 +8,7 @@ class ForgotPasswordViewModel with ChangeNotifier {
       {required SendPasswordResetEmailUseCase sendPasswordResetEmailUseCase})
       : _sendPasswordResetEmailUseCase = sendPasswordResetEmailUseCase;
 
-  void passwordResetWithFirebaseAuth(String inputEmail) async {
+  void sendPasswordResetWithFirebaseAuth(String inputEmail) async {
     await _sendPasswordResetEmailUseCase.execute(inputEmail);
     notifyListeners();
   }
