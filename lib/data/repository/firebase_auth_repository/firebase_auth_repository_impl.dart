@@ -50,4 +50,9 @@ class FirebaseAuthRepositoryImpl implements FirebaseAuthRepository {
       }
     });
   }
+
+  @override
+  Future<void> callSendPasswordResetEmail(String inputEmail) async {
+    await _authentication.sendPasswordResetEmail(email: inputEmail);
+  }
 }

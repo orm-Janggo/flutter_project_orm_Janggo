@@ -8,4 +8,6 @@ abstract interface class FirebaseAuthRepository {
       String inputEmail, String inputPassword);
 
   Stream<UserInfoModel?> callAuthStateChanges();
+
+  Future<void> callSendPasswordResetEmail(String inputEmail);
 }
