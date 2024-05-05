@@ -31,7 +31,12 @@ class _MypageScreenState extends State<MypageScreen> {
     _authentication.authStateChanges().listen((firebase_auth.User? emailUser) {
       if (emailUser != null) {
         _emailUser = emailUser;
-        debugPrint('마이페이지');
+        debugPrint('---마이페이지---');
+        debugPrint(_emailUser.toString());
+        debugPrint(_emailUser?.uid);
+        print(_emailUser?.providerData[0]);
+        debugPrint(_emailUser?.uid);
+        debugPrint('----유저 정보----');
         debugPrint('${_emailUser?.email}, ${_emailUser?.displayName}');
         setState(() {});
         userEmail = _emailUser!.email;
