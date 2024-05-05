@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_orm_janggo/presentation/sign/forgot_password/forgot_password_view_model.dart';
 import 'package:go_router/go_router.dart';
@@ -12,7 +11,6 @@ class ForgotPasswordScreen extends StatefulWidget {
 }
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
-  final _authentication = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
 
   String? inputEmail;
