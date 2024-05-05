@@ -101,7 +101,7 @@ final router = GoRouter(
               GoRoute(
                 path: 'my-page',
                 builder: (context, state) {
-                  return MypageScreen();
+                  return const MypageScreen();
                 },
               ),
             ]),
