@@ -29,35 +29,35 @@ class _MyPageScreenState extends State<MyPageScreen> {
   // 설정 버튼 눌렀을때 수정 가능여부  => true : textFormField 수정 가능, false : textFormField 수정 불가능
   bool isChanged = false;
 
-  Future<void> getEmailUser() async {
-    _authentication.authStateChanges().listen((firebase_auth.User? emailUser) {
-      if (emailUser != null) {
-        _emailUser = emailUser;
-        debugPrint('---마이페이지---');
-        debugPrint(_emailUser.toString());
-        debugPrint(_emailUser?.uid);
-        print(_emailUser?.providerData[0]);
-        debugPrint(_emailUser?.uid);
-        debugPrint('----유저 정보----');
-        debugPrint('${_emailUser?.email}, ${_emailUser?.displayName}');
-        setState(() {});
-        userEmail = _emailUser!.email;
-        userDisplayName = _emailUser!.displayName;
-      }
-    });
-  }
+  // Future<void> getEmailUser() async {
+  //   _authentication.authStateChanges().listen((firebase_auth.User? emailUser) {
+  //     if (emailUser != null) {
+  //       _emailUser = emailUser;
+  //       debugPrint('---마이페이지---');
+  //       debugPrint(_emailUser.toString());
+  //       debugPrint(_emailUser?.uid);
+  //       print(_emailUser?.providerData[0]);
+  //       debugPrint(_emailUser?.uid);
+  //       debugPrint('----유저 정보----');
+  //       debugPrint('${_emailUser?.email}, ${_emailUser?.displayName}');
+  //       setState(() {});
+  //       userEmail = _emailUser!.email;
+  //       userDisplayName = _emailUser!.displayName;
+  //     }
+  //   });
+  // }
 
-  void getSetUserInfo() async {
-    await getEmailUser();
-    _accountController.text = userEmail!;
-    _nickNameController.text = userDisplayName!;
-  }
+  // void getSetUserInfo() async {
+  //   await getEmailUser();
+  //   _accountController.text = userEmail!;
+  //   _nickNameController.text = userDisplayName!;
+  // }
 
   // DB에서 받아온 개인정보로 초기화하고 그 내용이 처음 화면에 보입니다.
   @override
   void initState() {
     super.initState();
-    getSetUserInfo();
+    // getSetUserInfo();
   }
 
   @override
@@ -71,6 +71,13 @@ class _MyPageScreenState extends State<MyPageScreen> {
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<MyPageViewModel>();
+    viewModel.getCurrentUserInfo();
+
+    _accountController.text = viewModel.userEmail!;
+    _nickNameController.text = viewModel.userDisplayName!;
+
+    print('---test get current user---');
+    print(viewModel.userEmail);
 
     return Scaffold(
       appBar: AppBar(
