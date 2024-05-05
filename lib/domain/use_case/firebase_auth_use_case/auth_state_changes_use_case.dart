@@ -6,8 +6,7 @@ class AuthStateChangesUseCase {
 
   AuthStateChangesUseCase(this._firebaseAuthRepository);
 
-  Stream<UserInfoModel?> execute() {
-    // AuthRepository를 통해 사용자의 인증 상태 변경 스트림을 가져옵니다.
-    return _firebaseAuthRepository.callAuthStateChanges();
+  UserInfoModel? execute() {
+    return _firebaseAuthRepository.callCurrentUser();
   }
 }
