@@ -7,7 +7,7 @@ import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_cas
 import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_case/sign_up_with_email_password_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/get_recipe_use_case.dart';
 import 'package:flutter_project_orm_janggo/presentation/main_screen.dart';
-import 'package:flutter_project_orm_janggo/presentation/my_page/mypage_screen.dart';
+import 'package:flutter_project_orm_janggo/presentation/my_page/my_page_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/sign/forgot_password/forgot_password_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/sign/forgot_password/forgot_password_view_model.dart';
 import 'package:flutter_project_orm_janggo/presentation/sign/sign_in/sign_in_screen.dart';
@@ -101,7 +101,7 @@ final router = GoRouter(
               GoRoute(
                 path: 'my-page',
                 builder: (context, state) {
-                  return const MypageScreen();
+                  return const MyPageScreen();
                 },
               ),
             ]),

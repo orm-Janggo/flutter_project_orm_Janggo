@@ -1,15 +1,17 @@
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:flutter/material.dart';
+import 'package:flutter_project_orm_janggo/presentation/my_page/my_page_view_model.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
-class MypageScreen extends StatefulWidget {
-  const MypageScreen({super.key});
+class MyPageScreen extends StatefulWidget {
+  const MyPageScreen({super.key});
 
   @override
-  State<MypageScreen> createState() => _MypageScreenState();
+  State<MyPageScreen> createState() => _MyPageScreenState();
 }
 
-class _MypageScreenState extends State<MypageScreen> {
+class _MyPageScreenState extends State<MyPageScreen> {
   final _authentication = firebase_auth.FirebaseAuth.instance;
 
   firebase_auth.User? _emailUser;
@@ -68,6 +70,8 @@ class _MypageScreenState extends State<MypageScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = context.watch<MyPageViewModel>();
+
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -132,7 +136,7 @@ class _MypageScreenState extends State<MypageScreen> {
                         ),
                         TextFormField(
                           controller: _accountController,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             border: InputBorder.none,
                             enabled: false,
                           ),
