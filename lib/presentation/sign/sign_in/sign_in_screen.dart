@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_orm_janggo/presentation/kakao_login/kakao_login_ver2.dart';
+import 'package:flutter_project_orm_janggo/presentation/sign/sign_in/sign_in_view_model.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
@@ -23,6 +25,8 @@ class _SignInScreenState extends State<SignInScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = context.watch<SignInViewModel>();
+
     return Scaffold(
       appBar: AppBar(),
       body: GestureDetector(
@@ -188,16 +192,18 @@ class _SignInScreenState extends State<SignInScreen> {
                     borderRadius: BorderRadius.circular(16.0),
                   ),
                   child: TextButton(
-                    onPressed: () async {
+                    onPressed: () {
                       if (_formKey.currentState?.validate() ?? false) {
                         _formKey.currentState?.save();
                       }
 
                       try {
-                        await _authentication.signInWithEmailAndPassword(
-                          email: inputEmail.toString(),
-                          password: inputPassword.toString(),
-                        );
+                        // await _authentication.signInWithEmailAndPassword(
+                        //   email: inputEmail.toString(),
+                        //   password: inputPassword.toString(),
+                        // );
+                        viewModel.signInWithFirebaseAuth(
+                            inputEmail!, inputPassword!);
                         debugPrint('로그인 성공');
 
                         // check mount
