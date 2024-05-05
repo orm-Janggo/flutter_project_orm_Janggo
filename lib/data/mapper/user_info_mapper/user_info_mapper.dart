@@ -10,3 +10,13 @@ extension ToUserInfo on User {
     );
   }
 }
+
+extension UserCredentailToUserInfo on UserCredential {
+  UserInfoModel userCredentialToUserInfo() {
+    return UserInfoModel(
+      email: user?.providerData[0].email ?? '',
+      displayName: user?.providerData[0].displayName ?? '',
+      uid: user?.providerData[0].uid ?? '',
+    );
+  }
+}
