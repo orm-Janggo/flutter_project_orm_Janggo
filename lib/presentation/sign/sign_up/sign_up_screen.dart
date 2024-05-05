@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_orm_janggo/presentation/sign/sign_up/sign_up_view_model.dart';
 import 'package:go_router/go_router.dart';
