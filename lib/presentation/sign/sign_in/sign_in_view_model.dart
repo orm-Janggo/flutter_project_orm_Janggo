@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_case/sign_in_with_email_password_use_case.dart';
 
 class SignInViewModel with ChangeNotifier {
-  // final SignInRepository _signInRepository;
-  // SignInState _signInState = const SignInState();
-  // SignInState get signInState => _signInState;
+  final SignInWithEmailPasswordUseCase _signInWithEmailPasswordUseCase;
 
-  // void signInWithFirebaseAuth(String inputEmail, String inputPassword) {
-  //   signInWithEmailAndPassword
-  // }
+  SignInViewModel(this._signInWithEmailPasswordUseCase);
+
+  void signInWithFirebaseAuth(String inputEmail, String inputPassword) async {
+    await _signInWithEmailPasswordUseCase.execute(inputEmail, inputPassword);
+    notifyListeners();
+  }
 }
