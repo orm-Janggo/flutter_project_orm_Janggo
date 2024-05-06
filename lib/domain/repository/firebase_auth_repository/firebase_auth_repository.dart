@@ -14,4 +14,6 @@ abstract interface class FirebaseAuthRepository {
   Future<void> callUpdateDisplayName(String inputDisplayName);
 
   Future<void> callUpdatePassword(String inputPassword);
+
+  Future<void> callSignOut();
 }
