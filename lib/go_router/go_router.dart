@@ -6,6 +6,8 @@ import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_cas
 import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_case/send_password_reset_email_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_case/sign_in_with_email_password_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_case/sign_up_with_email_password_use_case.dart';
+import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_case/update_display_name_use_case.dart';
+import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_case/update_password_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/get_recipe_use_case.dart';
 import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/main_screen.dart';
@@ -115,6 +117,12 @@ final router = GoRouter(
                   return ChangeNotifierProvider(
                     create: (_) => MyPageViewModel(
                       authStateChangesUseCase: AuthStateChangesUseCase(
+                        FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
+                      ),
+                      updateDisplayNameUseCase: UpdateDisplayNameUseCase(
+                        FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
+                      ),
+                      updatePasswordUseCase: UpdatePasswordUseCase(
                         FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
                       ),
                     ),
