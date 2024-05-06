@@ -7,6 +7,7 @@ import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_cas
 import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_case/sign_in_with_email_password_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_case/sign_up_with_email_password_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/get_recipe_use_case.dart';
+import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/main_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/my_page/my_page_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/my_page/my_page_view_model.dart';
@@ -99,6 +100,14 @@ final router = GoRouter(
                     ),
                   );
                 },
+                routes: [
+                  GoRoute(
+                    path: 'recipe-history',
+                    builder: (context, state) {
+                      return RecipeHistoryScreen();
+                    },
+                  ),
+                ],
               ),
               GoRoute(
                 path: 'my-page',
