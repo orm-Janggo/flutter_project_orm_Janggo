@@ -1,20 +1,20 @@
-import 'package:firebase_auth/firebase_auth.dart' as fba;
-import 'package:flutter/cupertino.dart';
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter_project_orm_janggo/presentation/my_page/my_page_view_model.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
-class MypageScreen extends StatefulWidget {
-  const MypageScreen({super.key});
+class MyPageScreen extends StatefulWidget {
+  const MyPageScreen({super.key});
 
   @override
-  State<MypageScreen> createState() => _MypageScreenState();
+  State<MyPageScreen> createState() => _MyPageScreenState();
 }
 
-class _MypageScreenState extends State<MypageScreen> {
-  final _authentication = fba.FirebaseAuth.instance;
+class _MyPageScreenState extends State<MyPageScreen> {
+  final _authentication = firebase_auth.FirebaseAuth.instance;
 
-  fba.User? _emailUser;
+  firebase_auth.User? _emailUser;
 
   String? originUserEmail;
   String? originUserDisplayName;
@@ -29,30 +29,35 @@ class _MypageScreenState extends State<MypageScreen> {
   // 설정 버튼 눌렀을때 수정 가능여부  => true : textFormField 수정 가능, false : textFormField 수정 불가능
   bool isChanged = false;
 
-  Future<void> getEmailUser() async {
-    _authentication.authStateChanges().listen((fba.User? emailUser) {
-      if (emailUser != null) {
-        _emailUser = emailUser;
-        debugPrint('마이페이지');
-        debugPrint('${_emailUser?.email}, ${_emailUser?.displayName}');
-        setState(() {});
-        userEmail = _emailUser!.email;
-        userDisplayName = _emailUser!.displayName;
-      }
-    });
-  }
+  // Future<void> getEmailUser() async {
+  //   _authentication.authStateChanges().listen((firebase_auth.User? emailUser) {
+  //     if (emailUser != null) {
+  //       _emailUser = emailUser;
+  //       debugPrint('---마이페이지---');
+  //       debugPrint(_emailUser.toString());
+  //       debugPrint(_emailUser?.uid);
+  //       print(_emailUser?.providerData[0]);
+  //       debugPrint(_emailUser?.uid);
+  //       debugPrint('----유저 정보----');
+  //       debugPrint('${_emailUser?.email}, ${_emailUser?.displayName}');
+  //       setState(() {});
+  //       userEmail = _emailUser!.email;
+  //       userDisplayName = _emailUser!.displayName;
+  //     }
+  //   });
+  // }
 
-  void getSetUserInfo() async {
-    await getEmailUser();
-    _accountController.text = userEmail!;
-    _nickNameController.text = userDisplayName!;
-  }
+  // void getSetUserInfo() async {
+  //   await getEmailUser();
+  //   _accountController.text = userEmail!;
+  //   _nickNameController.text = userDisplayName!;
+  // }
 
   // DB에서 받아온 개인정보로 초기화하고 그 내용이 처음 화면에 보입니다.
   @override
   void initState() {
     super.initState();
-    getSetUserInfo();
+    // getSetUserInfo();
   }
 
   @override
@@ -65,6 +70,15 @@ class _MypageScreenState extends State<MypageScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = context.watch<MyPageViewModel>();
+    viewModel.getCurrentUserInfo();
+
+    _accountController.text = viewModel.userEmail!;
+    _nickNameController.text = viewModel.userDisplayName!;
+
+    print('---test get current user---');
+    print(viewModel.userEmail);
+
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -129,7 +143,7 @@ class _MypageScreenState extends State<MypageScreen> {
                         ),
                         TextFormField(
                           controller: _accountController,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             border: InputBorder.none,
                             enabled: false,
                           ),
