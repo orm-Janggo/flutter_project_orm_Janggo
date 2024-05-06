@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:flutter/material.dart';
 import 'package:flutter_project_orm_janggo/presentation/my_page/my_page_view_model.dart';
 import 'package:go_router/go_router.dart';
@@ -12,11 +11,7 @@ class MyPageScreen extends StatefulWidget {
 }
 
 class _MyPageScreenState extends State<MyPageScreen> {
-  final _authentication = firebase_auth.FirebaseAuth.instance;
-
   final _formKey = GlobalKey<FormState>();
-
-  // firebase_auth.User? _emailUser;
 
   String? originUserEmail;
   String? originUserDisplayName;
@@ -24,36 +19,8 @@ class _MyPageScreenState extends State<MyPageScreen> {
   String? userDisplayName;
   String userPassword = '';
 
-  // final _accountController = TextEditingController();
-  // final _nickNameController = TextEditingController();
-  // final _passwordController = TextEditingController();
-
   // 설정 버튼 눌렀을때 수정 가능여부  => true : textFormField 수정 가능, false : textFormField 수정 불가능
   bool isChanged = false;
-
-  // Future<void> getEmailUser() async {
-  //   _authentication.authStateChanges().listen((firebase_auth.User? emailUser) {
-  //     if (emailUser != null) {
-  //       _emailUser = emailUser;
-  //       debugPrint('---마이페이지---');
-  //       debugPrint(_emailUser.toString());
-  //       debugPrint(_emailUser?.uid);
-  //       print(_emailUser?.providerData[0]);
-  //       debugPrint(_emailUser?.uid);
-  //       debugPrint('----유저 정보----');
-  //       debugPrint('${_emailUser?.email}, ${_emailUser?.displayName}');
-  //       setState(() {});
-  //       userEmail = _emailUser!.email;
-  //       userDisplayName = _emailUser!.displayName;
-  //     }
-  //   });
-  // }
-
-  // void getSetUserInfo() async {
-  //   await getEmailUser();
-  //   _accountController.text = userEmail!;
-  //   _nickNameController.text = userDisplayName!;
-  // }
 
   // DB에서 받아온 개인정보로 초기화하고 그 내용이 처음 화면에 보입니다.
   @override
@@ -75,11 +42,8 @@ class _MyPageScreenState extends State<MyPageScreen> {
     final viewModel = context.watch<MyPageViewModel>();
     viewModel.getCurrentUserInfo();
 
-    // _accountController.text = viewModel.userEmail!;
-    // _nickNameController.text = viewModel.userDisplayName!;
-
-    print('---test get current user---');
-    print(viewModel.userEmail);
+    debugPrint('---test get current user---');
+    debugPrint(viewModel.userEmail);
 
     return Scaffold(
       appBar: AppBar(
@@ -228,7 +192,6 @@ class _MyPageScreenState extends State<MyPageScreen> {
                             ),
                           ),
                           TextFormField(
-                            // controller: _passwordController,
                             key: const ValueKey(2),
                             decoration: InputDecoration(
                               border: InputBorder.none,
@@ -257,21 +220,16 @@ class _MyPageScreenState extends State<MyPageScreen> {
                           onPressed: () {
                             setState(() {
                               if (originUserDisplayName != userDisplayName) {
-                                // _emailUser
-                                //    ?.updateDisplayName(userDisplayName);
                                 viewModel.updateCurrentUserDisplayName(
                                     userDisplayName!);
                               }
 
                               if (userPassword != '') {
-                                // _emailUser?.updatePassword(userPassword);
                                 viewModel
                                     .updateCurrentUserPassword(userPassword);
                               }
 
                               if (!context.mounted) return;
-
-                              // _nickNameController.text = userDisplayName!;
 
                               isChanged = !isChanged;
                             });
@@ -299,9 +257,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xfff8f8f8)),
-                          onPressed: ()  {
-                            // await _authentication.signOut();
-
+                          onPressed: () {
                             viewModel.signOutCurrentUser();
 
                             if (!context.mounted) return;
@@ -359,41 +315,3 @@ class _MyPageScreenState extends State<MyPageScreen> {
     );
   }
 }
-
-// Widget editMypageInfo(
-//     Widget widgetName,
-//     TextEditingController textEditingController,
-//     bool isChanged,
-//     String? editVal) {
-//   return Container(
-//     padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-//     margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
-//     decoration: BoxDecoration(
-//       color: const Color(0xfff8f8f8),
-//       borderRadius: BorderRadius.circular(16.0),
-//       boxShadow: [
-//         BoxShadow(
-//           color: Colors.grey.withOpacity(0.3),
-//           blurRadius: 8.0,
-//           offset: const Offset(3, 3),
-//         ),
-//       ],
-//     ),
-//     child: Column(
-//       crossAxisAlignment: CrossAxisAlignment.start,
-//       children: [
-//         widgetName,
-//         TextFormField(
-//           controller: textEditingController,
-//           decoration: InputDecoration(
-//             border: InputBorder.none,
-//             enabled: isChanged,
-//           ),
-//           onChanged: (String? value) {
-//             editVal = value;
-//           },
-//         ),
-//       ],
-//     ),
-//   );
-// }
