@@ -299,8 +299,10 @@ class _MyPageScreenState extends State<MyPageScreen> {
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xfff8f8f8)),
-                          onPressed: () async {
-                            await _authentication.signOut();
+                          onPressed: ()  {
+                            // await _authentication.signOut();
+
+                            viewModel.signOutCurrentUser();
 
                             if (!context.mounted) return;
 
