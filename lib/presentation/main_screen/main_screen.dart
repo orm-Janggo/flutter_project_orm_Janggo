@@ -1,34 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project_orm_janggo/presentation/main_screen/main_screen_view_model.dart';
+import 'package:flutter_project_orm_janggo/presentation/my_page/my_page_view_model.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart'; // go_router 임포트 추가
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
+import 'package:provider/provider.dart';
 
 class MainScreen extends StatefulWidget {
   State<StatefulWidget> createState() => _MainScreenState();
 }
 
 class _MainScreenState extends State<StatefulWidget> {
-  final _authentication = firebase_auth.FirebaseAuth.instance;
-
-  firebase_auth.User? _emailUser;
-
   User? _kakaoUser;
 
   @override
   void initState() {
     super.initState();
     _initKakaoUser();
-    getEmailUser();
-  }
-
-  void getEmailUser() {
-    _authentication.authStateChanges().listen((firebase_auth.User? emailUser) {
-      if (emailUser != null) {
-        _emailUser = emailUser;
-        debugPrint(_emailUser.toString());
-        setState(() {});
-      }
-    });
+    // getEmailUser();
   }
 
   Future<void> _initKakaoUser() async {
@@ -80,6 +69,8 @@ class _MainScreenState extends State<StatefulWidget> {
   @override
   Widget build(BuildContext context) {
     debugPrint('kakao user ${_kakaoUser.toString()}');
+    final viewModelForgetUser = context.watch<MainScreenViewModel>();
+    viewModelForgetUser.getCurrentUserInfo();
 
     final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
@@ -95,7 +86,7 @@ class _MainScreenState extends State<StatefulWidget> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            if (_emailUser != null) {
+            if (viewModelForgetUser.firebaseUser != null) {
               context.push('/');
               return;
             }
@@ -114,7 +105,7 @@ class _MainScreenState extends State<StatefulWidget> {
                     ],
                   ),
                 )
-              : _emailUser != null
+              : viewModelForgetUser.firebaseUser != null
                   ? Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16.0),
                       child: Column(
@@ -125,8 +116,8 @@ class _MainScreenState extends State<StatefulWidget> {
                               context.push('/main/my-page');
                             },
                             child: Text(
-                              _emailUser?.displayName ??
-                                  _emailUser!.email.toString(),
+                              viewModelForgetUser.userDisplayName ??
+                                  viewModelForgetUser.userEmail!,
                               style: TextStyle(fontFamily: 'school_font'),
                             ),
                           )
