@@ -44,51 +44,52 @@ class _RecipeScreenState extends State<RecipeScreen> {
       viewModel.getPicture(state.recipe);
       setState(() {});
     }
+
+    final double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(
+        // 커스텀 레이아웃을 사용하여 텍스트를 중앙에 위치
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center, // 중앙 정렬
+          children: [
+            Spacer(), // 왼쪽에서 중앙으로 텍스트 이동
+            Text(
+              state.recipe.isNotEmpty
+                  ? '${_currentPage + 1} / ${state.recipe.length}'
+                  : '',
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            ),
+            Spacer(), // 오른쪽 아이콘과 간격 유지
+          ],
+        ),
         actions: [
-          // 페이지 전체 개수와 현재 페이지 인덱스를 표시
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                state.recipe.isNotEmpty
-                    ? '${_currentPage + 1} / ${state.recipe.length}'
-                    : '',
-                style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-              ),
-              const SizedBox(width: 150), // 공백 추가
-            ],
-          ),
           IconButton(
             onPressed: () {
               context.push('/main/recipe/recipe-history');
             },
-            icon: Icon(Icons.face),
+            icon: const Icon(Icons.face),
           ),
-          SizedBox(
-            width: 10,
-          )
+          const SizedBox(width: 10),
         ],
       ),
       body: SafeArea(
         child: state.recipe.isEmpty
             ? Center(
-          child: Container(
-            width: 300,
-            height: 150,
-            child: Column(
-              children: [
-                Image.asset(
-                  'assets/images/book.gif',
-                  fit: BoxFit.fill,
+                child: Container(
+                  width: 300,
+                  height: 150,
+                  child: Column(
+                    children: [
+                      Image.asset(
+                        'assets/images/book.gif',
+                        fit: BoxFit.fill,
+                      ),
+                      const Text('Ai가 레시피를 찾고있어요 잠시만 기다려주세요!', style: TextStyle(fontFamily: 'school_font', fontSize: 15),),
+                    ],
+                  ),
                 ),
-                const Text('레시피를 찾고있어요 잠시만 기다려주세요!', style: TextStyle(fontFamily: 'school_font', fontSize: 15),),
-                const Text('Ai가 항상 정확하진 않아요..!', style: TextStyle(fontFamily: 'school_font', fontSize: 15),),
-              ],
-            ),
-          ),
-        )
+              )
             : Center(
           child: Column(
             children: [

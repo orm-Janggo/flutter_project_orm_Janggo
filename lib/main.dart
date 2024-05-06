@@ -32,8 +32,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange),
         useMaterial3: true,
         textTheme: const TextTheme(
-          bodyText1: TextStyle(fontFamily: 'hand_font'),
-          bodyText2: TextStyle(fontFamily: 'school_font'),
+          bodyLarge: TextStyle(fontFamily: 'hand_font'),
+          bodyMedium: TextStyle(fontFamily: 'school_font'),
         )
       ),
       routerConfig: router,
