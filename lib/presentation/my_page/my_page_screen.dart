@@ -14,7 +14,7 @@ class MyPageScreen extends StatefulWidget {
 class _MyPageScreenState extends State<MyPageScreen> {
   final _authentication = firebase_auth.FirebaseAuth.instance;
 
-  firebase_auth.User? _emailUser;
+  // firebase_auth.User? _emailUser;
 
   String? originUserEmail;
   String? originUserDisplayName;
@@ -245,24 +245,22 @@ class _MyPageScreenState extends State<MyPageScreen> {
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             backgroundColor: const Color(0xfffb8c00)),
-                        onPressed: () async {
-                          // deprecated
-                          // if(originUserEmail != userEmail) {
-                          //   await _emailUser?.updateEmail(userEmail);
-                          // }
-
+                        onPressed: () {
                           if (originUserDisplayName != userDisplayName) {
-                            await _emailUser
-                                ?.updateDisplayName(userDisplayName);
+                            // _emailUser
+                            //    ?.updateDisplayName(userDisplayName);
+                            viewModel
+                                .updateCurrentUserDisplayName(userDisplayName!);
                           }
 
                           if (userPassword != '') {
-                            await _emailUser?.updatePassword(userPassword);
+                            // _emailUser?.updatePassword(userPassword);
+                            viewModel.updateCurrentUserPassword(userPassword);
                           }
 
                           if (!context.mounted) return;
 
-                          context.push('/main');
+                          // context.push('/main');
                         },
                         child: const SizedBox(
                           width: double.infinity,
