@@ -21,7 +21,8 @@ import 'package:flutter_project_orm_janggo/presentation/sign/sign_in/sign_in_scr
 import 'package:flutter_project_orm_janggo/presentation/sign/sign_in/sign_in_view_model.dart';
 import 'package:flutter_project_orm_janggo/presentation/sign/sign_up/sign_up_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/sign/sign_up/sign_up_view_model.dart';
-import 'package:flutter_project_orm_janggo/presentation/splash_screen.dart';
+import 'package:flutter_project_orm_janggo/presentation/splash/splash_screen.dart';
+import 'package:flutter_project_orm_janggo/presentation/splash/splash_screen_view_model.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -35,7 +36,18 @@ final router = GoRouter(
   routes: [
     GoRoute(
       path: '/',
-      builder: (context, state) => const SplashScreen(),
+      builder: (context, state) {
+        return ChangeNotifierProvider(
+          create: (_) => SplashScreenViewModel(
+            authStateChangesUseCase: AuthStateChangesUseCase(
+              FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
+            ),
+            signOutUseCase: SignOutUseCase(
+                FirebaseAuthRepositoryImpl(FirebaseAuth.instance)),
+          ),
+          child: const SplashScreen(),
+        );
+      },
       routes: [
         GoRoute(
           path: 'sign-in',
