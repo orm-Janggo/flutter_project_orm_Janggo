@@ -122,14 +122,7 @@ class SplashScreen5 extends StatefulWidget {
 }
 
 class _SplashScreen5State extends State<SplashScreen5> {
-  // final _authentication = firebase_auth.FirebaseAuth.instance;
-
-  // firebase_auth.User? _emailUser;
   kakao.User? _kakaouser;
-
-  // void getCurrentUser() {
-  //   _emailUser = _authentication.currentUser;
-  // }
 
   @override
   void initState() {
