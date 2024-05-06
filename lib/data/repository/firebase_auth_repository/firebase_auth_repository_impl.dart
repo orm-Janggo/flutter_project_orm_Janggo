@@ -53,4 +53,9 @@ class FirebaseAuthRepositoryImpl implements FirebaseAuthRepository {
 
     await currentUser?.updatePassword(inputPassword);
   }
+
+  @override
+  Future<void> callSignOut() async {
+    await _authentication.signOut();
+  }
 }
