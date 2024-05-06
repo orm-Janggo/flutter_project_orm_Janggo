@@ -1,6 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_project_orm_janggo/presentation/sign/forgot_password/forgot_password_view_model.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -10,13 +11,14 @@ class ForgotPasswordScreen extends StatefulWidget {
 }
 
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
-  final _authentication = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
 
   String? inputEmail;
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = context.watch<ForgotPasswordViewModel>();
+
     return Scaffold(
       appBar: AppBar(),
       body: Column(
@@ -72,9 +74,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   _formKey.currentState?.save();
                 }
 
-                await _authentication.setLanguageCode("ko");
-                await _authentication.sendPasswordResetEmail(
-                    email: inputEmail.toString());
+                viewModel.sendPasswordResetWithFirebaseAuth(inputEmail!);
 
                 // check mount
                 if (!context.mounted) return;

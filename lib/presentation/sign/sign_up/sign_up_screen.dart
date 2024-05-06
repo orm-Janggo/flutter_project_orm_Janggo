@@ -1,8 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter_project_orm_janggo/presentation/sign/sign_up/sign_up_view_model.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -12,7 +11,6 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  final _authentication = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
 
   String? inputEmail;
@@ -23,6 +21,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = context.watch<SignUpViewModel>();
+
     return Scaffold(
       appBar: AppBar(),
       body: GestureDetector(
@@ -240,24 +240,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           }
 
                           try {
-                            final newUser = await _authentication
-                                .createUserWithEmailAndPassword(
-                              email: inputEmail.toString(),
-                              password: inputPassword.toString(),
-                            );
-                            // User 등록 성공 시
-                            if (newUser.user != null) {
-                              // check mount
-                              if (!context.mounted) return;
+                            await viewModel.signUpWithFirebaseAuth(
+                                inputEmail!, inputPassword!);
 
-                              context.push('/sign-in');
-                            }
-                          } catch (e) {
-                            // check mount
-                            debugPrint('$inputEmail, $inputCheckPassword');
-                            debugPrint(e.toString());
                             if (!context.mounted) return;
-
+                            context.push('/main');
+                          } catch (e) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                 content: Text(
