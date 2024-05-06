@@ -31,9 +31,6 @@ class _MyPageScreenState extends State<MyPageScreen> {
 
   @override
   void dispose() {
-    // _accountController.dispose();
-    // _nickNameController.dispose();
-    // _passwordController.dispose();
     super.dispose();
   }
 
