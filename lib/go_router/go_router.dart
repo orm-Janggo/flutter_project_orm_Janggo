@@ -11,7 +11,8 @@ import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_cas
 import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_case/update_password_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/get_recipe_use_case.dart';
 import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_screen.dart';
-import 'package:flutter_project_orm_janggo/presentation/main_screen.dart';
+import 'package:flutter_project_orm_janggo/presentation/main_screen/main_screen.dart';
+import 'package:flutter_project_orm_janggo/presentation/main_screen/main_screen_view_model.dart';
 import 'package:flutter_project_orm_janggo/presentation/my_page/my_page_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/my_page/my_page_view_model.dart';
 import 'package:flutter_project_orm_janggo/presentation/sign/forgot_password/forgot_password_screen.dart';
@@ -81,7 +82,14 @@ final router = GoRouter(
         GoRoute(
             path: 'main',
             builder: (context, state) {
-              return MainScreen();
+              return ChangeNotifierProvider(
+                create: (_) => MainScreenViewModel(
+                  authStateChangesUseCase: AuthStateChangesUseCase(
+                    FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
+                  ),
+                ),
+                child: MainScreen(),
+              );
             },
             routes: [
               GoRoute(
