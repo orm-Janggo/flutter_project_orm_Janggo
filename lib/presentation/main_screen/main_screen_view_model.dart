@@ -21,12 +21,12 @@ class MainScreenViewModel with ChangeNotifier {
 
   void getCurrentUserInfo() {
     _firebaseUser = _authStateChangesUseCase.execute();
-    notifyListeners();
+    // notifyListeners();
 
     _userEmail = firebaseUser?.email;
-    notifyListeners();
+    // notifyListeners();
 
     _userDisplayName = firebaseUser?.displayName;
-    notifyListeners();
+    // notifyListeners();
   }
 }
