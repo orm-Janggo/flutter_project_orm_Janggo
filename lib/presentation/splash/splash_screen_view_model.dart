@@ -19,7 +19,6 @@ class SplashScreenViewModel with ChangeNotifier {
   UserInfoModel? _firebaseUser;
   kakao.User? _kakaoUser;
 
-
   kakao.User? get kakaoUser => _kakaoUser;
 
   String? get userEmail => _userEmail;
@@ -30,15 +29,15 @@ class SplashScreenViewModel with ChangeNotifier {
 
   void getCurrentUserInfo() {
     _firebaseUser = _authStateChangesUseCase.execute();
-    notifyListeners();
+    // notifyListeners();
 
     _userEmail = firebaseUser?.email;
-    notifyListeners();
+    // notifyListeners();
 
     _userDisplayName = firebaseUser?.displayName;
-    notifyListeners();
+    // notifyListeners();
     _updateKaKaoUserInfo();
-    notifyListeners();
+    // notifyListeners();
   }
 
   void _updateKaKaoUserInfo() async {
@@ -48,17 +47,18 @@ class SplashScreenViewModel with ChangeNotifier {
           '\n회원번호: ${kakaoUser.id}'
           '\n닉네임: ${kakaoUser.kakaoAccount?.profile?.nickname}'
           '\n이메일: ${kakaoUser.kakaoAccount?.email}');
-      if(_firebaseUser?.email == null && _kakaoUser?.kakaoAccount?.email != null){
+      if (_firebaseUser?.email == null &&
+          _kakaoUser?.kakaoAccount?.email != null) {
         _userEmail = _kakaoUser?.kakaoAccount?.email;
       }
-
     } catch (error) {
       print('사용자 정보 요청 실패 $error');
     }
   }
+
   void signOutCurrentUser() async {
     await _signOutUseCase.execute();
 
-    notifyListeners();
+    // notifyListeners();
   }
 }
