@@ -5,10 +5,14 @@ import 'package:flutter_project_orm_janggo/data/repository/firebase_auth_reposit
 import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_case/auth_state_changes_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_case/send_password_reset_email_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_case/sign_in_with_email_password_use_case.dart';
+import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_case/sign_out_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_case/sign_up_with_email_password_use_case.dart';
+import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_case/update_display_name_use_case.dart';
+import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_case/update_password_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/get_recipe_use_case.dart';
 import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_screen.dart';
-import 'package:flutter_project_orm_janggo/presentation/main_screen.dart';
+import 'package:flutter_project_orm_janggo/presentation/main_screen/main_screen.dart';
+import 'package:flutter_project_orm_janggo/presentation/main_screen/main_screen_view_model.dart';
 import 'package:flutter_project_orm_janggo/presentation/my_page/my_page_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/my_page/my_page_view_model.dart';
 import 'package:flutter_project_orm_janggo/presentation/sign/forgot_password/forgot_password_screen.dart';
@@ -17,7 +21,8 @@ import 'package:flutter_project_orm_janggo/presentation/sign/sign_in/sign_in_scr
 import 'package:flutter_project_orm_janggo/presentation/sign/sign_in/sign_in_view_model.dart';
 import 'package:flutter_project_orm_janggo/presentation/sign/sign_up/sign_up_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/sign/sign_up/sign_up_view_model.dart';
-import 'package:flutter_project_orm_janggo/presentation/splash_screen.dart';
+import 'package:flutter_project_orm_janggo/presentation/splash/splash_screen.dart';
+import 'package:flutter_project_orm_janggo/presentation/splash/splash_screen_view_model.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -31,7 +36,18 @@ final router = GoRouter(
   routes: [
     GoRoute(
       path: '/',
-      builder: (context, state) => const SplashScreen(),
+      builder: (context, state) {
+        return ChangeNotifierProvider(
+          create: (_) => SplashScreenViewModel(
+            authStateChangesUseCase: AuthStateChangesUseCase(
+              FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
+            ),
+            signOutUseCase: SignOutUseCase(
+                FirebaseAuthRepositoryImpl(FirebaseAuth.instance)),
+          ),
+          child: const SplashScreen(),
+        );
+      },
       routes: [
         GoRoute(
           path: 'sign-in',
@@ -78,7 +94,14 @@ final router = GoRouter(
         GoRoute(
             path: 'main',
             builder: (context, state) {
-              return MainScreen();
+              return ChangeNotifierProvider(
+                create: (_) => MainScreenViewModel(
+                  authStateChangesUseCase: AuthStateChangesUseCase(
+                    FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
+                  ),
+                ),
+                child: MainScreen(),
+              );
             },
             routes: [
               GoRoute(
@@ -115,6 +138,15 @@ final router = GoRouter(
                   return ChangeNotifierProvider(
                     create: (_) => MyPageViewModel(
                       authStateChangesUseCase: AuthStateChangesUseCase(
+                        FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
+                      ),
+                      updateDisplayNameUseCase: UpdateDisplayNameUseCase(
+                        FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
+                      ),
+                      updatePasswordUseCase: UpdatePasswordUseCase(
+                        FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
+                      ),
+                      signOutUseCase: SignOutUseCase(
                         FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
                       ),
                     ),

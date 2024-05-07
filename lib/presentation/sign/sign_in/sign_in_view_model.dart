@@ -8,7 +8,7 @@ class SignInViewModel with ChangeNotifier {
       {required SignInWithEmailPasswordUseCase signInWithEmailPasswordUseCase})
       : _signInWithEmailPasswordUseCase = signInWithEmailPasswordUseCase;
 
-  void signInWithFirebaseAuth(String inputEmail, String inputPassword) async {
+  Future<void> signInWithFirebaseAuth(String inputEmail, String inputPassword) async {
     await _signInWithEmailPasswordUseCase.execute(inputEmail, inputPassword);
     notifyListeners();
   }

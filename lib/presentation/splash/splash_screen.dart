@@ -1,10 +1,11 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_project_orm_janggo/presentation/splash/splash_screen_view_model.dart';
 import 'package:go_router/go_router.dart';
-import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart' as kakao;
+import 'package:provider/provider.dart';
 
-import 'kakao_login/kakao_login_ver2.dart';
+import '../kakao_login/kakao_login_ver2.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -121,27 +122,22 @@ class SplashScreen5 extends StatefulWidget {
 }
 
 class _SplashScreen5State extends State<SplashScreen5> {
-  final _authentication = firebase_auth.FirebaseAuth.instance;
-
-  firebase_auth.User? _emailUser;
   kakao.User? _kakaouser;
-
-  void getCurrentUser() {
-    _emailUser = _authentication.currentUser;
-  }
 
   @override
   void initState() {
     super.initState();
-    getCurrentUser();
+    // getCurrentUser();
   }
 
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
     const double paddingValue = 16.0;
+    final viewModelForgetUser = context.watch<SplashScreenViewModel>();
+    viewModelForgetUser.getCurrentUserInfo();
 
-    debugPrint(_emailUser.toString());
+    // debugPrint(_emailUser.toString());
 
     return Scaffold(
       body: Stack(
@@ -192,7 +188,7 @@ class _SplashScreen5State extends State<SplashScreen5> {
                 borderRadius: BorderRadius.circular(24),
                 color: Colors.white70,
               ),
-              child: _emailUser == null
+              child: viewModelForgetUser.firebaseUser == null
                   ? TextButton(
                       onPressed: () {
                         // Sign In 버튼 눌렀을 때 처리
@@ -210,12 +206,13 @@ class _SplashScreen5State extends State<SplashScreen5> {
                     )
                   : TextButton(
                       onPressed: () async {
-                        if (_emailUser != null) {
-                          await _authentication.signOut();
+                        if (viewModelForgetUser.firebaseUser != null) {
+                          // await _authentication.signOut();
+                          viewModelForgetUser.signOutCurrentUser();
                         }
 
                         if (_kakaouser != null) {
-                        await Kakaologout(context);
+                          await Kakaologout(context);
                         }
 
                         if (!context.mounted) return;
@@ -247,7 +244,10 @@ class _SplashScreen5State extends State<SplashScreen5> {
                 const SizedBox(width: 10),
                 const Text(
                   'or',
-                  style: TextStyle(fontWeight: FontWeight.bold,fontFamily: 'school_font',),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'school_font',
+                  ),
                 ),
                 const SizedBox(width: 10),
                 Container(
