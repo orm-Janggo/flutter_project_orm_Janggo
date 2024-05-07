@@ -18,6 +18,10 @@ class RecipeViewModel with ChangeNotifier{
   RecipeState get state => _state;
 
   void getPicture(List<String> query) async {
+    if (_state.url.length == query.length) {
+      // 검색이 이미 완료되었다면 추가 검색을 방지
+      return;
+    }
     List<String> images = [];
     try {
       for (String recipe in query) {
@@ -32,6 +36,7 @@ class RecipeViewModel with ChangeNotifier{
       }
 
       _state = _state.copyWith(url: images);
+      print(_state.url);
       notifyListeners();
     } catch (e) {
       print("Error in getPicture: $e"); // 예외 처리

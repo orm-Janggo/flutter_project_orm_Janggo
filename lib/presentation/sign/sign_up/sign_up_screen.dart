@@ -1,8 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter_project_orm_janggo/presentation/sign/sign_up/sign_up_view_model.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -12,7 +11,6 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  final _authentication = FirebaseAuth.instance;
   final _formKey = GlobalKey<FormState>();
 
   String? inputEmail;
@@ -20,10 +18,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
   String? inputCheckPassword;
 
   bool _isObscure = true;
-  bool _isChecked = false;
 
   @override
   Widget build(BuildContext context) {
+    final viewModel = context.watch<SignUpViewModel>();
+
     return Scaffold(
       appBar: AppBar(),
       body: GestureDetector(
@@ -206,25 +205,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0),
-                child: Row(
-                  children: [
-                    Checkbox(
-                      value: _isChecked,
-                      onChanged: (bool? value) {
-                        setState(() {
-                          _isChecked = value!;
-                        });
-                      },
-                      checkColor: Colors.white,
-                      activeColor: const Color(0xfffb8c00),
-                      side: const BorderSide(
-                        color: Color(0xfffb8c00),
-                        width: 2.0,
-                      ),
+                padding: const EdgeInsets.only(
+                  top: 16.0,
+                ),
+                child: SizedBox(
+                  width: 320,
+                  height: 50,
+                  child: TextButton(
+                    onPressed: () {
+                      context.push('/sign-in');
+                    },
+                    child: const Text(
+                      '계정이 있으신가요? 로그인',
+                      style: TextStyle(fontSize: 16, fontFamily: 'school_font'),
                     ),
-                    Text('자동 로그인'),
-                  ],
+                  ),
                 ),
               ),
               Container(
@@ -245,24 +240,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           }
 
                           try {
-                            final newUser = await _authentication
-                                .createUserWithEmailAndPassword(
-                              email: inputEmail.toString(),
-                              password: inputPassword.toString(),
-                            );
-                            // User 등록 성공 시
-                            if (newUser.user != null) {
-                              // check mount
-                              if (!context.mounted) return;
+                            await viewModel.signUpWithFirebaseAuth(
+                                inputEmail!, inputPassword!);
 
-                              context.push('/sign-in');
-                            }
-                          } catch (e) {
-                            // check mount
-                            debugPrint('$inputEmail, $inputCheckPassword');
-                            debugPrint(e.toString());
                             if (!context.mounted) return;
-
+                            context.push('/main');
+                          } catch (e) {
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
                                 content: Text(
@@ -286,69 +269,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               ),
                             ),
                           ),
-                        ),
-                      ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Expanded(
-                            child: Divider(
-                              color: Colors.grey,
-                              height: 36,
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 8.0),
-                            child: Text(
-                              'or',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Divider(
-                              color: Colors.grey,
-                              height: 36,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16.0, vertical: 8.0),
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: const Color(0xfff8f8f8)),
-                        // 뒤로 가기 기능 넣으시면 됩니다!
-                        onPressed: () {},
-                        child: const SizedBox(
-                          width: double.infinity,
-                          child: Center(
-                            child: Text(
-                              '구글 계정으로 회원 가입',
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 18.0,
-                                color: Colors.black,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16.0, vertical: 8.0),
-                      child: InkWell(
-                        onTap: () {},
-                        child: Image.asset(
-                          'assets/images/kakao_login_large_wide.png',
                         ),
                       ),
                     ),

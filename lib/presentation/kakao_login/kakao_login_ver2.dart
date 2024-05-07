@@ -1,9 +1,11 @@
+
 import 'package:firebase_auth/firebase_auth.dart' as Auth;
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
 Future<bool> signInWithKakao() async {
+  print(await KakaoSdk.origin);
   try {
     // 카카오 로그인 시도
     var provider = Auth.OAuthProvider("oidc.janggo");
@@ -13,6 +15,7 @@ Future<bool> signInWithKakao() async {
       accessToken: token.accessToken,
     );
     await Auth.FirebaseAuth.instance.signInWithCredential(credential);
+
     print('카카오톡으로 로그인 성공 ${token.accessToken}');
     User user = await UserApi.instance.me();
     print('사용자 정보${user.id}');
@@ -47,13 +50,28 @@ void navigateToMain(BuildContext context) async {
   }
 }
 
-void logout() async {
+Future<void> Kakaologout(BuildContext context) async {
+  bool logoutSuccessful = false;
+
   try {
     await UserApi.instance.logout();
     print('로그아웃 성공, SDK에서 토큰 삭제');
   } catch (error) {
     print('로그아웃 실패, SDK에서 토큰 삭제 $error');
   }
+
+  try{
+    await Auth.FirebaseAuth.instance.signOut();
+    logoutSuccessful = true;
+  }catch(e){
+    print('Firebase 로그아웃 실패 : $e');
+  }
+
+  if(logoutSuccessful){
+
+    navigateToMain(context);
+  }
+
 }
 
 void userInfo() async {
@@ -69,28 +87,18 @@ void userInfo() async {
 }
 
 Widget getKakaoLoginButton(BuildContext context) {
-  return InkWell(
-    onTap: () {
-      navigateToMain(context);
-    },
-    child: Container(
+  return Container(
+    width: 320,
+    height: 50,
+    decoration: BoxDecoration(
       color: Colors.yellow,
-      child: SizedBox(
-        width: 210,
-        height: 50,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Image.asset(
-              'assets/images/kakao_login_button.png',
-              width: 200,
-              height: 150,
-              fit: BoxFit.cover,
-            ),
-            SizedBox(width: 10),
-          ],
-        ),
-      ),
+      borderRadius: BorderRadius.circular(16.0),
+    ),
+    child: InkWell(
+      onTap: () {
+        navigateToMain(context);
+      },
+      child: Image.asset('assets/images/kakao_login_large_wide.png'),
     ),
   );
 }

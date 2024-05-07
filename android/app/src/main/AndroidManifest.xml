@@ -4,7 +4,7 @@
 
     <application
         android:enableOnBackInvokedCallback="true"
-        android:label="flutter_project_orm_janggo"
+        android:label="장고처리"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <!-- 카카오 로그인 커스텀 URL 스킴 설정 -->

@@ -40,39 +40,57 @@ class _RecipeScreenState extends State<RecipeScreen> {
   Widget build(BuildContext context) {
     final viewModel = context.watch<RecipeViewModel>();
     final state = viewModel.state;
-
-    if (state.recipe != null) {
+    if (state.recipe != []) {
       viewModel.getPicture(state.recipe);
       setState(() {});
     }
+
+    final double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
       appBar: AppBar(
-
-  
+        // 커스텀 레이아웃을 사용하여 텍스트를 중앙에 위치
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center, // 중앙 정렬
+          children: [
+            Spacer(), // 왼쪽에서 중앙으로 텍스트 이동
+            Text(
+              state.recipe.isNotEmpty
+                  ? '${_currentPage + 1} / ${state.recipe.length}'
+                  : '',
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+            ),
+            Spacer(), // 오른쪽 아이콘과 간격 유지
+          ],
+        ),
         actions: [
-          // 페이지 전체 개수와 현재 페이지 인덱스를 표시
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                '${_currentPage + 1} / ${state.recipe.length}',
-                style:
-                const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-              ),
-              const SizedBox(width: 130), // 공백 추가
-            ],
-          ),
           IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.face),
+            onPressed: () {
+              context.push('/main/recipe/recipe-history');
+            },
+            icon: const Icon(Icons.face),
           ),
-          SizedBox(
-            width: 10,
-          )
+          const SizedBox(width: 10),
         ],
       ),
       body: SafeArea(
-        child: Center(
+        child: state.recipe.isEmpty
+            ? Center(
+                child: Container(
+                  width: 300,
+                  height: 150,
+                  child: Column(
+                    children: [
+                      Image.asset(
+                        'assets/images/book.gif',
+                        fit: BoxFit.fill,
+                      ),
+                      const Text('Ai가 레시피를 찾고있어요 잠시만 기다려주세요!', style: TextStyle(fontFamily: 'school_font', fontSize: 15),),
+                    ],
+                  ),
+                ),
+              )
+            : Center(
           child: Column(
             children: [
               Container(
@@ -98,7 +116,8 @@ class _RecipeScreenState extends State<RecipeScreen> {
               ),
               Expanded(
                 child: PageView.builder(
-                  itemCount: state.recipe.length > 3 ? 3 : state.recipe.length,
+                  itemCount:
+                  state.recipe.length > 3 ? 3 : state.recipe.length,
                   controller: _pageController,
                   itemBuilder: (context, index) {
                     return Padding(
@@ -115,7 +134,8 @@ class _RecipeScreenState extends State<RecipeScreen> {
                                   index < state.url.length &&
                                   state.url[index] != 'empty')
                                   ? ClipRRect(
-                                borderRadius: BorderRadius.circular(15),
+                                borderRadius:
+                                BorderRadius.circular(15),
                                 child: Container(
                                   decoration: BoxDecoration(
                                     border: Border.all(
@@ -132,7 +152,8 @@ class _RecipeScreenState extends State<RecipeScreen> {
                                 ),
                               )
                                   : ClipRRect(
-                                borderRadius: BorderRadius.circular(15),
+                                borderRadius:
+                                BorderRadius.circular(15),
                                 child: Container(
                                   decoration: BoxDecoration(
                                     border: Border.all(
@@ -156,18 +177,21 @@ class _RecipeScreenState extends State<RecipeScreen> {
                               child: SingleChildScrollView(
                                 scrollDirection: Axis.vertical,
                                 child: Container(
-                                  width: MediaQuery.of(context).size.width,
+                                  width:
+                                  MediaQuery.of(context).size.width,
                                   decoration: BoxDecoration(
                                     color: Colors.amber[50],
-                                    borderRadius: BorderRadius.circular(10),
+                                    borderRadius:
+                                    BorderRadius.circular(10),
                                   ),
                                   padding: const EdgeInsets.all(16.0),
                                   child: Text(
                                     state.recipe[index],
                                     style: const TextStyle(
-                                      fontSize: 18,
+                                      fontSize: 20,
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold,
+                                      fontFamily: 'hand_font',
                                     ),
                                   ),
                                 ),

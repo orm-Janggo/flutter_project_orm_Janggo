@@ -1,20 +1,18 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart'; // go_router 임포트 추가
-import 'package:firebase_auth/firebase_auth.dart' as fba;
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 
 class MainScreen extends StatefulWidget {
   State<StatefulWidget> createState() => _MainScreenState();
 }
 
 class _MainScreenState extends State<StatefulWidget> {
-  final _authentication = fba.FirebaseAuth.instance;
+  final _authentication = firebase_auth.FirebaseAuth.instance;
 
-  fba.User? _emailUser;
+  firebase_auth.User? _emailUser;
 
-  User? _user;
+  User? _kakaoUser;
 
   @override
   void initState() {
@@ -24,7 +22,7 @@ class _MainScreenState extends State<StatefulWidget> {
   }
 
   void getEmailUser() {
-    _authentication.authStateChanges().listen((fba.User? emailUser) {
+    _authentication.authStateChanges().listen((firebase_auth.User? emailUser) {
       if (emailUser != null) {
         _emailUser = emailUser;
         debugPrint(_emailUser.toString());
@@ -32,8 +30,9 @@ class _MainScreenState extends State<StatefulWidget> {
       }
     });
   }
+
   Future<void> _initKakaoUser() async {
-    _user = await UserApi.instance.me();
+    _kakaoUser = await UserApi.instance.me();
     setState(() {});
   }
 
@@ -80,6 +79,14 @@ class _MainScreenState extends State<StatefulWidget> {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint('kakao user ${_kakaoUser.toString()}');
+
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final double screenHeight = MediaQuery.of(context).size.height;
+
+    final double centerX = screenWidth / 2;
+    final double centerY = screenHeight / 2;
+
     return Scaffold(
       // 키보드에 의한 UI 이동방지
       resizeToAvoidBottomInset: false,
@@ -88,67 +95,93 @@ class _MainScreenState extends State<StatefulWidget> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
+            if (_emailUser != null) {
+              context.push('/');
+              return;
+            }
+
             Navigator.of(context).pop();
           },
         ),
         actions: [
-          _user != null
+          _kakaoUser != null
               ? Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(_user!.kakaoAccount!.profile!.nickname!),
-              ],
-            ),
-          )
-              : _emailUser != null
-              ? Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TextButton(
-                  onPressed: () {
-                    context.push('/main/my-page');
-                  },
-                  child: Text(_emailUser!.displayName!),
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(_kakaoUser!.kakaoAccount!.profile!.nickname!),
+                    ],
+                  ),
                 )
-              ],
-            ),
-          )
-              : const Text('비회원'),
+              : _emailUser != null
+                  ? Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          TextButton(
+                            onPressed: () {
+                              context.push('/main/my-page');
+                            },
+                            child: Text(
+                              _emailUser?.displayName ??
+                                  _emailUser!.email.toString(),
+                              style: TextStyle(fontFamily: 'school_font'),
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            '비회원',
+                            style: TextStyle(fontFamily: 'school_font'),
+                          ),
+                        ],
+                      ),
+                    ),
           SizedBox(
             width: 16,
           ),
         ],
       ),
-      body: Stack(
+
+      body: SafeArea(
+          child: Stack(
         children: [
           Container(
             decoration: const BoxDecoration(
-                image: DecorationImage(
-              image: AssetImage('assets/images/main-background.png'),
-              fit: BoxFit.cover,
-            )),
+              image: DecorationImage(
+                image: AssetImage('assets/images/main-background.png'),
+                fit: BoxFit.cover,
+              ),
+            ),
           ),
           Align(
             alignment: Alignment.topCenter,
-            child: Container(
-                padding: EdgeInsets.only(top: 10),
-                width: 200,
-                height: 200,
-                child: Text(
-                  '재료를 넣어주세요!',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                )),
+            child: Positioned(
+              left: centerX - 50,
+              top: centerY - 50,
+              child: const Text(
+                '재료를 넣어주세요!',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'school_font',
+                ),
+              ),
+            ),
           ),
-
           Center(
             child: Padding(
               padding: const EdgeInsets.only(top: 155.0),
               child: SizedBox(
-                height: 340, // 스크롤 가능한 영역의 높이를 설정합니다.
+                height: 340,
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
@@ -157,7 +190,7 @@ class _MainScreenState extends State<StatefulWidget> {
                         Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: SizedBox(
-                            height: 70, // 텍스트 폼 필드의 고정된 높이 설정
+                            height: 70,
                             child: TextField(
                               keyboardType: TextInputType.text,
                               onTapOutside: (event) =>
@@ -171,6 +204,9 @@ class _MainScreenState extends State<StatefulWidget> {
                                   },
                                 ),
                                 hintText: '재료를 입력해주세요',
+                                hintStyle: TextStyle(
+                                  fontFamily: 'school_font',
+                                ),
                                 filled: true,
                                 fillColor: Colors.white,
                                 border: const OutlineInputBorder(
@@ -196,34 +232,30 @@ class _MainScreenState extends State<StatefulWidget> {
                               ),
                               style: const TextStyle(
                                 color: Colors.black,
+                                fontFamily: 'school_font',
                               ),
                             ),
                           ),
                         ),
-                      // 다른 영역의 추가되는 텍스트 폼 필드들
-                      // 이 영역은 특정 높이 이상일 때만 스크롤됩니다.
                     ],
                   ),
                 ),
               ),
             ),
           ),
-
-          // 버튼을 화면 맨 아래에 고정시킴
           GestureDetector(
             onTap: () {
               FocusScope.of(context).unfocus();
             },
             child: Align(
-              alignment: Alignment.bottomCenter, // 화면 아래 중앙에 배치
+              alignment: Alignment.bottomCenter, // 화면 아래 가운데 정렬
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.end, // 하단에 배치
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Container(
-                    width: 300,
+                    width: screenWidth * 0.7,
                     height: 50,
                     margin: EdgeInsets.only(bottom: 16),
-                    // 아래 여백 추가
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(24),
                       color: Colors.white70,
@@ -239,6 +271,7 @@ class _MainScreenState extends State<StatefulWidget> {
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
+                              fontFamily: 'school_font',
                             ),
                           ),
                           SizedBox(width: 8),
@@ -248,33 +281,36 @@ class _MainScreenState extends State<StatefulWidget> {
                     ),
                   ),
                   Container(
-                    width: 300,
+                    width: screenWidth * 0.7,
                     height: 50,
                     margin: EdgeInsets.only(bottom: 16),
-                    // 아래 여백 추가
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(24),
                       color: Colors.orange,
                     ),
                     child: TextButton(
                       onPressed: () {
-                        // 재료가 입력되지 않은 경우
                         if (_controllers
                             .any((controller) => controller.text.isEmpty)) {
-                          // 알럿 대화상자 표시
                           showDialog(
                             context: context,
                             builder: (context) => AlertDialog(
                               title: Text(
                                 '알림',
-                                style: TextStyle(fontSize: 16),
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontFamily: 'school_font',
+                                ),
                                 textAlign: TextAlign.center,
                               ),
                               content: Padding(
                                 padding: const EdgeInsets.only(top: 16.0),
                                 child: const Text(
                                   '재료가 없습니다!',
-                                  style: TextStyle(fontSize: 18),
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    fontFamily: 'school_font',
+                                  ),
                                   textAlign: TextAlign.center,
                                 ),
                               ),
@@ -283,13 +319,17 @@ class _MainScreenState extends State<StatefulWidget> {
                                   onPressed: () {
                                     Navigator.of(context).pop();
                                   },
-                                  child: Text('확인'),
+                                  child: Text(
+                                    '확인',
+                                    style: TextStyle(
+                                      fontFamily: 'school_font',
+                                    ),
+                                  ),
                                 ),
                               ],
                             ),
                           );
                         } else {
-                          context.push('/main/loading');
                           _onButtonPressed(context);
                         }
                       },
@@ -302,6 +342,7 @@ class _MainScreenState extends State<StatefulWidget> {
                               fontSize: 16,
                               fontWeight: FontWeight.bold,
                               color: Colors.black,
+                              fontFamily: 'school_font',
                             ),
                           ),
                           SizedBox(width: 8),
@@ -315,7 +356,7 @@ class _MainScreenState extends State<StatefulWidget> {
             ),
           ),
         ],
-      ),
+      )),
     );
   }
 }

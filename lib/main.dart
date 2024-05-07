@@ -31,6 +31,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange),
         useMaterial3: true,
+        textTheme: const TextTheme(
+          bodyLarge: TextStyle(fontFamily: 'hand_font'),
+          bodyMedium: TextStyle(fontFamily: 'school_font'),
+        )
       ),
       routerConfig: router,
     );
