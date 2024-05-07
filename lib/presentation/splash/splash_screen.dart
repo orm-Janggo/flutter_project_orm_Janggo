@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_project_orm_janggo/domain/model/social_login/kakao_login.dart';
 import 'package:flutter_project_orm_janggo/presentation/splash/splash_screen_view_model.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart' as kakao;
@@ -114,21 +115,8 @@ class SplashScreen4 extends StatelessWidget {
   }
 }
 
-class SplashScreen5 extends StatefulWidget {
-  SplashScreen5({Key? key});
-
-  @override
-  State<SplashScreen5> createState() => _SplashScreen5State();
-}
-
-class _SplashScreen5State extends State<SplashScreen5> {
-  kakao.User? _kakaouser;
-
-  @override
-  void initState() {
-    super.initState();
-    // getCurrentUser();
-  }
+class SplashScreen5 extends StatelessWidget {
+  const SplashScreen5({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -136,8 +124,6 @@ class _SplashScreen5State extends State<SplashScreen5> {
     const double paddingValue = 16.0;
     final viewModelForgetUser = context.watch<SplashScreenViewModel>();
     viewModelForgetUser.getCurrentUserInfo();
-
-    // debugPrint(_emailUser.toString());
 
     return Scaffold(
       body: Stack(
@@ -152,8 +138,8 @@ class _SplashScreen5State extends State<SplashScreen5> {
             // 첫 번째 Container 안에 배치되는 위젯들
           ),
           Positioned(
-            bottom: screenSize.height * 0.19, // 원하는 위치로 조정
-            left: paddingValue, // 원하는 위치로 조정
+            bottom: screenSize.height * 0.19,
+            left: paddingValue,
             child: Container(
               width: screenSize.width - (paddingValue * 2),
               height: 50,
@@ -179,8 +165,8 @@ class _SplashScreen5State extends State<SplashScreen5> {
             ),
           ),
           Positioned(
-            bottom: screenSize.height * 0.09, // 원하는 위치로 조정
-            left: paddingValue, // 원하는 위치로 조정
+            bottom: screenSize.height * 0.09,
+            left: paddingValue,
             child: Container(
               width: screenSize.width - (paddingValue * 2),
               height: 50,
@@ -190,45 +176,46 @@ class _SplashScreen5State extends State<SplashScreen5> {
               ),
               child: viewModelForgetUser.firebaseUser == null
                   ? TextButton(
-                      onPressed: () {
-                        // Sign In 버튼 눌렀을 때 처리
-                        context.push('/sign-in');
-                      },
-                      child: const Text(
-                        "로그인",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                          fontFamily: 'school_font',
-                        ),
-                      ),
-                    )
+                onPressed: () {
+                  // Sign In 버튼 눌렀을 때 처리
+                  context.push('/sign-in');
+                },
+                child: const Text(
+                  "로그인",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                    fontFamily: 'school_font',
+                  ),
+                ),
+              )
                   : TextButton(
-                      onPressed: () async {
-                        if (viewModelForgetUser.firebaseUser != null) {
-                          // await _authentication.signOut();
-                          viewModelForgetUser.signOutCurrentUser();
-                        }
+                onPressed: () async {
+                  if (viewModelForgetUser.firebaseUser != null) {
+                    // 로그아웃 처리
+                    viewModelForgetUser.signOutCurrentUser();
+                  }
 
-                        if (_kakaouser != null) {
-                          await Kakaologout(context);
-                        }
+                  // 카카오 로그아웃
+                  KakaoLogin kakaoLogin = KakaoLogin();
+                  if (viewModelForgetUser.kakaoUser != null) {
+                    await kakaoLogin.logout();
+                  }
 
-                        if (!context.mounted) return;
-
-                        context.push('/');
-                      },
-                      child: const Text(
-                        "로그아웃",
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black,
-                          fontFamily: 'school_font',
-                        ),
-                      ),
-                    ),
+                  // 홈으로 이동
+                  context.push('/');
+                },
+                child: const Text(
+                  "로그아웃",
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                    fontFamily: 'school_font',
+                  ),
+                ),
+              ),
             ),
           ),
           Positioned(
