@@ -4,6 +4,8 @@ import 'package:flutter_project_orm_janggo/presentation/sign/sign_in/sign_in_vie
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import 'google/google_sign_in.dart';
+
 class SignInScreen extends StatefulWidget {
   const SignInScreen({super.key});
 
@@ -261,21 +263,9 @@ class _SignInScreenState extends State<SignInScreen> {
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  width: 320,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: Colors.grey,
-                    borderRadius: BorderRadius.circular(16.0),
-                  ),
-                  child: TextButton(
-                    onPressed: () {},
-                    child: const Text(
-                      '구글 계정으로 로그인',
-                      style: TextStyle(fontSize: 20),
-                    ),
-                  ),
-                ),
+                child: googleLoginButton(
+                  context,
+                )
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
