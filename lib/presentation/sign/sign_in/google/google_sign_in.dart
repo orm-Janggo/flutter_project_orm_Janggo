@@ -1,12 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 final GoogleSignIn _googleSignIn = GoogleSignIn(
-  scopes: [
-    'email',
-    'https://www.googleapis.com/auth/contacts.readonly',
-  ],
+  scopes: ['email', 'profile'],  // 최소 범위만 요청
 );
 
 Future<void> GoogleLogin(BuildContext context) async {
@@ -25,15 +23,10 @@ Future<void> GoogleLogin(BuildContext context) async {
 
       await FirebaseAuth.instance.signInWithCredential(credential);
 
-      Navigator.of(context).pushNamed('/main'); // 로그인 성공 시 메인 화면으로 이동
+      context.go('/main');
     }
   } catch (error) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text("Google 로그인에 실패했습니다: $error"),
-        backgroundColor: Colors.red,
-      ),
-    );
+    print("Google 로그인에 실패했습니다: $error");
   }
 }
 
