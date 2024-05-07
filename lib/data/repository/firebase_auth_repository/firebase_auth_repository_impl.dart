@@ -39,4 +39,23 @@ class FirebaseAuthRepositoryImpl implements FirebaseAuthRepository {
   Future<void> callSendPasswordResetEmail(String inputEmail) async {
     await _authentication.sendPasswordResetEmail(email: inputEmail);
   }
+
+  @override
+  Future<void> callUpdateDisplayName(String inputDisplayName) async {
+    firebase_auth.User? currentUser = _authentication.currentUser;
+
+    await currentUser?.updateDisplayName(inputDisplayName);
+  }
+
+  @override
+  Future<void> callUpdatePassword(String inputPassword) async {
+    firebase_auth.User? currentUser = _authentication.currentUser;
+
+    await currentUser?.updatePassword(inputPassword);
+  }
+
+  @override
+  Future<void> callSignOut() async {
+    await _authentication.signOut();
+  }
 }
