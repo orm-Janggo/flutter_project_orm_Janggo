@@ -190,7 +190,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     borderRadius: BorderRadius.circular(16.0),
                   ),
                   child: TextButton(
-                    onPressed: () {
+                    onPressed: () async {
                       if (_formKey.currentState?.validate() ?? false) {
                         _formKey.currentState?.save();
                       }
@@ -200,7 +200,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         //   email: inputEmail.toString(),
                         //   password: inputPassword.toString(),
                         // );
-                        viewModel.signInWithFirebaseAuth(
+                        await viewModel.signInWithFirebaseAuth(
                             inputEmail!, inputPassword!);
                         debugPrint('로그인 성공');
 

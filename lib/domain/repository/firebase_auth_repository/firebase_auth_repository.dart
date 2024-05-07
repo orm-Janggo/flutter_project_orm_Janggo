@@ -10,4 +10,10 @@ abstract interface class FirebaseAuthRepository {
   UserInfoModel? callCurrentUser();
 
   Future<void> callSendPasswordResetEmail(String inputEmail);
+
+  Future<void> callUpdateDisplayName(String inputDisplayName);
+
+  Future<void> callUpdatePassword(String inputPassword);
+
+  Future<void> callSignOut();
 }
