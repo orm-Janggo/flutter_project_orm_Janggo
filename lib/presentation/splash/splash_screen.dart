@@ -7,7 +7,6 @@ import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart' as kakao;
 import 'package:provider/provider.dart';
 
 import '../kakao_login/kakao_login_ver2.dart';
-
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
@@ -19,10 +18,10 @@ class _SplashScreenState extends State<SplashScreen> {
   int _currentIndex = 0;
 
   List<Widget> splashScreens = [
-    SplashScreen1(),
-    SplashScreen2(),
-    SplashScreen3(),
-    SplashScreen4(),
+    SplashScreenImage(imagePath: 'assets/images/Splash Screen - 1.png'),
+    SplashScreenImage(imagePath: 'assets/images/Splash Screen - 2.png'),
+    SplashScreenImage(imagePath: 'assets/images/Splash Screen - 3.png'),
+    SplashScreenImage(imagePath: 'assets/images/Splash Screen - 4.png'),
     SplashScreen5(),
   ];
 
@@ -59,55 +58,17 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 }
 
-class SplashScreen1 extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('assets/images/Splash Screen - 1.png'),
-          fit: BoxFit.cover,
-        ),
-      ),
-    );
-  }
-}
+class SplashScreenImage extends StatelessWidget {
+  final String imagePath;
 
-class SplashScreen2 extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('assets/images/Splash Screen - 2.png'),
-          fit: BoxFit.cover,
-        ),
-      ),
-    );
-  }
-}
+  const SplashScreenImage({Key? key, required this.imagePath}) : super(key: key);
 
-class SplashScreen3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
+      decoration: BoxDecoration(
         image: DecorationImage(
-          image: AssetImage('assets/images/Splash Screen - 3.png'),
-          fit: BoxFit.cover,
-        ),
-      ),
-    );
-  }
-}
-
-class SplashScreen4 extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage('assets/images/Splash Screen - 4.png'),
+          image: AssetImage(imagePath),
           fit: BoxFit.cover,
         ),
       ),
