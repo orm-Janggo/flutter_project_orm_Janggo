@@ -2,10 +2,29 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/get_picture_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/get_recipe_use_case.dart';
 import 'package:flutter_project_orm_janggo/presentation/recipe_state.dart';
+import 'package:hive/hive.dart';
+
 
 class RecipeViewModel with ChangeNotifier{
   final GetPictureUseCase _getPictureUseCase;
   final GetRecipeUseCase _getRecipeUseCase;
+
+  // hive box 가져오기
+  final _recipeBox = Hive.box('recipeBox');
+  final _imageBox = Hive.box('imageBox');
+
+  // hive box에 data 쓰기
+  void wirteData() {
+    _recipeBox.put(1, '123');
+    _imageBox.put(1, 'abc');
+  }
+
+  void readData() {
+    print('${_recipeBox.get(1)}');
+    print('${_imageBox.get(1)}');
+  }
+
+  // void deleteData() {}
 
   RecipeViewModel({
     required GetPictureUseCase getPictureUseCase,
@@ -51,4 +70,9 @@ class RecipeViewModel with ChangeNotifier{
     notifyListeners();
   }
 
+  void saveData(List<String> recipes, List<String> images) async {
+    var box = await Hive.openBox('myBox');
+    await box.put('recipeKey', recipes);
+    await box.put('imagesKey', images);
+  }
 }
