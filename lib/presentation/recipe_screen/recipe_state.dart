@@ -6,11 +6,11 @@ part 'recipe_state.g.dart';
 
 @freezed
 class RecipeState with _$RecipeState {
-  const factory RecipeState({
-    @Default([]) List<String> recipe,
-    @Default([]) List<String> url
+  const factory RecipeState(
+      {@Default([]) List<String> recipe,
+      @Default([]) List<String> url,
+      @Default(false) bool islike}) = _RecipeState;
 
-  }) = _RecipeState;
-  
-  factory RecipeState.fromJson(Map<String, Object?> json) => _$RecipeStateFromJson(json); 
+  factory RecipeState.fromJson(Map<String, Object?> json) =>
+      _$RecipeStateFromJson(json);
 }
