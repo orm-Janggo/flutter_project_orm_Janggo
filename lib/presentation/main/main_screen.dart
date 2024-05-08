@@ -108,7 +108,15 @@ class _MainScreenState extends State<MainScreen> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(userInfo?.displayName ?? 'Unknown Kakao User'),
+                  TextButton(
+                    onPressed: () {
+                      context.push('/main/my-page');  // 사용자 정보 페이지로 이동
+                    },
+                    child: Text(
+                      userInfo?.displayName ?? 'Unknown Kakao User',
+                      style: const TextStyle(fontFamily: 'school_font'),
+                    ),
+                  ),
                 ],
               ),
             )
@@ -136,9 +144,14 @@ class _MainScreenState extends State<MainScreen> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      userInfo?.email ?? '',
-                      style: const TextStyle(fontFamily: 'school_font'),
+                    TextButton(
+                      onPressed: () {
+                        context.push('/main/my-page');  // 사용자 정보 페이지로 이동
+                      },
+                      child: Text(
+                        userInfo?.email ?? '',
+                        style: const TextStyle(fontFamily: 'school_font'),
+                      ),
                     ),
                   ],
                 ),
