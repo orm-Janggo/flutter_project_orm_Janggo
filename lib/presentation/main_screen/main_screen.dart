@@ -4,6 +4,7 @@ import 'package:flutter_project_orm_janggo/presentation/main_screen/main_screen_
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import '../../domain/model/social_login/kakao_login.dart';
 
@@ -14,10 +15,17 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   final kakaoLoginViewModel = KakaoLoginViewModel(kakaoLogin: KakaoLogin());
 
+  // initialize google mobile ad sdk
+  Future<InitializationStatus> _initGoogleMobileAds() {
+    // TODO: Initialize Google Mobile Ads SDK
+    return MobileAds.instance.initialize();
+  }
+
   @override
   void initState() {
     super.initState();
     _initKakaoUser();
+    _initGoogleMobileAds();
   }
 
   Future<void> _initKakaoUser() async {
@@ -96,45 +104,46 @@ class _MainScreenState extends State<MainScreen> {
         actions: [
           kakaoLoginViewModel.user != null
               ? Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(kakaoLoginViewModel.user!.kakaoAccount!.profile!.nickname!),
-              ],
-            ),
-          )
-              : viewModelForgetUser.firebaseUser != null
-              ? Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                TextButton(
-                  onPressed: () {
-                    context.push('/main/my-page');
-                  },
-                  child: Text(
-                    viewModelForgetUser.userDisplayName ??
-                        viewModelForgetUser.userEmail!,
-                    style: TextStyle(fontFamily: 'school_font'),
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(kakaoLoginViewModel
+                          .user!.kakaoAccount!.profile!.nickname!),
+                    ],
                   ),
                 )
-              ],
-            ),
-          )
-              : Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  '비회원',
-                  style: TextStyle(fontFamily: 'school_font'),
-                ),
-              ],
-            ),
-          ),
+              : viewModelForgetUser.firebaseUser != null
+                  ? Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          TextButton(
+                            onPressed: () {
+                              context.push('/main/my-page');
+                            },
+                            child: Text(
+                              viewModelForgetUser.userDisplayName ??
+                                  viewModelForgetUser.userEmail!,
+                              style: TextStyle(fontFamily: 'school_font'),
+                            ),
+                          )
+                        ],
+                      ),
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            '비회원',
+                            style: TextStyle(fontFamily: 'school_font'),
+                          ),
+                        ],
+                      ),
+                    ),
           SizedBox(
             width: 16,
           ),
