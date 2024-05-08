@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/get_picture_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/get_recipe_use_case.dart';
-import 'package:flutter_project_orm_janggo/presentation/recipe_state.dart';
+import 'package:flutter_project_orm_janggo/presentation/recipe_screen/recipe_state.dart';
 
 class RecipeViewModel with ChangeNotifier{
   final GetPictureUseCase _getPictureUseCase;

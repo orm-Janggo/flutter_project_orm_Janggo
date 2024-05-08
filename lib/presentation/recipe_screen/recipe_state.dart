@@ -9,6 +9,7 @@ class RecipeState with _$RecipeState {
   const factory RecipeState({
     @Default([]) List<String> recipe,
     @Default([]) List<String> url
+
   }) = _RecipeState;
   
   factory RecipeState.fromJson(Map<String, Object?> json) => _$RecipeStateFromJson(json); 

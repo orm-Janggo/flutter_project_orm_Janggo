@@ -29,8 +29,8 @@ import 'package:provider/provider.dart';
 import '../data/data_source/picture_data_source.dart';
 import '../data/repository/picture_repository_impl.dart';
 import '../domain/use_case/get_picture_use_case.dart';
-import '../presentation/recipe_screen.dart';
-import '../presentation/recipe_view_model.dart';
+import '../presentation/recipe_screen/recipe_screen.dart';
+import '../presentation/recipe_screen/recipe_view_model.dart';
 
 final router = GoRouter(
   routes: [
