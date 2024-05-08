@@ -50,9 +50,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
         onAdLoaded: (ad) {
           print('------------ad------------');
           ad.fullScreenContentCallback = FullScreenContentCallback(
-            onAdDismissedFullScreenContent: (ad) {
-
-            },
+            onAdDismissedFullScreenContent: (ad) {},
           );
 
           setState(() {
@@ -95,7 +93,6 @@ class _RecipeScreenState extends State<RecipeScreen> {
       viewModel.getPicture(state.recipe);
       setState(() {});
     }
-
 
     final double screenWidth = MediaQuery.of(context).size.width;
 
