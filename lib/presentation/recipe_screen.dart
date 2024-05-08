@@ -23,8 +23,6 @@ class _RecipeScreenState extends State<RecipeScreen> {
   // 현재 페이지의 index
   int _currentPage = 0;
 
-
-
   @override
   void initState() {
     super.initState();
@@ -37,6 +35,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
   Widget build(BuildContext context) {
     final viewModel = context.watch<RecipeViewModel>();
     final state = viewModel.state;
+
     if (state.recipe != []) {
       viewModel.getPicture(state.recipe);
       setState(() {});
@@ -61,15 +60,13 @@ class _RecipeScreenState extends State<RecipeScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              // context.push('/main/recipe/recipe-history');
-              viewModel.wirteData();
+              context.push('/main/recipe/recipe-history');
             },
-            icon: const Icon(Icons.face),
+            icon: const Icon(Icons.abc),
           ),
           IconButton(
             onPressed: () {
-              // context.push('/main/recipe/recipe-history');
-              viewModel.readData();
+              context.push('/main/recipe/recipe-history');
             },
             icon: const Icon(Icons.face),
           ),

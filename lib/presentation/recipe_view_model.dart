@@ -1,30 +1,13 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter_project_orm_janggo/data/db/history/history_recipe_data.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/get_picture_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/get_recipe_use_case.dart';
 import 'package:flutter_project_orm_janggo/presentation/recipe_state.dart';
 import 'package:hive/hive.dart';
 
-
-class RecipeViewModel with ChangeNotifier{
+class RecipeViewModel with ChangeNotifier {
   final GetPictureUseCase _getPictureUseCase;
   final GetRecipeUseCase _getRecipeUseCase;
-
-  // hive box 가져오기
-  final _recipeBox = Hive.box('recipeBox');
-  final _imageBox = Hive.box('imageBox');
-
-  // hive box에 data 쓰기
-  void wirteData() {
-    _recipeBox.put(1, '123');
-    _imageBox.put(1, 'abc');
-  }
-
-  void readData() {
-    print('${_recipeBox.get(1)}');
-    print('${_imageBox.get(1)}');
-  }
-
-  // void deleteData() {}
 
   RecipeViewModel({
     required GetPictureUseCase getPictureUseCase,
@@ -55,7 +38,8 @@ class RecipeViewModel with ChangeNotifier{
       }
 
       _state = _state.copyWith(url: images);
-      print(_state.url);
+      addDataListToHive(_state.url, _state.recipe);
+
       notifyListeners();
     } catch (e) {
       print("Error in getPicture: $e"); // 예외 처리
@@ -64,15 +48,27 @@ class RecipeViewModel with ChangeNotifier{
 
   void getRecipe(String ingredients) async {
     final recipe = await _getRecipeUseCase.execute(ingredients);
-    _state = _state.copyWith(
-      recipe: recipe
-    );
+    _state = _state.copyWith(recipe: recipe);
     notifyListeners();
   }
 
-  void saveData(List<String> recipes, List<String> images) async {
-    var box = await Hive.openBox('myBox');
-    await box.put('recipeKey', recipes);
-    await box.put('imagesKey', images);
+  Future<void> addDataListToHive(
+      List<String> imagePathList, List<String> recipeList) async {
+    Box box = Hive.box<HistoryRecipeData>('historyRecipeBox');
+
+    // 박스의 길이를 id로 사용하여 새로운 id를 생성
+    int nextId = box.length;
+
+    for (int i = 0; i < imagePathList.length; i++) {
+      String imagePath = imagePathList[i];
+      String recipe = recipeList[i];
+
+      box.add(HistoryRecipeData(nextId++, imagePath, recipe));
+
+      print('id =================== $nextId');
+      print('imagePath =================== $imagePath');
+      print('recipe =================== $recipe');
+    }
+    print('values============================${box.values.length}');
   }
 }
