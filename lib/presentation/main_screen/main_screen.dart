@@ -4,9 +4,11 @@ import 'package:flutter_project_orm_janggo/presentation/main_screen/main_screen_
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import '../../domain/model/social_login/kakao_login.dart';
+
+import 'package:flutter_project_orm_janggo/presentation/ads/google_ads_helper.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class MainScreen extends StatefulWidget {
   State<StatefulWidget> createState() => _MainScreenState();
@@ -17,8 +19,34 @@ class _MainScreenState extends State<MainScreen> {
 
   // initialize google mobile ad sdk
   Future<InitializationStatus> _initGoogleMobileAds() {
-    // TODO: Initialize Google Mobile Ads SDK
     return MobileAds.instance.initialize();
+  }
+
+  // Add _interstitialAd
+  InterstitialAd? _interstitialAd;
+
+  // Implement _loadInterstitialAd()
+  void _loadInterstitialAd() {
+    InterstitialAd.load(
+      adUnitId: AdHelper.interstitialAdUnitId,
+      request: AdRequest(),
+      adLoadCallback: InterstitialAdLoadCallback(
+        onAdLoaded: (ad) {
+          ad.fullScreenContentCallback = FullScreenContentCallback(
+            onAdDismissedFullScreenContent: (ad) {
+              _onButtonPressed(context);
+            },
+          );
+
+          setState(() {
+            _interstitialAd = ad;
+          });
+        },
+        onAdFailedToLoad: (err) {
+          print('Failed to load an interstitial ad: ${err.message}');
+        },
+      ),
+    );
   }
 
   @override
@@ -26,6 +54,7 @@ class _MainScreenState extends State<MainScreen> {
     super.initState();
     _initKakaoUser();
     _initGoogleMobileAds();
+    _loadInterstitialAd();
   }
 
   Future<void> _initKakaoUser() async {
@@ -71,6 +100,7 @@ class _MainScreenState extends State<MainScreen> {
     for (var controller in _controllers) {
       controller.dispose();
     }
+    _interstitialAd?.dispose();
     super.dispose();
   }
 
@@ -329,7 +359,8 @@ class _MainScreenState extends State<MainScreen> {
                               ),
                             );
                           } else {
-                            _onButtonPressed(context);
+                            // _onButtonPressed(context);
+                            _interstitialAd?.show();
                           }
                         },
                         child: Row(
