@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
+import '../../../../data/user_information/user_information.dart';
+
+
+
 final GoogleSignIn _googleSignIn = GoogleSignIn(
   scopes: ['email', 'profile'],  // 최소 범위만 요청
 );
@@ -23,6 +27,18 @@ Future<void> GoogleLogin(BuildContext context) async {
 
       await FirebaseAuth.instance.signInWithCredential(credential);
 
+      // Firebase 사용자 정보
+      final firebaseUser = FirebaseAuth.instance.currentUser;
+
+      // 싱글턴을 통해 사용자 정보 업데이트
+      UserInformation().updateUser(
+        uid: firebaseUser?.uid,
+        email: account.email,
+        displayName: account.displayName,
+        photoUrl: account.photoUrl,
+      );
+
+      UserInformation().updateLoginMethod(LoginMethod.google);
       context.go('/main');
     }
   } catch (error) {

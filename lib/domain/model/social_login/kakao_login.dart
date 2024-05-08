@@ -2,6 +2,8 @@ import 'package:flutter_project_orm_janggo/domain/model/social_login/social_logi
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:firebase_auth/firebase_auth.dart' as Auth;
 
+import '../../../data/user_information/user_information.dart';
+
 class KakaoLogin implements SocialLogin {
   @override
   Future<bool> login() async {
@@ -18,6 +20,12 @@ class KakaoLogin implements SocialLogin {
         await Auth.FirebaseAuth.instance.signInWithCredential(credential);
         print('카카오톡으로 로그인 성공 ${token.accessToken}');
         User user = await UserApi.instance.me();
+        UserInformation().updateUser(
+            displayName: user.kakaoAccount!.profile!.nickname,
+            email: user.kakaoAccount!.email,
+            photoUrl: user.kakaoAccount!.profile!.profileImageUrl,
+            uid: user.id.toString()
+        );
         print('사용자 정보${user.id}');
         return true; // 로그인 성공 시 true 반환
       } else {
@@ -39,6 +47,12 @@ class KakaoLogin implements SocialLogin {
         await Auth.FirebaseAuth.instance.signInWithCredential(credential);
         print('카카오계정으로 로그인 성공');
         User user = await UserApi.instance.me();
+        UserInformation().updateUser(
+            displayName: user.kakaoAccount!.profile!.nickname,
+            email: user.kakaoAccount!.email,
+            photoUrl: user.kakaoAccount!.profile!.profileImageUrl,
+            uid: user.id.toString()
+        );
         print('사용자 정보${user.id}');
         return true; // 로그인 성공 시 true 반환
       } catch (error) {
