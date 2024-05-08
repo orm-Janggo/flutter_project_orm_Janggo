@@ -22,6 +22,7 @@ RecipeState _$RecipeStateFromJson(Map<String, dynamic> json) {
 mixin _$RecipeState {
   List<String> get recipe => throw _privateConstructorUsedError;
   List<String> get url => throw _privateConstructorUsedError;
+  bool get islike => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -35,7 +36,7 @@ abstract class $RecipeStateCopyWith<$Res> {
           RecipeState value, $Res Function(RecipeState) then) =
       _$RecipeStateCopyWithImpl<$Res, RecipeState>;
   @useResult
-  $Res call({List<String> recipe, List<String> url});
+  $Res call({List<String> recipe, List<String> url, bool islike});
 }
 
 /// @nodoc
@@ -53,6 +54,7 @@ class _$RecipeStateCopyWithImpl<$Res, $Val extends RecipeState>
   $Res call({
     Object? recipe = null,
     Object? url = null,
+    Object? islike = null,
   }) {
     return _then(_value.copyWith(
       recipe: null == recipe
@@ -63,6 +65,10 @@ class _$RecipeStateCopyWithImpl<$Res, $Val extends RecipeState>
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      islike: null == islike
+          ? _value.islike
+          : islike // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -75,7 +81,7 @@ abstract class _$$RecipeStateImplCopyWith<$Res>
       __$$RecipeStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<String> recipe, List<String> url});
+  $Res call({List<String> recipe, List<String> url, bool islike});
 }
 
 /// @nodoc
@@ -91,6 +97,7 @@ class __$$RecipeStateImplCopyWithImpl<$Res>
   $Res call({
     Object? recipe = null,
     Object? url = null,
+    Object? islike = null,
   }) {
     return _then(_$RecipeStateImpl(
       recipe: null == recipe
@@ -101,6 +108,10 @@ class __$$RecipeStateImplCopyWithImpl<$Res>
           ? _value._url
           : url // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      islike: null == islike
+          ? _value.islike
+          : islike // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -109,7 +120,9 @@ class __$$RecipeStateImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$RecipeStateImpl implements _RecipeState {
   const _$RecipeStateImpl(
-      {final List<String> recipe = const [], final List<String> url = const []})
+      {final List<String> recipe = const [],
+      final List<String> url = const [],
+      this.islike = false})
       : _recipe = recipe,
         _url = url;
 
@@ -135,8 +148,12 @@ class _$RecipeStateImpl implements _RecipeState {
   }
 
   @override
+  @JsonKey()
+  final bool islike;
+
+  @override
   String toString() {
-    return 'RecipeState(recipe: $recipe, url: $url)';
+    return 'RecipeState(recipe: $recipe, url: $url, islike: $islike)';
   }
 
   @override
@@ -145,7 +162,8 @@ class _$RecipeStateImpl implements _RecipeState {
         (other.runtimeType == runtimeType &&
             other is _$RecipeStateImpl &&
             const DeepCollectionEquality().equals(other._recipe, _recipe) &&
-            const DeepCollectionEquality().equals(other._url, _url));
+            const DeepCollectionEquality().equals(other._url, _url) &&
+            (identical(other.islike, islike) || other.islike == islike));
   }
 
   @JsonKey(ignore: true)
@@ -153,7 +171,8 @@ class _$RecipeStateImpl implements _RecipeState {
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(_recipe),
-      const DeepCollectionEquality().hash(_url));
+      const DeepCollectionEquality().hash(_url),
+      islike);
 
   @JsonKey(ignore: true)
   @override
@@ -171,7 +190,9 @@ class _$RecipeStateImpl implements _RecipeState {
 
 abstract class _RecipeState implements RecipeState {
   const factory _RecipeState(
-      {final List<String> recipe, final List<String> url}) = _$RecipeStateImpl;
+      {final List<String> recipe,
+      final List<String> url,
+      final bool islike}) = _$RecipeStateImpl;
 
   factory _RecipeState.fromJson(Map<String, dynamic> json) =
       _$RecipeStateImpl.fromJson;
@@ -180,6 +201,8 @@ abstract class _RecipeState implements RecipeState {
   List<String> get recipe;
   @override
   List<String> get url;
+  @override
+  bool get islike;
   @override
   @JsonKey(ignore: true)
   _$$RecipeStateImplCopyWith<_$RecipeStateImpl> get copyWith =>
