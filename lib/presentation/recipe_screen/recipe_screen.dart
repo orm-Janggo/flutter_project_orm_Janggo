@@ -85,11 +85,12 @@ class _RecipeScreenState extends State<RecipeScreen> {
                         'assets/images/book.gif',
                         fit: BoxFit.fill,
                       ),
-                      const Text('Ai가 레시피를 찾고있어요 잠시만 기다려주세요!', style: TextStyle(fontFamily: 'school_font', fontSize: 15),),
+                      const Text('Ai가 레시피를 찾고있어요 잠시만 기다려주세요!', style: TextStyle(fontFamily: 'school_font', fontSize: 12),),
                     ],
                   ),
                 ),
               )
+
             : Center(
           child: Column(
             children: [
@@ -173,31 +174,48 @@ class _RecipeScreenState extends State<RecipeScreen> {
                           ),
                           Expanded(
                             flex: 1,
-                            child: Scrollbar(
-                              child: SingleChildScrollView(
-                                scrollDirection: Axis.vertical,
-                                child: Container(
-                                  width:
-                                  MediaQuery.of(context).size.width,
-                                  decoration: BoxDecoration(
-                                    color: Colors.amber[50],
-                                    borderRadius:
-                                    BorderRadius.circular(10),
-                                  ),
-                                  padding: const EdgeInsets.all(16.0),
-                                  child: Text(
-                                    state.recipe[index],
-                                    style: const TextStyle(
-                                      fontSize: 20,
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.bold,
-                                      fontFamily: 'hand_font',
+                            child: Stack(
+                              children: [
+                                SingleChildScrollView(
+                                  scrollDirection: Axis.vertical,
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    decoration: BoxDecoration(
+                                      color: Colors.amber[50],
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Text(
+                                      state.recipe[index],
+                                      style: const TextStyle(
+                                        fontSize: 20,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'hand_font',
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
+                                Positioned(
+                                  right: 16,
+                                  top: 16,
+                                  child: IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        viewModel.isLike = !viewModel.isLike;
+                                      });
+                                    },
+                                    icon: Icon(
+                                      viewModel.isLike ? Icons.favorite : Icons.favorite_border ,color: Colors.red,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
+
+
+
                         ],
                       ),
                     );
@@ -213,6 +231,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
           ),
         ),
       ),
+
     );
   }
 }
