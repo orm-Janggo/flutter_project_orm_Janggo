@@ -17,44 +17,44 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   final kakaoLoginViewModel = KakaoLoginViewModel(kakaoLogin: KakaoLogin());
 
-  // initialize google mobile ad sdk
-  Future<InitializationStatus> _initGoogleMobileAds() {
-    return MobileAds.instance.initialize();
-  }
-
-  // Add _interstitialAd
-  InterstitialAd? _interstitialAd;
-
-  // Implement _loadInterstitialAd()
-  void _loadInterstitialAd() {
-    InterstitialAd.load(
-      adUnitId: AdHelper.interstitialAdUnitId,
-      request: AdRequest(),
-      adLoadCallback: InterstitialAdLoadCallback(
-        onAdLoaded: (ad) {
-          ad.fullScreenContentCallback = FullScreenContentCallback(
-            onAdDismissedFullScreenContent: (ad) {
-              _onButtonPressed(context);
-            },
-          );
-
-          setState(() {
-            _interstitialAd = ad;
-          });
-        },
-        onAdFailedToLoad: (err) {
-          print('Failed to load an interstitial ad: ${err.message}');
-        },
-      ),
-    );
-  }
+  // // initialize google mobile ad sdk
+  // Future<InitializationStatus> _initGoogleMobileAds() {
+  //   return MobileAds.instance.initialize();
+  // }
+  //
+  // // Add _interstitialAd
+  // InterstitialAd? _interstitialAd;
+  //
+  // // Implement _loadInterstitialAd()
+  // void _loadInterstitialAd() {
+  //   InterstitialAd.load(
+  //     adUnitId: AdHelper.interstitialAdUnitId,
+  //     request: AdRequest(),
+  //     adLoadCallback: InterstitialAdLoadCallback(
+  //       onAdLoaded: (ad) {
+  //         ad.fullScreenContentCallback = FullScreenContentCallback(
+  //           onAdDismissedFullScreenContent: (ad) {
+  //             _onButtonPressed(context);
+  //           },
+  //         );
+  //
+  //         setState(() {
+  //           _interstitialAd = ad;
+  //         });
+  //       },
+  //       onAdFailedToLoad: (err) {
+  //         print('Failed to load an interstitial ad: ${err.message}');
+  //       },
+  //     ),
+  //   );
+  // }
 
   @override
   void initState() {
     super.initState();
     _initKakaoUser();
-    _initGoogleMobileAds();
-    _loadInterstitialAd();
+    // _initGoogleMobileAds();
+    // _loadInterstitialAd();
   }
 
   Future<void> _initKakaoUser() async {
@@ -100,7 +100,7 @@ class _MainScreenState extends State<MainScreen> {
     for (var controller in _controllers) {
       controller.dispose();
     }
-    _interstitialAd?.dispose();
+    // _interstitialAd?.dispose();
     super.dispose();
   }
 
@@ -359,8 +359,8 @@ class _MainScreenState extends State<MainScreen> {
                               ),
                             );
                           } else {
-                            // _onButtonPressed(context);
-                            _interstitialAd?.show();
+                            _onButtonPressed(context);
+                            // _interstitialAd?.show();
                           }
                         },
                         child: Row(
