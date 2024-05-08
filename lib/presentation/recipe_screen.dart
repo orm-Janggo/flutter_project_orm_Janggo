@@ -48,8 +48,10 @@ class _RecipeScreenState extends State<RecipeScreen> {
       request: AdRequest(),
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (ad) {
+          print('------------ad------------');
           ad.fullScreenContentCallback = FullScreenContentCallback(
             onAdDismissedFullScreenContent: (ad) {
+
             },
           );
 
@@ -71,7 +73,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
     _initGoogleMobileAds();
     // add for ad
     _loadInterstitialAd();
-    _interstitialAd?.show();
+    // _interstitialAd?.show();
     final ingredients = widget.ingredients;
     context.read<RecipeViewModel>().getRecipe(ingredients);
     setState(() {});
@@ -88,10 +90,12 @@ class _RecipeScreenState extends State<RecipeScreen> {
   Widget build(BuildContext context) {
     final viewModel = context.watch<RecipeViewModel>();
     final state = viewModel.state;
+    _interstitialAd?.show();
     if (state.recipe != []) {
       viewModel.getPicture(state.recipe);
       setState(() {});
     }
+
 
     final double screenWidth = MediaQuery.of(context).size.width;
 
