@@ -3,9 +3,10 @@ import 'package:flutter_project_orm_janggo/domain/use_case/get_picture_use_case.
 import 'package:flutter_project_orm_janggo/domain/use_case/get_recipe_use_case.dart';
 import 'package:flutter_project_orm_janggo/presentation/recipe_screen/recipe_state.dart';
 
-class RecipeViewModel with ChangeNotifier{
+class RecipeViewModel with ChangeNotifier {
   final GetPictureUseCase _getPictureUseCase;
   final GetRecipeUseCase _getRecipeUseCase;
+  bool isLike = false;
 
   RecipeViewModel({
     required GetPictureUseCase getPictureUseCase,
@@ -16,6 +17,7 @@ class RecipeViewModel with ChangeNotifier{
   RecipeState _state = const RecipeState();
 
   RecipeState get state => _state;
+
 
   void getPicture(List<String> query) async {
     if (_state.url.length == query.length) {
@@ -45,9 +47,7 @@ class RecipeViewModel with ChangeNotifier{
 
   void getRecipe(String ingredients) async {
     final recipe = await _getRecipeUseCase.execute(ingredients);
-    _state = _state.copyWith(
-      recipe: recipe
-    );
+    _state = _state.copyWith(recipe: recipe);
     notifyListeners();
   }
 
