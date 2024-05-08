@@ -112,6 +112,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                               border: InputBorder.none,
                               enabled: false,
                             ),
+                            style: TextStyle(fontFamily: 'school_font'),
                             initialValue: viewModel.userEmail,
                             onChanged: (String? value) {
                               userEmail = value;
@@ -153,6 +154,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                               border: InputBorder.none,
                               enabled: isChanged,
                             ),
+                            style: TextStyle(fontFamily: 'school_font'),
                             initialValue: viewModel.userDisplayName,
                             onChanged: (String? value) {
                               // _nickNameController.text = value!;
@@ -194,6 +196,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                               border: InputBorder.none,
                               enabled: isChanged,
                             ),
+                            style: TextStyle(fontFamily: 'school_font'),
                             onChanged: (String? value) {
                               userPassword = value!;
                             },
