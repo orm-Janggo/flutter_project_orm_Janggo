@@ -60,7 +60,8 @@ class _RecipeScreenState extends State<RecipeScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              context.push('/main/recipe/recipe-history');
+              // context.push('/main/recipe/recipe-history');
+              viewModel.getDataListFromHive();
             },
             icon: const Icon(Icons.abc),
           ),

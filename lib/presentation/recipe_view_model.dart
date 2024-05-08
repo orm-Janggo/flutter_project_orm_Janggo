@@ -71,4 +71,13 @@ class RecipeViewModel with ChangeNotifier {
     }
     print('values============================${box.values.length}');
   }
+
+  Future<void> getDataListFromHive() async {
+    var box = await Hive.openBox<HistoryRecipeData>('historyRecipeBox');
+    List<HistoryRecipeData> recipeList = box.values.toList();
+
+    for (var recipeData in recipeList) {
+      print('ID: ${recipeData.id}, Image Path: ${recipeData.imagePath}, Recipe: ${recipeData.recipe}');
+    }
+  }
 }
