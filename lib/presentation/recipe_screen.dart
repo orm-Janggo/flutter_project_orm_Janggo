@@ -25,17 +25,14 @@ class _RecipeScreenState extends State<RecipeScreen> {
   int _currentPage = 0;
 
   // initialize google mobile ad sdk
-  // add for ad
   Future<InitializationStatus> _initGoogleMobileAds() {
     return MobileAds.instance.initialize();
   }
 
   // Add _interstitialAd
-  // add for ad
   InterstitialAd? _interstitialAd;
 
   // Implement _loadInterstitialAd()
-  // add for ad
   void _loadInterstitialAd() {
     InterstitialAd.load(
       adUnitId: AdHelper.interstitialAdUnitId,
@@ -61,11 +58,8 @@ class _RecipeScreenState extends State<RecipeScreen> {
   @override
   void initState() {
     super.initState();
-    // add for ad
     _initGoogleMobileAds();
-    // add for ad
     _loadInterstitialAd();
-    // _interstitialAd?.show();
     final ingredients = widget.ingredients;
     context.read<RecipeViewModel>().getRecipe(ingredients);
     setState(() {});
