@@ -3,11 +3,13 @@ import 'dart:ffi';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_project_orm_janggo/data/db/like_hive/like_item.dart';
 import 'package:flutter_project_orm_janggo/presentation/recipe_screen/recipe_view_model.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../domain/model/picture_model.dart';
+import '../locker/recipe_like/recipe_like_view_model.dart';
 
 class RecipeScreen extends StatefulWidget {
   const RecipeScreen({
@@ -38,6 +40,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final likeRecipeViewModel = context.watch<RecipeLikeViewModel>();
     final viewModel = context.watch<RecipeViewModel>();
     final state = viewModel.state;
     if (state.recipe != []) {
@@ -203,6 +206,13 @@ class _RecipeScreenState extends State<RecipeScreen> {
                                     onPressed: () {
                                       setState(() {
                                         viewModel.isLike = !viewModel.isLike;
+                                        final currentItem = state.recipe[_currentPage];
+                                        if(viewModel.isLike){
+                                            if(currentItem is LikeItem)
+                                          likeRecipeViewModel.addLikeItem(currentItem as LikeItem);
+                                        }else{
+                                          likeRecipeViewModel.removeLikeItem(index);
+                                        }
                                       });
                                     },
                                     icon: Icon(
