@@ -11,6 +11,7 @@ import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_cas
 import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_case/update_password_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/get_recipe_use_case.dart';
 import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_screen.dart';
+import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_view_model.dart';
 import 'package:flutter_project_orm_janggo/presentation/main_screen/main_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/main_screen/main_screen_view_model.dart';
 import 'package:flutter_project_orm_janggo/presentation/my_page/my_page_screen.dart';
@@ -127,7 +128,10 @@ final router = GoRouter(
                   GoRoute(
                     path: 'recipe-history',
                     builder: (context, state) {
-                      return RecipeHistoryScreen();
+                      return ChangeNotifierProvider(
+                        create: (_) => RecipeHistoryViewModel(),
+                        child: RecipeHistoryScreen(),
+                      );
                     },
                   ),
                 ],
