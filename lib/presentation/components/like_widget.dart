@@ -9,10 +9,6 @@ class LikeWidget extends StatelessWidget {
       width: 500,
       height: 450,
       child: Container(
-        // decoration: BoxDecoration(
-        //   border: Border.all(width: 5),
-        //   borderRadius: BorderRadius.circular(5),
-        // ),
         color: Colors.white,
         child: Column(
           children: [
