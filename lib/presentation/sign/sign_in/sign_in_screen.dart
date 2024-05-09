@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project_orm_janggo/data/user_information/user_information.dart';
 import 'package:flutter_project_orm_janggo/presentation/kakao_login/kakao_login_ver2.dart';
 import 'package:flutter_project_orm_janggo/presentation/sign/sign_in/sign_in_view_model.dart';
 import 'package:go_router/go_router.dart';
@@ -73,6 +74,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         key: const ValueKey(1),
                         decoration: InputDecoration(
                           hintText: '이메일 e.g. emailAddress@gmail.com',
+                          hintStyle: TextStyle(fontFamily: 'school_font'),
                           filled: true,
                           fillColor: const Color(0xfff8f8f8),
                           border: InputBorder.none,
@@ -89,6 +91,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             ),
                           ),
                         ),
+                        style: TextStyle(fontFamily: 'school_font'),
                         validator: (value) {
                           if (value?.isEmpty ?? false) {
                             return '이메일을 입력해주세요.';
@@ -114,6 +117,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             },
                           ),
                           hintText: '비밀번호',
+                          hintStyle: TextStyle(fontFamily: 'school_font'),
                           filled: true,
                           fillColor: const Color(0xfff8f8f8),
                           border: InputBorder.none,
@@ -130,6 +134,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             ),
                           ),
                         ),
+                        style: TextStyle(fontFamily: 'school_font'),
                         obscureText: isObsecure,
                         validator: (value) {
                           if (value?.isEmpty ?? false) {
@@ -205,7 +210,6 @@ class _SignInScreenState extends State<SignInScreen> {
                         await viewModel.signInWithFirebaseAuth(
                             inputEmail!, inputPassword!);
                         debugPrint('로그인 성공');
-
                         // check mount
                         if (!context.mounted) return;
 
@@ -226,7 +230,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     },
                     child: const Text(
                       '로그인',
-                      style: TextStyle(fontSize: 20),
+                      style: TextStyle(fontSize: 20, fontFamily: 'school_font'),
                     ),
                   ),
                 ),

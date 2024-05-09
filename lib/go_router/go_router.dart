@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_project_orm_janggo/data/gpt_data_source/gpt_data_source.dart';
-import 'package:flutter_project_orm_janggo/data/repository/chat_gpt_reopository_impl.dart';
+import 'package:flutter_project_orm_janggo/data/repository/chat_gpt_repository_impl.dart';
 import 'package:flutter_project_orm_janggo/data/repository/firebase_auth_repository/firebase_auth_repository_impl.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_case/auth_state_changes_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_case/send_password_reset_email_use_case.dart';
@@ -12,8 +13,9 @@ import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_cas
 import 'package:flutter_project_orm_janggo/domain/use_case/get_recipe_use_case.dart';
 import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_view_model.dart';
-import 'package:flutter_project_orm_janggo/presentation/main_screen/main_screen.dart';
-import 'package:flutter_project_orm_janggo/presentation/main_screen/main_screen_view_model.dart';
+import 'package:flutter_project_orm_janggo/presentation/my_page/app_information/app_information_screen.dart';
+import 'package:flutter_project_orm_janggo/presentation/my_page/app_information/privacy_policy_screen.dart';
+import 'package:flutter_project_orm_janggo/presentation/my_page/app_information/question_answer_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/my_page/my_page_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/my_page/my_page_view_model.dart';
 import 'package:flutter_project_orm_janggo/presentation/sign/forgot_password/forgot_password_screen.dart';
@@ -30,6 +32,8 @@ import 'package:provider/provider.dart';
 import '../data/data_source/picture_data_source.dart';
 import '../data/repository/picture_repository_impl.dart';
 import '../domain/use_case/get_picture_use_case.dart';
+import '../presentation/main/main_screen.dart';
+import '../presentation/main/main_screen_view_model.dart';
 import '../presentation/recipe_screen.dart';
 import '../presentation/recipe_view_model.dart';
 
@@ -58,6 +62,8 @@ final router = GoRouter(
                 signInWithEmailPasswordUseCase: SignInWithEmailPasswordUseCase(
                   FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
                 ),
+                authStateChangesUseCase: AuthStateChangesUseCase(
+                    FirebaseAuthRepositoryImpl(FirebaseAuth.instance)),
               ),
               child: const SignInScreen(),
             );
@@ -93,72 +99,98 @@ final router = GoRouter(
           },
         ),
         GoRoute(
-            path: 'main',
-            builder: (context, state) {
-              return ChangeNotifierProvider(
-                create: (_) => MainScreenViewModel(
-                  authStateChangesUseCase: AuthStateChangesUseCase(
-                    FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
-                  ),
+          path: 'main',
+          builder: (context, state) {
+            return ChangeNotifierProvider(
+              create: (_) => MainScreenViewModel(
+                authStateChangesUseCase: AuthStateChangesUseCase(
+                  FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
                 ),
-                child: MainScreen(),
-              );
-            },
-            routes: [
-              GoRoute(
-                path: 'recipe',
-                builder: (context, state) {
-                  return ChangeNotifierProvider(
-                    create: (_) => RecipeViewModel(
-                      getPictureUseCase: GetPictureUseCase(
-                        repository: PictureRepositoryImpl(
-                          pictureDataSource: PictureDataSource(),
-                        ),
+              ),
+              child: const MainScreen(),
+            );
+          },
+          routes: [
+            GoRoute(
+              path: 'recipe',
+              builder: (context, state) {
+                return ChangeNotifierProvider(
+                  create: (_) => RecipeViewModel(
+                    getPictureUseCase: GetPictureUseCase(
+                      repository: PictureRepositoryImpl(
+                        pictureDataSource: PictureDataSource(),
                       ),
-                      getRecipeUseCase: GetRecipeUseCase(
-                          chatGptRepositoryImpl: ChatGptRepositoryImpl(
-                              dataSource: GptDataSource())),
                     ),
-                    child: RecipeScreen(
-                      ingredients: state.extra as String,
-                    ),
-                  );
-                },
-                routes: [
-                  GoRoute(
-                    path: 'recipe-history',
-                    builder: (context, state) {
-                      return ChangeNotifierProvider(
-                        create: (_) => RecipeHistoryViewModel(),
-                        child: RecipeHistoryScreen(),
-                      );
-                    },
+                    getRecipeUseCase: GetRecipeUseCase(
+                        chatGptRepositoryImpl:
+                            ChatGptRepositoryImpl(dataSource: GptDataSource())),
                   ),
-                ],
-              ),
-              GoRoute(
-                path: 'my-page',
-                builder: (context, state) {
-                  return ChangeNotifierProvider(
-                    create: (_) => MyPageViewModel(
-                      authStateChangesUseCase: AuthStateChangesUseCase(
-                        FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
-                      ),
-                      updateDisplayNameUseCase: UpdateDisplayNameUseCase(
-                        FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
-                      ),
-                      updatePasswordUseCase: UpdatePasswordUseCase(
-                        FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
-                      ),
-                      signOutUseCase: SignOutUseCase(
-                        FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
-                      ),
+                  child: RecipeScreen(
+                    ingredients: state.extra as String,
+                  ),
+                );
+              },
+              routes: [
+                GoRoute(
+                  path: 'recipe-history',
+                  builder: (context, state) {
+                    return ChangeNotifierProvider(
+                      create: (_) => RecipeHistoryViewModel(),
+                      child: RecipeHistoryScreen(),
+                    );
+                  },
+                ),
+              ],
+            ),
+            GoRoute(
+              path: 'my-page',
+              builder: (context, state) {
+                return ChangeNotifierProvider(
+                  create: (_) => MyPageViewModel(
+                    authStateChangesUseCase: AuthStateChangesUseCase(
+                      FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
                     ),
-                    child: const MyPageScreen(),
-                  );
-                },
-              ),
-            ]),
+                    updateDisplayNameUseCase: UpdateDisplayNameUseCase(
+                      FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
+                    ),
+                    updatePasswordUseCase: UpdatePasswordUseCase(
+                      FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
+                    ),
+                    signOutUseCase: SignOutUseCase(
+                      FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
+                    ),
+                  ),
+                  child: const MyPageScreen(),
+                );
+              },
+              routes: [
+                GoRoute(
+                  path: 'app-information',
+                  builder: (context, state) {
+                    return const AppInformationScreen();
+                  },
+                  routes: [
+                    GoRoute(
+                        path: 'license',
+                        builder: (context, state) {
+                          return const LicensePage();
+                        }),
+                    GoRoute(
+                        path: 'privacy',
+                        builder: (context, state) {
+                          return const PrivacyPolicyScreen();
+                        }),
+                    GoRoute(
+                        path: 'qna',
+                        builder: (context, state) {
+                          return const QuestionAnswerScreen();
+                        }),
+                  ],
+                )
+              ],
+            ),
+          ],
+        ),
       ],
     ),
   ],

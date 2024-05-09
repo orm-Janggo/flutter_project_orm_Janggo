@@ -7,6 +7,7 @@ import 'package:hive_flutter/adapters.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
 import 'core/config/api_config.dart';
+import 'data/db/history/history_recipe_adapter.dart';
 
 void main() async {
   // Hive 초기화
@@ -36,12 +37,12 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange),
-          useMaterial3: true,
-          textTheme: const TextTheme(
-            bodyLarge: TextStyle(fontFamily: 'hand_font'),
-            bodyMedium: TextStyle(fontFamily: 'school_font'),
-          )),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange),
+        useMaterial3: true,
+        textTheme: const TextTheme(
+          bodyMedium: TextStyle(fontFamily: 'school_font'),
+        )
+      ),
       routerConfig: router,
     );
   }
