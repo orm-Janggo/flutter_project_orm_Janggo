@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_project_orm_janggo/data/gpt_data_source/gpt_data_source.dart';
 import 'package:flutter_project_orm_janggo/data/repository/chat_gpt_reopository_impl.dart';
 import 'package:flutter_project_orm_janggo/data/repository/firebase_auth_repository/firebase_auth_repository_impl.dart';
+import 'package:flutter_project_orm_janggo/data/repository/like_recipe_repository_impl.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_case/auth_state_changes_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_case/send_password_reset_email_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_case/sign_in_with_email_password_use_case.dart';
@@ -10,6 +11,10 @@ import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_cas
 import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_case/update_display_name_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_case/update_password_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/get_recipe_use_case.dart';
+import 'package:flutter_project_orm_janggo/domain/use_case/like_recipe_use_case/like_add_recipe_use_case.dart';
+import 'package:flutter_project_orm_janggo/domain/use_case/like_recipe_use_case/like_load_recipe_use_case.dart';
+import 'package:flutter_project_orm_janggo/domain/use_case/like_recipe_use_case/like_remove_recipe_use_case.dart';
+import 'package:flutter_project_orm_janggo/domain/use_case/like_recipe_use_case/like_search_recipe_use_case.dart';
 import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/main_screen/main_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/main_screen/main_screen_view_model.dart';
@@ -30,7 +35,7 @@ import '../data/data_source/picture_data_source.dart';
 import '../data/db/like_hive/like_adapter.dart';
 import '../data/repository/picture_repository_impl.dart';
 import '../domain/use_case/get_picture_use_case.dart';
-import '../presentation/locker/recipe_like/recipe_like_view_model.dart';
+import '../presentation/locker/recipe_like/like_recipe_screen.dart';
 import '../presentation/recipe_screen/recipe_screen.dart';
 import '../presentation/recipe_screen/recipe_view_model.dart';
 
@@ -45,7 +50,8 @@ final router = GoRouter(
               FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
             ),
             signOutUseCase: SignOutUseCase(
-                FirebaseAuthRepositoryImpl(FirebaseAuth.instance)),
+              FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
+            ),
           ),
           child: const SplashScreen(),
         );
@@ -94,78 +100,106 @@ final router = GoRouter(
           },
         ),
         GoRoute(
-            path: 'main',
-            builder: (context, state) {
-              return ChangeNotifierProvider(
-                create: (_) => MainScreenViewModel(
-                  authStateChangesUseCase: AuthStateChangesUseCase(
-                    FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
-                  ),
+          path: 'main',
+          builder: (context, state) {
+            return ChangeNotifierProvider(
+              create: (_) => MainScreenViewModel(
+                authStateChangesUseCase: AuthStateChangesUseCase(
+                  FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
                 ),
-                child: MainScreen(),
-              );
-            },
-            routes: [
-              GoRoute(
-                path: 'recipe',
-                builder: (context, state) {
-                  return MultiProvider(
-                    providers: [
-                      ChangeNotifierProvider(create: (_) => RecipeViewModel(
-                        getPictureUseCase: GetPictureUseCase(
-                          repository: PictureRepositoryImpl(
-                            pictureDataSource: PictureDataSource(),
-                          ),
-                        ),
-                        getRecipeUseCase: GetRecipeUseCase(
-                          chatGptRepositoryImpl: ChatGptRepositoryImpl(
-                            dataSource: GptDataSource(),
-                          ),
-                        ),
-                      )),
-                      ChangeNotifierProvider(create: (_) => RecipeLikeViewModel(
-                        likeBoxAdapter: LikeBoxAdapter(), // LikeBoxAdapter 인스턴스 전달
-                      )),
-                      // 다른 프로바이더 추가 가능
-                    ],
-                    child: RecipeScreen(
-                      ingredients: state.extra as String,
+              ),
+              child: MainScreen(),
+            );
+          },
+          routes: [
+            GoRoute(
+              path: 'recipe',
+              builder: (context, state) {
+                return ChangeNotifierProvider(
+                  create: (_) => RecipeViewModel(
+                    getPictureUseCase: GetPictureUseCase(
+                      repository: PictureRepositoryImpl(
+                        pictureDataSource: PictureDataSource(),
+                      ),
                     ),
-                  );
-
-                },
-                routes: [
-                  GoRoute(
-                    path: 'recipe-history',
-                    builder: (context, state) {
-                      return RecipeHistoryScreen();
-                    },
+                    getRecipeUseCase: GetRecipeUseCase(
+                      chatGptRepositoryImpl: ChatGptRepositoryImpl(
+                        dataSource: GptDataSource(),
+                      ),
+                    ),
+                    likeBoxAdapter: LikeBoxAdapter(),
+                    likeAddRecipeUseCase: LikeAddRecipeUseCase(
+                        likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
+                    likeLoadRecipeUseCase: LikeLoadRecipeUseCase(
+                        likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
+                    likeRemoveRecipeUseCase: LikeRemoveRecipeUseCase(
+                        likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
+                    likeSearchRecipeUseCase: LikeSearchRecipeUseCase(
+                        likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
                   ),
-                ],
-              ),
-              GoRoute(
-                path: 'my-page',
-                builder: (context, state) {
-                  return ChangeNotifierProvider(
-                    create: (_) => MyPageViewModel(
-                      authStateChangesUseCase: AuthStateChangesUseCase(
-                        FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
+                  child: RecipeScreen(
+                    ingredients: state.extra as String,
+                  ),
+                );
+              },
+              routes: [
+                GoRoute(
+                  path: 'recipe-history',
+                  builder: (context, state) {
+                    return RecipeHistoryScreen();
+                  },
+                ),
+                GoRoute(
+                  path: 'recipe-like',
+                  builder: (context, state) {
+                    return ChangeNotifierProvider(
+                      create: (_) => RecipeViewModel(
+                        likeBoxAdapter: LikeBoxAdapter(),
+                        getPictureUseCase: GetPictureUseCase(
+                            repository: PictureRepositoryImpl(
+                                pictureDataSource: PictureDataSource())),
+                        getRecipeUseCase: GetRecipeUseCase(
+                            chatGptRepositoryImpl: ChatGptRepositoryImpl(
+                                dataSource: GptDataSource())),
+                        likeAddRecipeUseCase: LikeAddRecipeUseCase(
+                            likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
+                        likeLoadRecipeUseCase: LikeLoadRecipeUseCase(
+                            likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
+                        likeRemoveRecipeUseCase: LikeRemoveRecipeUseCase(
+                            likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
+                        likeSearchRecipeUseCase: LikeSearchRecipeUseCase(
+                            likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
                       ),
-                      updateDisplayNameUseCase: UpdateDisplayNameUseCase(
-                        FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
-                      ),
-                      updatePasswordUseCase: UpdatePasswordUseCase(
-                        FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
-                      ),
-                      signOutUseCase: SignOutUseCase(
-                        FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
-                      ),
+                      child: LikeRecipeScreen(),
+                    );
+                  },
+                ),
+              ],
+            ),
+            GoRoute(
+              path: 'my-page',
+              builder: (context, state) {
+                return ChangeNotifierProvider(
+                  create: (_) => MyPageViewModel(
+                    authStateChangesUseCase: AuthStateChangesUseCase(
+                      FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
                     ),
-                    child: const MyPageScreen(),
-                  );
-                },
-              ),
-            ]),
+                    updateDisplayNameUseCase: UpdateDisplayNameUseCase(
+                      FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
+                    ),
+                    updatePasswordUseCase: UpdatePasswordUseCase(
+                      FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
+                    ),
+                    signOutUseCase: SignOutUseCase(
+                      FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
+                    ),
+                  ),
+                  child: const MyPageScreen(),
+                );
+              },
+            ),
+          ],
+        ),
       ],
     ),
   ],
