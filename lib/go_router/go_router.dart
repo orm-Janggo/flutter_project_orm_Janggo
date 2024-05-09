@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_project_orm_janggo/data/gpt_data_source/gpt_data_source.dart';
-import 'package:flutter_project_orm_janggo/data/repository/chat_gpt_reopository_impl.dart';
+import 'package:flutter_project_orm_janggo/data/repository/chat_gpt_repository_impl.dart';
 import 'package:flutter_project_orm_janggo/data/repository/firebase_auth_repository/firebase_auth_repository_impl.dart';
 import 'package:flutter_project_orm_janggo/data/repository/like_recipe_repository_impl.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_case/auth_state_changes_use_case.dart';
@@ -16,8 +17,6 @@ import 'package:flutter_project_orm_janggo/domain/use_case/like_recipe_use_case/
 import 'package:flutter_project_orm_janggo/domain/use_case/like_recipe_use_case/like_remove_recipe_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/like_recipe_use_case/like_search_recipe_use_case.dart';
 import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_screen.dart';
-import 'package:flutter_project_orm_janggo/presentation/main_screen/main_screen.dart';
-import 'package:flutter_project_orm_janggo/presentation/main_screen/main_screen_view_model.dart';
 import 'package:flutter_project_orm_janggo/presentation/my_page/my_page_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/my_page/my_page_view_model.dart';
 import 'package:flutter_project_orm_janggo/presentation/sign/forgot_password/forgot_password_screen.dart';
@@ -35,9 +34,16 @@ import '../data/data_source/picture_data_source.dart';
 import '../data/db/like_hive/like_adapter.dart';
 import '../data/repository/picture_repository_impl.dart';
 import '../domain/use_case/get_picture_use_case.dart';
+
 import '../presentation/locker/recipe_like/like_recipe_screen.dart';
+import '../presentation/main/main_screen.dart';
+import '../presentation/main/main_screen_view_model.dart';
+import '../presentation/my_page/app_information/app_information_screen.dart';
+import '../presentation/my_page/app_information/privacy_policy_screen.dart';
+import '../presentation/my_page/app_information/question_answer_screen.dart';
 import '../presentation/recipe_screen/recipe_screen.dart';
 import '../presentation/recipe_screen/recipe_view_model.dart';
+
 
 final router = GoRouter(
   routes: [
@@ -49,9 +55,9 @@ final router = GoRouter(
             authStateChangesUseCase: AuthStateChangesUseCase(
               FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
             ),
-            signOutUseCase: SignOutUseCase(
-              FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
-            ),
+
+            signOutUseCase: SignOutUseCase(FirebaseAuthRepositoryImpl(FirebaseAuth.instance)),
+
           ),
           child: const SplashScreen(),
         );
@@ -64,7 +70,9 @@ final router = GoRouter(
               create: (_) => SignInViewModel(
                 signInWithEmailPasswordUseCase: SignInWithEmailPasswordUseCase(
                   FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
-                ),
+                ), authStateChangesUseCase: AuthStateChangesUseCase(
+                  FirebaseAuthRepositoryImpl(FirebaseAuth.instance)
+              ),
               ),
               child: const SignInScreen(),
             );
@@ -75,8 +83,7 @@ final router = GoRouter(
               builder: (context, state) {
                 return ChangeNotifierProvider(
                   create: (_) => ForgotPasswordViewModel(
-                    sendPasswordResetEmailUseCase:
-                        SendPasswordResetEmailUseCase(
+                    sendPasswordResetEmailUseCase: SendPasswordResetEmailUseCase(
                       FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
                     ),
                   ),
@@ -108,7 +115,8 @@ final router = GoRouter(
                   FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
                 ),
               ),
-              child: MainScreen(),
+
+              child: const MainScreen(),
             );
           },
           routes: [
@@ -122,6 +130,7 @@ final router = GoRouter(
                         pictureDataSource: PictureDataSource(),
                       ),
                     ),
+
                     getRecipeUseCase: GetRecipeUseCase(
                       chatGptRepositoryImpl: ChatGptRepositoryImpl(
                         dataSource: GptDataSource(),
@@ -136,6 +145,7 @@ final router = GoRouter(
                         likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
                     likeSearchRecipeUseCase: LikeSearchRecipeUseCase(
                         likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
+
                   ),
                   child: RecipeScreen(
                     ingredients: state.extra as String,
@@ -172,6 +182,7 @@ final router = GoRouter(
                       ),
                       child: LikeRecipeScreen(),
                     );
+
                   },
                 ),
               ],
@@ -197,6 +208,34 @@ final router = GoRouter(
                   child: const MyPageScreen(),
                 );
               },
+
+              routes: [
+                GoRoute(
+                  path: 'app-information',
+                  builder: (context, state) {
+                    return const AppInformationScreen();
+                  },
+                  routes: [
+                    GoRoute(
+                        path: 'license',
+                        builder: (context, state) {
+                          return const LicensePage();
+                        }),
+                    GoRoute(
+                      path: 'privacy',
+                      builder: (context, state) {
+                        return const PrivacyPolicyScreen();
+                      }
+                    ),
+                    GoRoute(
+                        path: 'qna',
+                        builder: (context, state) {
+                          return const QuestionAnswerScreen();
+                        }
+                    ),
+                  ],
+                )
+              ],
             ),
           ],
         ),
