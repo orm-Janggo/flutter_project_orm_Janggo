@@ -9,13 +9,13 @@ import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'core/config/api_config.dart';
 import 'data/db/like_hive/like_item.dart';
 
-late Box<List<LikeItem>> likeBox;
+late Box<String> likeBox;
 
 // 엔트리 포인트,시작점
 void main() async {
   await Hive.initFlutter();
-  Hive.registerAdapter(LikeItemAdapter());
-  likeBox = await Hive.openBox<List<LikeItem>>('likebox');
+  // Hive.registerAdapter(LikeItemAdapter());
+  likeBox = await Hive.openBox<String>('likebox');
   await dotenv.load(fileName: '.env');
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
