@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project_orm_janggo/presentation/recipe_view_model.dart';
 import 'package:go_router/go_router.dart';
-import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
 
 class RecipeScreen extends StatefulWidget {

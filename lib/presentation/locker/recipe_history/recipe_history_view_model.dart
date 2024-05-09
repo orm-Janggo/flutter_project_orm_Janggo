@@ -44,7 +44,7 @@ class RecipeHistoryViewModel with ChangeNotifier {
 
     // 데이터가 있는지 확인하고 삭제
     await recipe.delete();
-    
+
     print('$id 번 레시피 삭제');
 
     notifyListeners();

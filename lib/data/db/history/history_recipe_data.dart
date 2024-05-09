@@ -4,7 +4,6 @@ part 'history_recipe_data.g.dart';
 
 @HiveType(typeId: 0)
 class HistoryRecipeData extends HiveObject {
-
   @HiveField(0)
   late int id;
 
