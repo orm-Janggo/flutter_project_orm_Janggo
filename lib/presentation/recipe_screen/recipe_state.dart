@@ -9,7 +9,9 @@ class RecipeState with _$RecipeState {
   const factory RecipeState(
       {@Default([]) List<String> recipe,
       @Default([]) List<String> url,
-      @Default(false) bool islike}) = _RecipeState;
+      @Default(false) bool isLike,
+
+      }) = _RecipeState;
 
   factory RecipeState.fromJson(Map<String, Object?> json) =>
       _$RecipeStateFromJson(json);
