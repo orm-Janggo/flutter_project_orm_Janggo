@@ -13,7 +13,6 @@ import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_cas
 import 'package:flutter_project_orm_janggo/domain/use_case/get_recipe_use_case.dart';
 import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/my_page/app_information/app_information_screen.dart';
-import 'package:flutter_project_orm_janggo/presentation/my_page/app_information/open_source_license_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/my_page/app_information/privacy_policy_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/my_page/app_information/question_answer_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/my_page/my_page_screen.dart';
