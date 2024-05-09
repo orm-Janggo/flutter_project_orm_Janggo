@@ -39,8 +39,13 @@ class RecipeHistoryViewModel with ChangeNotifier {
   Future<void> deleteDataFromHive(int id) async {
     var box = await Hive.openBox<HistoryRecipeData>('historyRecipeBox');
 
-    // 해당 id의 데이터 삭제
-    await box.delete(id);
+    // id에 해당하는 recipe 찾기
+    var recipe = box.values.firstWhere((recipe) => recipe.id == id);
+
+    // 데이터가 있는지 확인하고 삭제
+    await recipe.delete();
+    
+    print('$id 번 레시피 삭제');
 
     notifyListeners();
   }
