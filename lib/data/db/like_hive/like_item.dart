@@ -5,19 +5,23 @@ part 'like_item.g.dart';
 @HiveType(typeId: 0)
 class LikeItem extends HiveObject {
   @HiveField(0)
-  late String title;
-
-  @HiveField(1)
   late String recipe;
 
-  @HiveField(2)
+  @HiveField(1)
   late String id;
 
-  @HiveField(3)
+  @HiveField(2)
   late String imageUrl;
 
-  @HiveField(4)
+  @HiveField(3)
   late bool isLiked;
 
-  LikeItem(this.title, this.recipe, this.id, this.imageUrl, this.isLiked);
+
+
+  LikeItem({
+    required this.recipe,
+    required this.id,
+    required this.imageUrl,
+    required this.isLiked,
+  });
 }

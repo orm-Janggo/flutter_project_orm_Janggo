@@ -17,27 +17,24 @@ class LikeItemAdapter extends TypeAdapter<LikeItem> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return LikeItem(
-      fields[0] as String,
-      fields[1] as String,
-      fields[2] as String,
-      fields[3] as String,
-      fields[4] as bool,
+      recipe: fields[0] as String,
+      id: fields[1] as String,
+      imageUrl: fields[2] as String,
+      isLiked: fields[3] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, LikeItem obj) {
     writer
-      ..writeByte(5)
-      ..writeByte(0)
-      ..write(obj.title)
-      ..writeByte(1)
-      ..write(obj.recipe)
-      ..writeByte(2)
-      ..write(obj.id)
-      ..writeByte(3)
-      ..write(obj.imageUrl)
       ..writeByte(4)
+      ..writeByte(0)
+      ..write(obj.recipe)
+      ..writeByte(1)
+      ..write(obj.id)
+      ..writeByte(2)
+      ..write(obj.imageUrl)
+      ..writeByte(3)
       ..write(obj.isLiked);
   }
 
