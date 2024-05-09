@@ -31,67 +31,71 @@ class _RecipeHistoryScreenState extends State<RecipeHistoryScreen> {
         backgroundColor: const Color(0xffFB8C00),
         actions: [
           IconButton(
-            onPressed: () {
-              viewModel.deleteAllDataFromBox();
-              setState(() {
-                viewModel.getDataListFromHive();
-              });
+            onPressed: () async {
+              await viewModel.deleteAllDataFromBox();
+              await viewModel.getDataListFromHive();
+              setState(() {});
             },
             icon: const Icon(Icons.delete_outline),
           ),
         ],
       ),
-      body: state.recipe.isNotEmpty ? Container(
-        padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
-        color: const Color(0xffFB8C00),
-        child: ListView.builder(
-          itemCount: state.recipe.length,
-          itemBuilder: (context, index) {
-            return Container(
-              margin: EdgeInsets.symmetric(vertical: screenHeight * 0.01),
-              padding: EdgeInsets.all(screenWidth * 0.03),
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(8.0)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SizedBox(
-                    width: screenWidth * 0.3,
-                    child: state.url[index] != 'empty'
-                        ? ClipRRect(
-                            borderRadius: BorderRadius.circular(8.0),
-                            child: Image.network(state.url[index]),
-                          )
-                        : ClipRRect(
-                            borderRadius: BorderRadius.circular(8.0),
-                            child: Image.asset('assets/images/empty_image.png'),
-                          ),
-                  ),
-                  Text(state.recipe[index]),
-                  Column(
-                    children: [
-                      IconButton(
-                        onPressed: () {
-                          viewModel.deleteDataFromHive(state.id[index]);
-                          setState(() {
-                            viewModel.getDataListFromHive();
-                          });
-                        },
-                        icon: const Icon(Icons.delete_outline),
-                      ),
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.favorite_border_outlined),
-                      ),
-                    ],
-                  ),
-                ],
+      body: state.recipe.isNotEmpty
+          ? Container(
+              padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
+              color: const Color(0xffFB8C00),
+              child: ListView.builder(
+                itemCount: state.recipe.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    margin: EdgeInsets.symmetric(vertical: screenHeight * 0.01),
+                    padding: EdgeInsets.all(screenWidth * 0.03),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8.0)),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width: screenWidth * 0.3,
+                          child: state.url[index] != 'empty'
+                              ? ClipRRect(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  child: Image.network(state.url[index]),
+                                )
+                              : ClipRRect(
+                                  borderRadius: BorderRadius.circular(8.0),
+                                  child: Image.asset(
+                                      'assets/images/empty_image.png'),
+                                ),
+                        ),
+                        Text(state.recipe[index]),
+                        Column(
+                          children: [
+                            IconButton(
+                              onPressed: () {
+                                viewModel.deleteDataFromHive(state.id[index]);
+                                setState(() {
+                                  viewModel.getDataListFromHive();
+                                });
+                              },
+                              icon: const Icon(Icons.delete_outline),
+                            ),
+                            IconButton(
+                              onPressed: () {},
+                              icon: const Icon(Icons.favorite_border_outlined),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  );
+                },
               ),
-            );
-          },
-        ),
-      ) : Center(child: Text('값이 없습니다!'),),
+            )
+          : Center(
+              child: Text('값이 없습니다!'),
+            ),
     );
   }
 }
