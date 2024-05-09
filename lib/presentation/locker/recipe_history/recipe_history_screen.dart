@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_view_model.dart';
+import 'package:provider/provider.dart';
 
 class RecipeHistoryScreen extends StatefulWidget {
   const RecipeHistoryScreen({super.key});
@@ -12,16 +13,18 @@ class RecipeHistoryScreen extends StatefulWidget {
 
 class _RecipeHistoryScreenState extends State<RecipeHistoryScreen> {
 
-  final List<Container> _controllers = [];
-
-  void _removeHistory(int index) {
-    setState(() {
-      _controllers.removeAt(index);
-    });
+@override
+  void initState() {
+    super.initState();
+    context.read<RecipeHistoryViewModel>().getDataListFromHive();
   }
 
   @override
   Widget build(BuildContext context) {
+
+    final viewModel = context.watch<RecipeHistoryViewModel>();
+    final state = viewModel.state;
+
     // 스크린의 가로화면 사이즈
     final screenWidth = MediaQuery.of(context).size.width;
     // 스크린의 세로화면 사이즈
@@ -35,7 +38,7 @@ class _RecipeHistoryScreenState extends State<RecipeHistoryScreen> {
         padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
         color: const Color(0xffFB8C00),
         child: ListView.builder(
-          itemCount: _controllers.length,
+          itemCount: state.recipe.length,
           itemBuilder: (context, index) {
             return Container(
               margin: EdgeInsets.symmetric(vertical: screenHeight * 0.01),
@@ -49,14 +52,13 @@ class _RecipeHistoryScreenState extends State<RecipeHistoryScreen> {
                     width: screenWidth * 0.3,
                     child: ClipRRect(
                         borderRadius: BorderRadius.circular(8.0),
-                        child: Image.asset('assets/images/empty_image.png')),
+                        child: Image.network(state.url[index])),
                   ),
-                  Text('레시피 이름 $index'),
+                  Text('레시피 이름 ${state.recipe[index]})'),
                   Column(
                     children: [
                       IconButton(
                         onPressed: () {
-                          _removeHistory(index);
                         },
                         icon: const Icon(Icons.delete_outline),
                       ),
