@@ -52,16 +52,18 @@ Widget googleLoginButton(BuildContext context) {
       GoogleLogin(context); // 버튼을 클릭하면 구글 로그인을 실행
     },
     child: Container(
+      width: 320,
+      height: 50,
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
+        color: Color(0xFFF2F2F2),
+        borderRadius: BorderRadius.circular(16.0),
       ),
       child: Center(
         child: SizedBox(
           width: 220,
           height: 50,
           child: Image.asset(
-            'assets/images/google_sign_in.png', // 구글 로그인 버튼 이미지
+            'assets/images/google.png', // 구글 로그인 버튼 이미지
           ),
         ),
       ),
