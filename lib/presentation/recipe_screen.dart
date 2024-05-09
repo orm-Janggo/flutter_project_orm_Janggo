@@ -1,15 +1,9 @@
-import 'dart:ffi';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_project_orm_janggo/presentation/ads/google_ads_helper.dart';
 import 'package:flutter_project_orm_janggo/presentation/recipe_view_model.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
-
-import '../domain/model/picture_model.dart';
 
 class RecipeScreen extends StatefulWidget {
   const RecipeScreen({
