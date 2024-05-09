@@ -27,8 +27,10 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../data/data_source/picture_data_source.dart';
+import '../data/db/like_hive/like_adapter.dart';
 import '../data/repository/picture_repository_impl.dart';
 import '../domain/use_case/get_picture_use_case.dart';
+import '../presentation/locker/recipe_like/recipe_like_view_model.dart';
 import '../presentation/recipe_screen/recipe_screen.dart';
 import '../presentation/recipe_screen/recipe_view_model.dart';
 
@@ -107,21 +109,30 @@ final router = GoRouter(
               GoRoute(
                 path: 'recipe',
                 builder: (context, state) {
-                  return ChangeNotifierProvider(
-                    create: (_) => RecipeViewModel(
-                      getPictureUseCase: GetPictureUseCase(
-                        repository: PictureRepositoryImpl(
-                          pictureDataSource: PictureDataSource(),
+                  return MultiProvider(
+                    providers: [
+                      ChangeNotifierProvider(create: (_) => RecipeViewModel(
+                        getPictureUseCase: GetPictureUseCase(
+                          repository: PictureRepositoryImpl(
+                            pictureDataSource: PictureDataSource(),
+                          ),
                         ),
-                      ),
-                      getRecipeUseCase: GetRecipeUseCase(
+                        getRecipeUseCase: GetRecipeUseCase(
                           chatGptRepositoryImpl: ChatGptRepositoryImpl(
-                              dataSource: GptDataSource())),
-                    ),
+                            dataSource: GptDataSource(),
+                          ),
+                        ),
+                      )),
+                      ChangeNotifierProvider(create: (_) => RecipeLikeViewModel(
+                        likeBoxAdapter: LikeBoxAdapter(), // LikeBoxAdapter 인스턴스 전달
+                      )),
+                      // 다른 프로바이더 추가 가능
+                    ],
                     child: RecipeScreen(
                       ingredients: state.extra as String,
                     ),
                   );
+
                 },
                 routes: [
                   GoRoute(
