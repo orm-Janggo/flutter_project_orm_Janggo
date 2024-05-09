@@ -59,7 +59,9 @@ final router = GoRouter(
               create: (_) => SignInViewModel(
                 signInWithEmailPasswordUseCase: SignInWithEmailPasswordUseCase(
                   FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
-                ),
+                ), authStateChangesUseCase: AuthStateChangesUseCase(
+                  FirebaseAuthRepositoryImpl(FirebaseAuth.instance)
+              ),
               ),
               child: const SignInScreen(),
             );
