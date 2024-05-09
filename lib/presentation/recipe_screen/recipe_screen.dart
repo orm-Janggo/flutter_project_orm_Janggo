@@ -208,26 +208,20 @@ class _RecipeScreenState extends State<RecipeScreen> {
                                         child: IconButton(
                                           onPressed: () {
                                             setState(() {
-                                              final currentItem =
-                                                  state.recipe[_currentPage];
-                                              if (state.isLike == true) {
-                                                // 값을 넣어주기
-                                                likeRecipe?.recipe =
-                                                    currentItem;
-                                                // likeRecipe 값이 없어서 값을 지정해줌
-                                                likeRecipe?.isLiked = true;
-                                                print("-----------$likeRecipe");
+                                              final currentItem = state.recipe[_currentPage];
+                                              if (state.isLike == false) {
+                                                // LikeItem 생성
+                                                likeRecipe = LikeItem(
+                                                  recipe: currentItem,
+                                                  isLiked: true, id: '', imageUrl: '',
+                                                );
 
-                                               print(viewModel
-                                                   .addLikeItem(likeRecipe!));
-
-
+                                                // LikeItem 추가
+                                                viewModel.addLikeItem(likeRecipe!);
                                               } else {
-                                                viewModel.removeLikeItem(
-                                                    likeRecipe!);
+                                                // LikeItem 제거
+                                                viewModel.removeLikeItem(likeRecipe!);
                                               }
-
-
                                             });
                                           },
                                           icon: Icon(
@@ -237,6 +231,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
                                             color: Colors.red,
                                           ),
                                         ),
+
                                       ),
                                     ],
                                   ),

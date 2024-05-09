@@ -64,12 +64,12 @@ class RecipeViewModel with ChangeNotifier {
   }
 
   void search(String query) async {
-    _likeItems = await _likeSearchRecipeUseCase.execute(query);
+    _likeItems = (await _likeSearchRecipeUseCase.execute(query)) ?? [];
     notifyListeners();
   }
 
-  void loadItem(LikeItem? item) {
-    _likeItems = _likeLoadRecipeUseCase.execute(item!) as List<LikeItem?>;
+  void loadItem(LikeItem item) {
+    _likeItems = (_likeLoadRecipeUseCase.execute(item)) ?? [];
     notifyListeners();
   }
 
@@ -77,14 +77,15 @@ class RecipeViewModel with ChangeNotifier {
   Future<void> addLikeItem(LikeItem item) async {
     await _likeAddRecipeUseCase.execute(item);
     loadItem(item);
-    _state = _state.copyWith(isLike: true);
+    _state = state.copyWith(isLike: true);
     notifyListeners();
+
   }
 
   Future<void> removeLikeItem(LikeItem item) async {
     await _likeRemoveRecipeUseCase.execute(item);
     loadItem(item);
-    _state = _state.copyWith(isLike: false);
+    _state = state.copyWith(isLike: false);
     notifyListeners();
   }
 
