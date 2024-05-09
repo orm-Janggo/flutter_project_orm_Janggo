@@ -20,7 +20,14 @@ class RecipeHistoryViewModel with ChangeNotifier {
       for (var recipeData in recipeList) {
         ids.add(recipeData.id);
         imagePaths.add(recipeData.imagePath);
-        recipes.add(recipeData.recipe);
+        List<String> sentences = recipeData.recipe.split('\n');
+        String recipeName = '';
+        if (sentences.first.contains('레시피')) {
+          recipeName = sentences[2];
+        } else {
+          recipeName = sentences.first;
+        }
+        recipes.add(recipeName);
       }
     }
 

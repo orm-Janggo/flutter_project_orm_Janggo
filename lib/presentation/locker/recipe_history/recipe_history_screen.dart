@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -12,8 +13,7 @@ class RecipeHistoryScreen extends StatefulWidget {
 }
 
 class _RecipeHistoryScreenState extends State<RecipeHistoryScreen> {
-
-@override
+  @override
   void initState() {
     super.initState();
     context.read<RecipeHistoryViewModel>().getDataListFromHive();
@@ -21,7 +21,6 @@ class _RecipeHistoryScreenState extends State<RecipeHistoryScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     final viewModel = context.watch<RecipeHistoryViewModel>();
     final state = viewModel.state;
 
@@ -44,22 +43,27 @@ class _RecipeHistoryScreenState extends State<RecipeHistoryScreen> {
               margin: EdgeInsets.symmetric(vertical: screenHeight * 0.01),
               padding: EdgeInsets.all(screenWidth * 0.03),
               decoration: BoxDecoration(
-                  color: Colors.white, borderRadius: BorderRadius.circular(8.0)),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(8.0)),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
+                  SizedBox(
                     width: screenWidth * 0.3,
-                    child: ClipRRect(
-                        borderRadius: BorderRadius.circular(8.0),
-                        child: Image.network(state.url[index])),
+                    child: state.url[index] != 'empty' ? ClipRRect(
+                      borderRadius: BorderRadius.circular(8.0),
+                      child: Image.network(state.url[index]),
+                    ) : ClipRRect(
+                      borderRadius: BorderRadius.circular(8.0),
+                      child: Image.asset(
+                          'assets/images/empty_image.png'),
+                    ),
                   ),
-                  Text('레시피 이름 ${state.recipe[index]})'),
+                  Text(state.recipe[index]),
                   Column(
                     children: [
                       IconButton(
-                        onPressed: () {
-                        },
+                        onPressed: () {},
                         icon: const Icon(Icons.delete_outline),
                       ),
                       IconButton(
