@@ -8,9 +8,6 @@ import 'package:flutter_project_orm_janggo/presentation/recipe_screen/recipe_vie
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-import '../../domain/model/picture_model.dart';
-import '../locker/recipe_like/recipe_like_view_model.dart';
-
 class RecipeScreen extends StatefulWidget {
   const RecipeScreen({
     super.key,
@@ -40,9 +37,10 @@ class _RecipeScreenState extends State<RecipeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final likeRecipeViewModel = context.watch<RecipeLikeViewModel>();
+    LikeItem? likeRecipe;
     final viewModel = context.watch<RecipeViewModel>();
     final state = viewModel.state;
+
     if (state.recipe != []) {
       viewModel.getPicture(state.recipe);
       setState(() {});
@@ -69,7 +67,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              context.push('/main/recipe/recipe-history');
+              context.push('/main/recipe/recipe-like');
             },
             icon: const Icon(Icons.face),
           ),
@@ -88,160 +86,176 @@ class _RecipeScreenState extends State<RecipeScreen> {
                         'assets/images/book.gif',
                         fit: BoxFit.fill,
                       ),
-                      const Text('Ai가 레시피를 찾고있어요 잠시만 기다려주세요!', style: TextStyle(fontFamily: 'school_font', fontSize: 12),),
+                      const Text(
+                        'Ai가 레시피를 찾고있어요 잠시만 기다려주세요!',
+                        style:
+                            TextStyle(fontFamily: 'school_font', fontSize: 12),
+                      ),
                     ],
                   ),
                 ),
               )
-
             : Center(
-          child: Column(
-            children: [
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                height: 4.0,
-                child: Center(
-                  child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: state.recipe.length,
-                    itemBuilder: (context, index) {
-                      return Container(
-                        width: MediaQuery.of(context).size.width / 3 - 10,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.rectangle,
-                          color: _currentPage == index
-                              ? const Color(0xfffb8c00)
-                              : Colors.grey.shade200,
-                        ),
-                      );
-                    },
-                  ),
-                ),
-              ),
-              Expanded(
-                child: PageView.builder(
-                  itemCount:
-                  state.recipe.length > 3 ? 3 : state.recipe.length,
-                  controller: _pageController,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: SizedBox(
-                              height: 265,
-                              width: 400,
-                              child: (state.url.isNotEmpty &&
-                                  index < state.url.length &&
-                                  state.url[index] != 'empty')
-                                  ? ClipRRect(
-                                borderRadius:
-                                BorderRadius.circular(15),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Colors.white,
-                                      width: 1,
-                                    ),
-                                  ),
-                                  child: Image.network(
-                                    state.url[index],
-                                    height: 265,
-                                    width: 400,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              )
-                                  : ClipRRect(
-                                borderRadius:
-                                BorderRadius.circular(15),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: Colors.white70,
-                                      width: 1,
-                                    ),
-                                  ),
-                                  child: Image.asset(
-                                    'assets/images/empty_image.png',
-                                    height: 265,
-                                    width: 400,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
+                child: Column(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      height: 4.0,
+                      child: Center(
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: state.recipe.length,
+                          itemBuilder: (context, index) {
+                            return Container(
+                              width: MediaQuery.of(context).size.width / 3 - 10,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.rectangle,
+                                color: _currentPage == index
+                                    ? const Color(0xfffb8c00)
+                                    : Colors.grey.shade200,
                               ),
-                            ),
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: Stack(
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: PageView.builder(
+                        itemCount:
+                            state.recipe.length > 3 ? 3 : state.recipe.length,
+                        controller: _pageController,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
                               children: [
-                                SingleChildScrollView(
-                                  scrollDirection: Axis.vertical,
-                                  child: Container(
-                                    width: MediaQuery.of(context).size.width,
-                                    decoration: BoxDecoration(
-                                      color: Colors.amber[50],
-                                      borderRadius: BorderRadius.circular(10),
-                                    ),
-                                    padding: const EdgeInsets.all(16.0),
-                                    child: Text(
-                                      state.recipe[index],
-                                      style: const TextStyle(
-                                        fontSize: 20,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.bold,
-                                        fontFamily: 'hand_font',
-                                      ),
-                                    ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: SizedBox(
+                                    height: 265,
+                                    width: 400,
+                                    child: (state.url.isNotEmpty &&
+                                            index < state.url.length &&
+                                            state.url[index] != 'empty')
+                                        ? ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
+                                                  color: Colors.white,
+                                                  width: 1,
+                                                ),
+                                              ),
+                                              child: Image.network(
+                                                state.url[index],
+                                                height: 265,
+                                                width: 400,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          )
+                                        : ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
+                                                  color: Colors.white70,
+                                                  width: 1,
+                                                ),
+                                              ),
+                                              child: Image.asset(
+                                                'assets/images/empty_image.png',
+                                                height: 265,
+                                                width: 400,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                          ),
                                   ),
                                 ),
-                                Positioned(
-                                  right: 16,
-                                  top: 16,
-                                  child: IconButton(
-                                    onPressed: () {
-                                      setState(() {
-                                        viewModel.isLike = !viewModel.isLike;
-                                        final currentItem = state.recipe[_currentPage];
-                                        if(viewModel.isLike){
-                                            if(currentItem is LikeItem)
-                                          likeRecipeViewModel.addLikeItem(currentItem as LikeItem);
-                                        }else{
-                                          likeRecipeViewModel.removeLikeItem(index);
-                                        }
-                                      });
-                                    },
-                                    icon: Icon(
-                                      viewModel.isLike ? Icons.favorite : Icons.favorite_border ,color: Colors.red,
-                                    ),
+                                Expanded(
+                                  flex: 1,
+                                  child: Stack(
+                                    children: [
+                                      SingleChildScrollView(
+                                        scrollDirection: Axis.vertical,
+                                        child: Container(
+                                          width:
+                                              MediaQuery.of(context).size.width,
+                                          decoration: BoxDecoration(
+                                            color: Colors.amber[50],
+                                            borderRadius:
+                                                BorderRadius.circular(10),
+                                          ),
+                                          padding: const EdgeInsets.all(16.0),
+                                          child: Text(
+                                            state.recipe[index],
+                                            style: const TextStyle(
+                                              fontSize: 20,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                              fontFamily: 'hand_font',
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Positioned(
+                                        right: 16,
+                                        top: 16,
+                                        child: IconButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              final currentItem =
+                                                  state.recipe[_currentPage];
+                                              if (state.isLike == true) {
+                                                // 값을 넣어주기
+                                                likeRecipe?.recipe =
+                                                    currentItem;
+                                                // likeRecipe 값이 없어서 값을 지정해줌
+                                                likeRecipe?.isLiked = true;
+                                                print("-----------$likeRecipe");
+
+                                               print(viewModel
+                                                   .addLikeItem(likeRecipe!));
+
+
+                                              } else {
+                                                viewModel.removeLikeItem(
+                                                    likeRecipe!);
+                                              }
+
+
+                                            });
+                                          },
+                                          icon: Icon(
+                                            state.isLike
+                                                ? Icons.favorite
+                                                : Icons.favorite_border,
+                                            color: Colors.red,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],
                             ),
-                          ),
-
-
-
-                        ],
+                          );
+                        },
+                        onPageChanged: (index) {
+                          setState(() {
+                            _currentPage = index;
+                          });
+                        },
                       ),
-                    );
-                  },
-                  onPageChanged: (index) {
-                    setState(() {
-                      _currentPage = index;
-                    });
-                  },
+                    ),
+                  ],
                 ),
               ),
-            ],
-          ),
-        ),
       ),
-
     );
   }
 }
