@@ -1,3 +1,5 @@
+import 'dart:js';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_project_orm_janggo/presentation/components/like_widget.dart';
 import 'package:flutter_project_orm_janggo/presentation/locker/recipe_like/recipe_like_view_model.dart';
@@ -8,7 +10,7 @@ class LikeRecipeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final likeRecipeViewModel = Provider.of<RecipeLikeViewModel>(context);
+    final likeRecipeViewModel = context.watch<RecipeLikeViewModel>();
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
