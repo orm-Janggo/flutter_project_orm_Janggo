@@ -1,4 +1,4 @@
-import 'package:flutter_project_orm_janggo/data/repository/chat_gpt_reopository_impl.dart';
+import 'package:flutter_project_orm_janggo/data/repository/chat_gpt_repository_impl.dart';
 
 class GetRecipeUseCase {
   final ChatGptRepositoryImpl _chatGptRepositoryImpl;

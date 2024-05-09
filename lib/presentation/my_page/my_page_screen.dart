@@ -112,6 +112,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                               border: InputBorder.none,
                               enabled: false,
                             ),
+                            style: TextStyle(fontFamily: 'school_font'),
                             initialValue: viewModel.userEmail,
                             onChanged: (String? value) {
                               userEmail = value;
@@ -153,6 +154,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                               border: InputBorder.none,
                               enabled: isChanged,
                             ),
+                            style: TextStyle(fontFamily: 'school_font'),
                             initialValue: viewModel.userDisplayName,
                             onChanged: (String? value) {
                               // _nickNameController.text = value!;
@@ -194,6 +196,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                               border: InputBorder.none,
                               enabled: isChanged,
                             ),
+                            style: TextStyle(fontFamily: 'school_font'),
                             onChanged: (String? value) {
                               userPassword = value!;
                             },
@@ -302,6 +305,27 @@ class _MyPageScreenState extends State<MyPageScreen> {
                         ),
                       ),
                     ],
+                  ),
+                ),
+
+                Align(
+                  alignment: Alignment.bottomLeft,
+                  child: Padding(
+                    padding: EdgeInsets.all(16.0), // 여백 추가
+                    child: TextButton(
+                      style: TextButton.styleFrom(
+                        backgroundColor: Color(0xFF865794),
+                        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20), // 패딩
+                        foregroundColor: Colors.black, // 텍스트 색상
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(16), // 둥근 모서리
+                        ),
+                      ),
+                      onPressed: () {
+                        context.go('/main/my-page/app-information');
+                      },
+                      child: Text('앱 정보', style: TextStyle(fontWeight: FontWeight.bold),),
+                    ),
                   ),
                 ),
               ],

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_project_orm_janggo/data/user_information/user_information.dart';
 import 'package:flutter_project_orm_janggo/domain/model/social_login/kakao_login.dart';
 import 'package:flutter_project_orm_janggo/presentation/splash/splash_screen_view_model.dart';
 import 'package:go_router/go_router.dart';
@@ -211,6 +212,7 @@ class SplashScreen5 extends StatelessWidget {
             child: TextButton(
               onPressed: () {
                 // SKIP 버튼 눌렀을 때 처리
+                UserInformation().updateLoginMethod(LoginMethod.none);
                 context.push('/main');
               },
               child: const Text(
