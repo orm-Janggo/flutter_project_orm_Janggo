@@ -1,6 +1,6 @@
-
 import 'package:firebase_auth/firebase_auth.dart' as Auth;
 import 'package:flutter/material.dart';
+import 'package:flutter_project_orm_janggo/data/user_information/user_information.dart';
 import 'package:go_router/go_router.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
@@ -15,9 +15,16 @@ Future<bool> signInWithKakao() async {
       accessToken: token.accessToken,
     );
     await Auth.FirebaseAuth.instance.signInWithCredential(credential);
+    final firebaseUser = Auth.FirebaseAuth.instance.currentUser;
 
     print('카카오톡으로 로그인 성공 ${token.accessToken}');
     User user = await UserApi.instance.me();
+    UserInformation().updateUser(
+      displayName: user.kakaoAccount!.profile!.nickname,
+      email: user.kakaoAccount!.email,
+      photoUrl: user.kakaoAccount!.profile!.profileImageUrl,
+      uid: user.id.toString()
+    );
     print('사용자 정보${user.id}');
     return true; // 로그인 성공 시 true 반환
   } catch (error) {
@@ -32,8 +39,17 @@ Future<bool> signInWithKakao() async {
         accessToken: token.accessToken,
       );
       await Auth.FirebaseAuth.instance.signInWithCredential(credential);
+      final firebaseUser = Auth.FirebaseAuth.instance.currentUser;
       print('카카오계정으로 로그인 성공');
+
       User user = await UserApi.instance.me();
+      UserInformation().updateUser(
+          displayName: user.kakaoAccount!.profile!.nickname,
+          email: user.kakaoAccount!.email,
+          photoUrl: user.kakaoAccount!.profile!.profileImageUrl,
+          uid: user.id.toString()
+      );
+
       print('사용자 정보${user.id}');
       return true; // 로그인 성공 시 true 반환
     } catch (error) {
@@ -45,6 +61,7 @@ Future<bool> signInWithKakao() async {
 
 void navigateToMain(BuildContext context) async {
   bool success = await signInWithKakao();
+  UserInformation().updateLoginMethod(LoginMethod.kakao);
   if (success) {
     context.push('/main');
   }
@@ -60,18 +77,16 @@ Future<void> Kakaologout(BuildContext context) async {
     print('로그아웃 실패, SDK에서 토큰 삭제 $error');
   }
 
-  try{
+  try {
     await Auth.FirebaseAuth.instance.signOut();
     logoutSuccessful = true;
-  }catch(e){
+  } catch (e) {
     print('Firebase 로그아웃 실패 : $e');
   }
 
-  if(logoutSuccessful){
-
+  if (logoutSuccessful) {
     navigateToMain(context);
   }
-
 }
 
 void userInfo() async {
