@@ -1,19 +1,18 @@
-import 'dart:js';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_project_orm_janggo/presentation/components/like_widget.dart';
-import 'package:flutter_project_orm_janggo/presentation/locker/recipe_like/recipe_like_view_model.dart';
 import 'package:provider/provider.dart';
 
+import '../../recipe_screen/recipe_view_model.dart';
+
 class LikeRecipeScreen extends StatelessWidget {
-  const LikeRecipeScreen({Key? key}) : super(key: key);
+  const LikeRecipeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final likeRecipeViewModel = context.watch<RecipeLikeViewModel>();
+    final viewModel = context.watch<RecipeViewModel>();
 
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.orange,
       body: Stack(
         children: [
@@ -49,12 +48,12 @@ class LikeRecipeScreen extends StatelessWidget {
                 child: ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: likeRecipeViewModel.likeItems.length,
+                  itemCount: viewModel.likeItems.length,
                   itemBuilder: (context, index) {
-                    final recipe = likeRecipeViewModel.likeItems[index];
+                    final recipe = viewModel.likeItems[index];
                     return Padding(
                       padding: const EdgeInsets.all(16.0),
-                      child: LikeWidget(),
+                      child: LikeWidget(recipe :recipe),
                     );
                   },
                 ),
@@ -77,12 +76,12 @@ class LikeRecipeScreen extends StatelessWidget {
                   ],
                 ),
                 children: [
-                  for (final recipe in likeRecipeViewModel.likeItems)
+                  for (final recipe in viewModel.likeItems)
                     Container(
                       color: Colors.black,
                       child: ListTile(
                         title: Text(
-                          recipe.title,
+                          recipe!.recipe,
                           style: TextStyle(
                             fontFamily: 'school_font',
                             color: Colors.white,
