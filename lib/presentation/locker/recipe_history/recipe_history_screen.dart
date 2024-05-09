@@ -29,8 +29,19 @@ class _RecipeHistoryScreenState extends State<RecipeHistoryScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xffFB8C00),
+        actions: [
+          IconButton(
+            onPressed: () {
+              viewModel.deleteAllDataFromBox();
+              setState(() {
+                viewModel.getDataListFromHive();
+              });
+            },
+            icon: const Icon(Icons.delete_outline),
+          ),
+        ],
       ),
-      body: Container(
+      body: state.recipe.isNotEmpty ? Container(
         padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
         color: const Color(0xffFB8C00),
         child: ListView.builder(
@@ -80,7 +91,7 @@ class _RecipeHistoryScreenState extends State<RecipeHistoryScreen> {
             );
           },
         ),
-      ),
+      ) : Center(child: Text('값이 없습니다!'),),
     );
   }
 }

@@ -49,4 +49,16 @@ class RecipeHistoryViewModel with ChangeNotifier {
 
     notifyListeners();
   }
+
+  Future<void> deleteAllDataFromBox() async {
+    var box = await Hive.openBox<HistoryRecipeData>('historyRecipeBox');
+
+    // 모든 데이터 삭제
+    await box.clear();
+
+    print('데이터 전체 삭제');
+
+    notifyListeners();
+  }
+
 }
