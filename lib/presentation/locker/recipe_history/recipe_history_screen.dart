@@ -68,6 +68,9 @@ class _RecipeHistoryScreenState extends State<RecipeHistoryScreen> {
                       IconButton(
                         onPressed: () {
                           viewModel.deleteDataFromHive(state.id[index]);
+                          setState(() {
+                            viewModel.getDataListFromHive();
+                          });
                         },
                         icon: const Icon(Icons.delete_outline),
                       ),
