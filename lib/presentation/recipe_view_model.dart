@@ -64,20 +64,6 @@ class RecipeViewModel with ChangeNotifier {
       String recipe = recipeList[i];
 
       box.add(HistoryRecipeData(nextId++, imagePath, recipe));
-
-      print('id =================== $nextId');
-      print('imagePath =================== $imagePath');
-      print('recipe =================== $recipe');
-    }
-    print('values============================${box.values.length}');
-  }
-
-  Future<void> getDataListFromHive() async {
-    var box = await Hive.openBox<HistoryRecipeData>('historyRecipeBox');
-    List<HistoryRecipeData> recipeList = box.values.toList();
-
-    for (var recipeData in recipeList) {
-      print('ID: ${recipeData.id}, Image Path: ${recipeData.imagePath}, Recipe: ${recipeData.recipe}');
     }
   }
 }
