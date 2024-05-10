@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_project_orm_janggo/presentation/sign/sign_up/sign_up_view_model.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -93,7 +94,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       padding: const EdgeInsets.symmetric(
                           vertical: 8.0, horizontal: 16.0),
                       child: TextFormField(
-                        key: const ValueKey(1),
+                        key: const ValueKey(2),
                         decoration: InputDecoration(
                           hintText: '닉네임',
                           hintStyle: TextStyle(fontFamily: 'school_font'),
@@ -114,10 +115,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                         ),
                         style: TextStyle(fontFamily: 'school_font'),
+                        inputFormatters: [
+                          FilteringTextInputFormatter.deny(RegExp(r'\s')),
+                          // Deny spaces
+                        ],
                         validator: (value) {
                           if (value?.isEmpty ?? false) {
                             return '닉네임을 입력해주세요.';
                           }
+
                           return null;
                         },
                         onChanged: (String? value) {
@@ -136,7 +142,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           padding: const EdgeInsets.symmetric(
                               vertical: 8.0, horizontal: 16.0),
                           child: TextFormField(
-                            key: const ValueKey(2),
+                            key: const ValueKey(3),
                             obscureText: _isObscure,
                             decoration: InputDecoration(
                               hintText: '비밀번호를 입력하세요',
@@ -192,7 +198,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           padding: const EdgeInsets.symmetric(
                               vertical: 8.0, horizontal: 16.0),
                           child: TextFormField(
-                            key: const ValueKey(3),
+                            key: const ValueKey(4),
                             obscureText: _isObscure,
                             decoration: InputDecoration(
                               hintText: '비밀번호 확인',
