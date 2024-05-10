@@ -32,21 +32,17 @@ class _RecipeScreenState extends State<RecipeScreen> {
     super.initState();
     final ingredients = widget.ingredients;
     context.read<RecipeViewModel>().getRecipe(ingredients);
-    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
-    LikeItem? likeRecipe;
     final viewModel = context.watch<RecipeViewModel>();
     final state = viewModel.state;
 
-    if (state.recipe != []) {
+    if (state.recipe.isNotEmpty) {
       viewModel.getPicture(state.recipe);
       setState(() {});
     }
-
-    final double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
       appBar: AppBar(
@@ -125,6 +121,14 @@ class _RecipeScreenState extends State<RecipeScreen> {
                             state.recipe.length > 3 ? 3 : state.recipe.length,
                         controller: _pageController,
                         itemBuilder: (context, index) {
+                          final currentItem = state.recipe.isNotEmpty
+                              ? state.recipe[index]
+                              : null;
+
+                          final isLiked = index < state.isLike.length
+                              ? state.isLike[index]
+                              : false;
+
                           return Padding(
                             padding: const EdgeInsets.all(16.0),
                             child: Column(
@@ -208,30 +212,28 @@ class _RecipeScreenState extends State<RecipeScreen> {
                                         child: IconButton(
                                           onPressed: () {
                                             setState(() {
-                                              final currentItem = state.recipe[_currentPage];
-                                              if (state.isLike == false) {
-                                                // LikeItem 생성
-                                                likeRecipe = LikeItem(
-                                                  recipe: currentItem,
-                                                  isLiked: true, id: '', imageUrl: '',
-                                                );
-
+                                              if (!isLiked) {
+                                                viewModel.addLikeItem(LikeItem(
+                                                    recipe: currentItem!,
+                                                    id: '',
+                                                    imageUrl: '',
+                                                    isLiked: true));
                                                 // LikeItem 추가
-                                                viewModel.addLikeItem(likeRecipe!);
+                                                viewModel.toggleLike(
+                                                    index, !isLiked);
                                               } else {
-                                                // LikeItem 제거
-                                                viewModel.removeLikeItem(likeRecipe!);
+                                                viewModel.toggleLike(
+                                                    _currentPage, !isLiked);
                                               }
                                             });
                                           },
                                           icon: Icon(
-                                            state.isLike
+                                            state.isLike[_currentPage]
                                                 ? Icons.favorite
                                                 : Icons.favorite_border,
                                             color: Colors.red,
                                           ),
                                         ),
-
                                       ),
                                     ],
                                   ),
