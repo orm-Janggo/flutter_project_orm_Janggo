@@ -17,6 +17,10 @@ import 'package:flutter_project_orm_janggo/domain/use_case/like_recipe_use_case/
 import 'package:flutter_project_orm_janggo/domain/use_case/like_recipe_use_case/like_remove_recipe_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/like_recipe_use_case/like_search_recipe_use_case.dart';
 import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_screen.dart';
+import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_view_model.dart';
+import 'package:flutter_project_orm_janggo/presentation/my_page/app_information/app_information_screen.dart';
+import 'package:flutter_project_orm_janggo/presentation/my_page/app_information/privacy_policy_screen.dart';
+import 'package:flutter_project_orm_janggo/presentation/my_page/app_information/question_answer_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/my_page/my_page_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/my_page/my_page_view_model.dart';
 import 'package:flutter_project_orm_janggo/presentation/sign/forgot_password/forgot_password_screen.dart';
@@ -38,9 +42,6 @@ import '../domain/use_case/get_picture_use_case.dart';
 import '../presentation/locker/recipe_like/like_recipe_screen.dart';
 import '../presentation/main/main_screen.dart';
 import '../presentation/main/main_screen_view_model.dart';
-import '../presentation/my_page/app_information/app_information_screen.dart';
-import '../presentation/my_page/app_information/privacy_policy_screen.dart';
-import '../presentation/my_page/app_information/question_answer_screen.dart';
 import '../presentation/recipe_screen/recipe_screen.dart';
 import '../presentation/recipe_screen/recipe_view_model.dart';
 
@@ -56,8 +57,8 @@ final router = GoRouter(
               FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
             ),
 
-            signOutUseCase: SignOutUseCase(FirebaseAuthRepositoryImpl(FirebaseAuth.instance)),
-
+            signOutUseCase: SignOutUseCase(
+                FirebaseAuthRepositoryImpl(FirebaseAuth.instance)),
           ),
           child: const SplashScreen(),
         );
@@ -70,9 +71,9 @@ final router = GoRouter(
               create: (_) => SignInViewModel(
                 signInWithEmailPasswordUseCase: SignInWithEmailPasswordUseCase(
                   FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
-                ), authStateChangesUseCase: AuthStateChangesUseCase(
-                  FirebaseAuthRepositoryImpl(FirebaseAuth.instance)
-              ),
+                ),
+                authStateChangesUseCase: AuthStateChangesUseCase(
+                    FirebaseAuthRepositoryImpl(FirebaseAuth.instance)),
               ),
               child: const SignInScreen(),
             );
@@ -83,7 +84,8 @@ final router = GoRouter(
               builder: (context, state) {
                 return ChangeNotifierProvider(
                   create: (_) => ForgotPasswordViewModel(
-                    sendPasswordResetEmailUseCase: SendPasswordResetEmailUseCase(
+                    sendPasswordResetEmailUseCase:
+                        SendPasswordResetEmailUseCase(
                       FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
                     ),
                   ),
@@ -145,6 +147,7 @@ final router = GoRouter(
                         likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
                     likeSearchRecipeUseCase: LikeSearchRecipeUseCase(
                         likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
+
 
                   ),
                   child: RecipeScreen(
@@ -222,17 +225,15 @@ final router = GoRouter(
                           return const LicensePage();
                         }),
                     GoRoute(
-                      path: 'privacy',
-                      builder: (context, state) {
-                        return const PrivacyPolicyScreen();
-                      }
-                    ),
+                        path: 'privacy',
+                        builder: (context, state) {
+                          return const PrivacyPolicyScreen();
+                        }),
                     GoRoute(
                         path: 'qna',
                         builder: (context, state) {
                           return const QuestionAnswerScreen();
-                        }
-                    ),
+                        }),
                   ],
                 )
               ],
