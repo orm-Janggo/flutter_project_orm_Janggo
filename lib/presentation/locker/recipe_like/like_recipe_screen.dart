@@ -13,6 +13,7 @@ class LikeRecipeScreen extends StatelessWidget {
     final viewModel = context.watch<RecipeViewModel>();
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.orange,
       body: Stack(
         children: [
