@@ -14,6 +14,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
 
   String? inputEmail;
+  String? inputDisplayName;
   String? inputPassword;
   String? inputCheckPassword;
 
@@ -85,6 +86,45 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         },
                         onSaved: (String? value) {
                           inputEmail = value;
+                        },
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 8.0, horizontal: 16.0),
+                      child: TextFormField(
+                        key: const ValueKey(1),
+                        decoration: InputDecoration(
+                          hintText: '닉네임',
+                          hintStyle: TextStyle(fontFamily: 'school_font'),
+                          filled: true,
+                          fillColor: const Color(0xfff8f8f8),
+                          border: InputBorder.none,
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(16.0),
+                            borderSide: const BorderSide(
+                              color: Colors.transparent,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(16.0),
+                            borderSide: const BorderSide(
+                              color: Color(0xfffb8c00),
+                            ),
+                          ),
+                        ),
+                        style: TextStyle(fontFamily: 'school_font'),
+                        validator: (value) {
+                          if (value?.isEmpty ?? false) {
+                            return '닉네임을 입력해주세요.';
+                          }
+                          return null;
+                        },
+                        onChanged: (String? value) {
+                          inputDisplayName = value;
+                        },
+                        onSaved: (String? value) {
+                          inputDisplayName = value;
                         },
                       ),
                     ),
@@ -247,7 +287,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                           try {
                             await viewModel.signUpWithFirebaseAuth(
-                                inputEmail!, inputPassword!);
+                              inputEmail!,
+                              inputPassword!,
+                              inputDisplayName!,
+                            );
 
                             if (!context.mounted) return;
                             context.push('/main');
