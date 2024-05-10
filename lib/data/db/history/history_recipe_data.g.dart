@@ -8,7 +8,7 @@ part of 'history_recipe_data.dart';
 
 class HistoryRecipeDataAdapter extends TypeAdapter<HistoryRecipeData> {
   @override
-  final int typeId = 0;
+  final int typeId = 1;
 
   @override
   HistoryRecipeData read(BinaryReader reader) {
