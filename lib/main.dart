@@ -1,12 +1,19 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_project_orm_janggo/data/db/history/history_recipe_data.dart';
 import 'package:flutter_project_orm_janggo/go_router/go_router.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
 import 'core/config/api_config.dart';
 
 void main() async {
+  // Hive 초기화
+  await Hive.initFlutter();
+  Hive.openBox<HistoryRecipeData>('historyRecipeBox');
+  Hive.registerAdapter(HistoryRecipeDataAdapter());
+
   await dotenv.load(fileName: '.env');
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();

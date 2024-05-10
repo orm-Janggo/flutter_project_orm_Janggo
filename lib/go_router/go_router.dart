@@ -12,6 +12,7 @@ import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_cas
 import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_case/update_password_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/get_recipe_use_case.dart';
 import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_screen.dart';
+import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_view_model.dart';
 import 'package:flutter_project_orm_janggo/presentation/my_page/app_information/app_information_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/my_page/app_information/privacy_policy_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/my_page/app_information/question_answer_screen.dart';
@@ -46,7 +47,8 @@ final router = GoRouter(
             authStateChangesUseCase: AuthStateChangesUseCase(
               FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
             ),
-            signOutUseCase: SignOutUseCase(FirebaseAuthRepositoryImpl(FirebaseAuth.instance)),
+            signOutUseCase: SignOutUseCase(
+                FirebaseAuthRepositoryImpl(FirebaseAuth.instance)),
           ),
           child: const SplashScreen(),
         );
@@ -59,9 +61,9 @@ final router = GoRouter(
               create: (_) => SignInViewModel(
                 signInWithEmailPasswordUseCase: SignInWithEmailPasswordUseCase(
                   FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
-                ), authStateChangesUseCase: AuthStateChangesUseCase(
-                  FirebaseAuthRepositoryImpl(FirebaseAuth.instance)
-              ),
+                ),
+                authStateChangesUseCase: AuthStateChangesUseCase(
+                    FirebaseAuthRepositoryImpl(FirebaseAuth.instance)),
               ),
               child: const SignInScreen(),
             );
@@ -72,7 +74,8 @@ final router = GoRouter(
               builder: (context, state) {
                 return ChangeNotifierProvider(
                   create: (_) => ForgotPasswordViewModel(
-                    sendPasswordResetEmailUseCase: SendPasswordResetEmailUseCase(
+                    sendPasswordResetEmailUseCase:
+                        SendPasswordResetEmailUseCase(
                       FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
                     ),
                   ),
@@ -118,8 +121,9 @@ final router = GoRouter(
                         pictureDataSource: PictureDataSource(),
                       ),
                     ),
-                    getRecipeUseCase:
-                        GetRecipeUseCase(chatGptRepositoryImpl: ChatGptRepositoryImpl(dataSource: GptDataSource())),
+                    getRecipeUseCase: GetRecipeUseCase(
+                        chatGptRepositoryImpl:
+                            ChatGptRepositoryImpl(dataSource: GptDataSource())),
                   ),
                   child: RecipeScreen(
                     ingredients: state.extra as String,
@@ -130,7 +134,10 @@ final router = GoRouter(
                 GoRoute(
                   path: 'recipe-history',
                   builder: (context, state) {
-                    return const RecipeHistoryScreen();
+                    return ChangeNotifierProvider(
+                      create: (_) => RecipeHistoryViewModel(),
+                      child: RecipeHistoryScreen(),
+                    );
                   },
                 ),
               ],
@@ -169,17 +176,15 @@ final router = GoRouter(
                           return const LicensePage();
                         }),
                     GoRoute(
-                      path: 'privacy',
-                      builder: (context, state) {
-                        return const PrivacyPolicyScreen();
-                      }
-                    ),
+                        path: 'privacy',
+                        builder: (context, state) {
+                          return const PrivacyPolicyScreen();
+                        }),
                     GoRoute(
                         path: 'qna',
                         builder: (context, state) {
                           return const QuestionAnswerScreen();
-                        }
-                    ),
+                        }),
                   ],
                 )
               ],
