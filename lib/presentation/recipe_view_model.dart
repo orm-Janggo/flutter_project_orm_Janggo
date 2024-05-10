@@ -39,6 +39,8 @@ class RecipeViewModel with ChangeNotifier {
 
       _state = _state.copyWith(url: images);
 
+      addDataListToHive(state.url, state.recipe);
+
       notifyListeners();
     } catch (e) {
       print("Error in getPicture: $e"); // 예외 처리
