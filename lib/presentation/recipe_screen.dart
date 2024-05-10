@@ -37,6 +37,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
 
     if (state.recipe != []) {
       viewModel.getPicture(state.recipe);
+      viewModel.addDataListToHive(state.url, state.recipe);
       setState(() {});
     }
 

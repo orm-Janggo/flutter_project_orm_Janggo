@@ -38,7 +38,6 @@ class RecipeViewModel with ChangeNotifier {
       }
 
       _state = _state.copyWith(url: images);
-      addDataListToHive(_state.url, _state.recipe);
 
       notifyListeners();
     } catch (e) {
@@ -52,7 +51,7 @@ class RecipeViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  void addDataListToHive(
+  Future<void> addDataListToHive(
       List<String> imagePathList, List<String> recipeList) async {
     Box box = Hive.box<HistoryRecipeData>('historyRecipeBox');
 
