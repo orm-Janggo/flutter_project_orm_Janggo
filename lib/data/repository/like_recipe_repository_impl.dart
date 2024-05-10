@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:hive/hive.dart';
+
 import '../../domain/repository/like_recipe_repository.dart';
 import '../../main.dart';
 import '../db/like_hive/like_item.dart';
@@ -8,18 +10,18 @@ class LikeRecipeRepositoryImpl implements LikeRecipeRepository {
   @override
   Future<void> addItem(LikeItem item) async {
     try {
-      List<LikeItem> likeListItem = loadItem(item) ?? [];
-      print('111111111111111');
-      print(likeListItem);
+      List<LikeItem> likeListItem = await loadItem(item);
       likeListItem.add(item);
-      print(likeListItem);
-      await likeBox.put('likeItem', likeListItem);
-      print('add 확인용!!!');
+      // 각 아이템을 개별적으로 Hive 데이터베이스에 저장
+      for (var item in likeListItem) {
+        await likeBox.put(item.id, item);
+      }
     } catch (e) {
       print('아이템 추가 실패: $e');
       throw e;
     }
   }
+
 
   @override
   Future<void> removeItem(LikeItem item) async {
@@ -34,20 +36,21 @@ class LikeRecipeRepositoryImpl implements LikeRecipeRepository {
   @override
   Future<List<LikeItem>> search(String query) async {
     try {
-      final items = likeBox
-          .get('likeItem')
-          ?.map((e) => e as LikeItem)
-          .where((item) => item.recipe.contains(query))
-          .toList();
-      return items ?? [];
+      final allitems = likeBox.values.toList();
+
+      final items =
+          allitems.where((item) => item.recipe.contains(query)).toList();
+      return items;
     } catch (e) {
       print('검색 실패: $e');
       throw e;
     }
   }
 
+
   @override
-  List<LikeItem>? loadItem(LikeItem item) {
-    return likeBox.get('likeItem');
+  List<LikeItem> loadItem(LikeItem item) {
+   final items = Hive.box<LikeItem>('likebox').values.toList().cast<LikeItem>();
+   return items;
   }
 }
