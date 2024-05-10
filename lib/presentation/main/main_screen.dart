@@ -139,37 +139,37 @@ class _MainScreenState extends State<MainScreen> {
                 ],
               ),
             )
-          else if (loginMethod == LoginMethod.email) // Firebase 이메일 로그인
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextButton(
-                    onPressed: () {
-                      context.push('/main/my-page'); // 사용자 정보 페이지로 이동
-                    },
-                    child: Text(
-                      userInfo?.email ?? '',
+          else if (loginMethod == LoginMethod.email)  // Firebase 이메일 로그인
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        context.push('/main/my-page');  // 사용자 정보 페이지로 이동
+                      },
+                      child: Text(
+                        userInfo?.displayName ?? userInfo!.email!,
+                        style: const TextStyle(fontFamily: 'school_font'),
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            else  // 비회원 또는 로그인되지 않은 상태
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      'Guest',
                       style: const TextStyle(fontFamily: 'school_font'),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            )
-          else // 비회원 또는 로그인되지 않은 상태
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    'Guest',
-                    style: const TextStyle(fontFamily: 'school_font'),
-                  ),
-                ],
-              ),
-            ),
           const SizedBox(
             width: 16,
           ),
