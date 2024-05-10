@@ -14,10 +14,14 @@ _$RecipeStateImpl _$$RecipeStateImplFromJson(Map<String, dynamic> json) =>
           const [],
       url: (json['url'] as List<dynamic>?)?.map((e) => e as String).toList() ??
           const [],
+      isLike:
+          (json['isLike'] as List<dynamic>?)?.map((e) => e as bool).toList() ??
+              const [],
     );
 
 Map<String, dynamic> _$$RecipeStateImplToJson(_$RecipeStateImpl instance) =>
     <String, dynamic>{
       'recipe': instance.recipe,
       'url': instance.url,
+      'isLike': instance.isLike,
     };
