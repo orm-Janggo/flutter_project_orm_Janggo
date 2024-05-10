@@ -21,11 +21,15 @@ class FirebaseAuthRepositoryImpl implements FirebaseAuthRepository {
 
   @override
   Future<UserInfoModel> callCreateUserWithEmailAndPassword(
-      String inputEmail, String inputPassword) async {
+      String inputEmail, String inputPassword, String inputDisplayName) async {
     final userInfo = await _authentication.createUserWithEmailAndPassword(
       email: inputEmail,
       password: inputPassword,
     );
+
+    firebase_auth.User? user = userInfo.user;
+
+    await user?.updateDisplayName(inputDisplayName);
 
     return userInfo.userCredentialToUserInfo();
   }
