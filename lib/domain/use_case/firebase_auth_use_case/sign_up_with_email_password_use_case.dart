@@ -6,8 +6,15 @@ class SignUpWithEmailPasswordUseCase {
 
   SignUpWithEmailPasswordUseCase(this._firebaseAuthRepository);
 
-  Future<UserInfoModel> execute(String inputEmail, String inputPassword) async {
+  Future<UserInfoModel> execute(
+    String inputEmail,
+    String inputPassword,
+    String inputDisplayName,
+  ) async {
     return await _firebaseAuthRepository.callCreateUserWithEmailAndPassword(
-        inputEmail, inputPassword);
+      inputEmail,
+      inputPassword,
+      inputDisplayName,
+    );
   }
 }
