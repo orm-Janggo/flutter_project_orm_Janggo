@@ -52,7 +52,7 @@ class RecipeViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> addDataListToHive(
+  void addDataListToHive(
       List<String> imagePathList, List<String> recipeList) async {
     Box box = Hive.box<HistoryRecipeData>('historyRecipeBox');
 
@@ -65,5 +65,7 @@ class RecipeViewModel with ChangeNotifier {
 
       box.add(HistoryRecipeData(nextId++, imagePath, recipe));
     }
+
+    print('---------------------------add 완료');
   }
 }

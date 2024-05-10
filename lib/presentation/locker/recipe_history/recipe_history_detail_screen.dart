@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_view_model.dart';
+import 'package:provider/provider.dart';
 
 class RecipeHistoryDetailScreen extends StatefulWidget {
-  const RecipeHistoryDetailScreen({super.key});
+  final int id;
+
+  const RecipeHistoryDetailScreen({
+    super.key,
+    required this.id,
+  });
 
   @override
   State<RecipeHistoryDetailScreen> createState() =>
@@ -9,12 +16,20 @@ class RecipeHistoryDetailScreen extends StatefulWidget {
 }
 
 class _RecipeHistoryDetailScreenState extends State<RecipeHistoryDetailScreen> {
+
+  @override
+  void initState() {
+    super.initState();
+    context.read<RecipeHistoryViewModel>().getDetailDataListFromHive(widget.id);
+  }
+
   @override
   Widget build(BuildContext context) {
+    final viewModel = context.watch<RecipeHistoryViewModel>();
+    final state = viewModel.state;
+
     // 스크린의 가로화면 사이즈
     final screenWidth = MediaQuery.of(context).size.width;
-    // 스크린의 세로화면 사이즈
-    final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
       appBar: AppBar(),
@@ -26,10 +41,25 @@ class _RecipeHistoryDetailScreenState extends State<RecipeHistoryDetailScreen> {
             child: SizedBox(
               height: 265,
               width: 400,
-
-              // image 받아오면 삼항연산자 사용해서 default image or recipe image 띄우기 기능 추가예정
-              child: ClipRRect(
+              child: state.url != 'empty' ? ClipRRect(
                 borderRadius: BorderRadius.circular(15),
+                child: Container(
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.white70,
+                      width: 1,
+                    ),
+                  ),
+                  child: Image.network(
+                    state.url[0],
+                    height: 265,
+                    width: 400,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ) : ClipRRect(
+                borderRadius:
+                BorderRadius.circular(15),
                 child: Container(
                   decoration: BoxDecoration(
                     border: Border.all(
@@ -59,7 +89,7 @@ class _RecipeHistoryDetailScreenState extends State<RecipeHistoryDetailScreen> {
                   ),
                   padding: const EdgeInsets.all(16.0),
                   child: Text(
-                    '레시피 들어갈 곳',
+                    state.recipe[0],
                     style: const TextStyle(
                       fontSize: 20,
                       color: Colors.black,
