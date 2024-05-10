@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project_orm_janggo/data/db/like_hive/like_item.dart';
 
 class LikeWidget extends StatelessWidget {
-  const LikeWidget({super.key});
+  final LikeItem? recipe;
+
+  const LikeWidget({
+    required this.recipe,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -9,10 +14,6 @@ class LikeWidget extends StatelessWidget {
       width: 500,
       height: 450,
       child: Container(
-        // decoration: BoxDecoration(
-        //   border: Border.all(width: 5),
-        //   borderRadius: BorderRadius.circular(5),
-        // ),
         color: Colors.white,
         child: Column(
           children: [
@@ -21,7 +22,9 @@ class LikeWidget extends StatelessWidget {
               child: Stack(
                 alignment: Alignment.topLeft,
                 children: [
-                  Image.asset(
+                  recipe?.imageUrl != null
+                  ? Image.network(recipe!.imageUrl, fit: BoxFit.cover,width: double.infinity,)
+                  :Image.asset(
                     "assets/images/empty_image.png",
                     fit: BoxFit.cover,
                     width: double.infinity,
@@ -141,4 +144,6 @@ class LikeWidget extends StatelessWidget {
       ),
     );
   }
+
+
 }
