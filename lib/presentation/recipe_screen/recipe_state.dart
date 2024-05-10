@@ -9,7 +9,7 @@ class RecipeState with _$RecipeState {
   const factory RecipeState(
       {@Default([]) List<String> recipe,
       @Default([]) List<String> url,
-      @Default(false) bool isLike,
+      @Default([]) List<bool> isLike,
 
 
       }) = _RecipeState;
