@@ -4,13 +4,20 @@ import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_cas
 class SignUpViewModel with ChangeNotifier {
   final SignUpWithEmailPasswordUseCase _signUpWithEmailPasswordUseCase;
 
-  SignUpViewModel(
-      {required SignUpWithEmailPasswordUseCase signUpWithEmailPasswordUseCase})
-      : _signUpWithEmailPasswordUseCase = signUpWithEmailPasswordUseCase;
+  SignUpViewModel({
+    required SignUpWithEmailPasswordUseCase signUpWithEmailPasswordUseCase,
+  }) : _signUpWithEmailPasswordUseCase = signUpWithEmailPasswordUseCase;
 
   Future<void> signUpWithFirebaseAuth(
-      String inputEmail, String inputPassword) async {
-    await _signUpWithEmailPasswordUseCase.execute(inputEmail, inputPassword);
+    String inputEmail,
+    String inputPassword,
+    String inputDisplayName,
+  ) async {
+    await _signUpWithEmailPasswordUseCase.execute(
+      inputEmail,
+      inputPassword,
+      inputDisplayName,
+    );
 
     notifyListeners();
   }
