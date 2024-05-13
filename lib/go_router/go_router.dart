@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_project_orm_janggo/data/gpt_data_source/gpt_data_source.dart';
 import 'package:flutter_project_orm_janggo/data/repository/chat_gpt_repository_impl.dart';
 import 'package:flutter_project_orm_janggo/data/repository/firebase_auth_repository/firebase_auth_repository_impl.dart';
+import 'package:flutter_project_orm_janggo/data/repository/like_recipe_repository_impl.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_case/auth_state_changes_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_case/send_password_reset_email_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_case/sign_in_with_email_password_use_case.dart';
@@ -13,6 +14,10 @@ import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_cas
 import 'package:flutter_project_orm_janggo/domain/use_case/get_recipe_use_case.dart';
 import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_detail/recipe_history_detail_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_detail/recipe_history_detail_view_model.dart';
+import 'package:flutter_project_orm_janggo/domain/use_case/like_recipe_use_case/like_add_recipe_use_case.dart';
+import 'package:flutter_project_orm_janggo/domain/use_case/like_recipe_use_case/like_load_recipe_use_case.dart';
+import 'package:flutter_project_orm_janggo/domain/use_case/like_recipe_use_case/like_remove_recipe_use_case.dart';
+import 'package:flutter_project_orm_janggo/domain/use_case/like_recipe_use_case/like_search_recipe_use_case.dart';
 import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_view_model.dart';
 import 'package:flutter_project_orm_janggo/presentation/my_page/app_information/app_information_screen.dart';
@@ -32,12 +37,16 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../data/data_source/picture_data_source.dart';
+import '../data/db/like_hive/like_adapter.dart';
 import '../data/repository/picture_repository_impl.dart';
 import '../domain/use_case/get_picture_use_case.dart';
+
+import '../presentation/locker/recipe_like/like_recipe_screen.dart';
 import '../presentation/main/main_screen.dart';
 import '../presentation/main/main_screen_view_model.dart';
-import '../presentation/recipe_screen.dart';
-import '../presentation/recipe_view_model.dart';
+import '../presentation/recipe_screen/recipe_screen.dart';
+import '../presentation/recipe_screen/recipe_view_model.dart';
+
 
 final router = GoRouter(
   routes: [
@@ -49,6 +58,7 @@ final router = GoRouter(
             authStateChangesUseCase: AuthStateChangesUseCase(
               FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
             ),
+
             signOutUseCase: SignOutUseCase(
                 FirebaseAuthRepositoryImpl(FirebaseAuth.instance)),
           ),
@@ -109,6 +119,7 @@ final router = GoRouter(
                   FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
                 ),
               ),
+
               child: const MainScreen(),
             );
           },
@@ -123,16 +134,59 @@ final router = GoRouter(
                         pictureDataSource: PictureDataSource(),
                       ),
                     ),
+
                     getRecipeUseCase: GetRecipeUseCase(
-                        chatGptRepositoryImpl:
-                            ChatGptRepositoryImpl(dataSource: GptDataSource())),
+                      chatGptRepositoryImpl: ChatGptRepositoryImpl(
+                        dataSource: GptDataSource(),
+                      ),
+                    ),
+                    likeBoxAdapter: LikeBoxAdapter(),
+                    likeAddRecipeUseCase: LikeAddRecipeUseCase(
+                        likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
+                    likeLoadRecipeUseCase: LikeLoadRecipeUseCase(
+                        likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
+                    likeRemoveRecipeUseCase: LikeRemoveRecipeUseCase(
+                        likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
+                    likeSearchRecipeUseCase: LikeSearchRecipeUseCase(
+                        likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
+
+
                   ),
                   child: RecipeScreen(
                     ingredients: state.extra as String,
                   ),
                 );
               },
+              routes: [
+                GoRoute(
+                  path: 'recipe-like',
+                  builder: (context, state) {
+                    return ChangeNotifierProvider(
+                      create: (_) => RecipeViewModel(
+                        likeBoxAdapter: LikeBoxAdapter(),
+                        getPictureUseCase: GetPictureUseCase(
+                            repository: PictureRepositoryImpl(
+                                pictureDataSource: PictureDataSource())),
+                        getRecipeUseCase: GetRecipeUseCase(
+                            chatGptRepositoryImpl: ChatGptRepositoryImpl(
+                                dataSource: GptDataSource())),
+                        likeAddRecipeUseCase: LikeAddRecipeUseCase(
+                            likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
+                        likeLoadRecipeUseCase: LikeLoadRecipeUseCase(
+                            likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
+                        likeRemoveRecipeUseCase: LikeRemoveRecipeUseCase(
+                            likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
+                        likeSearchRecipeUseCase: LikeSearchRecipeUseCase(
+                            likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
+                      ),
+                      child: LikeRecipeScreen(),
+                    );
+
+                  },
+                ),
+              ],
             ),
+
             GoRoute(
               path: 'recipe-history',
               builder: (context, state) {
@@ -173,6 +227,7 @@ final router = GoRouter(
                   child: const MyPageScreen(),
                 );
               },
+
               routes: [
                 GoRoute(
                   path: 'app-information',

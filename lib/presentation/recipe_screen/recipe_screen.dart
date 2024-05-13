@@ -1,5 +1,11 @@
+import 'dart:ffi';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_project_orm_janggo/presentation/recipe_view_model.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_project_orm_janggo/data/db/like_hive/like_item.dart';
+import 'package:flutter_project_orm_janggo/data/user_information/user_information.dart';
+import 'package:flutter_project_orm_janggo/presentation/recipe_screen/recipe_view_model.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -27,7 +33,6 @@ class _RecipeScreenState extends State<RecipeScreen> {
     super.initState();
     final ingredients = widget.ingredients;
     context.read<RecipeViewModel>().getRecipe(ingredients);
-    setState(() {});
   }
 
   @override
@@ -35,7 +40,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
     final viewModel = context.watch<RecipeViewModel>();
     final state = viewModel.state;
 
-    if (state.recipe != []) {
+    if (state.recipe.isNotEmpty) {
       viewModel.getPicture(state.recipe);
       setState(() {});
     }
@@ -48,9 +53,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
           children: [
             Spacer(), // 왼쪽에서 중앙으로 텍스트 이동
             Text(
-              state.recipe.isNotEmpty
-                  ? '${_currentPage + 1} / ${state.recipe.length}'
-                  : '',
+              state.recipe.isNotEmpty ? '${_currentPage + 1} / ${state.recipe.length}' : '',
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
             Spacer(), // 오른쪽 아이콘과 간격 유지
@@ -59,7 +62,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              context.push('/main/recipe-history');
+              context.push('/main/recipe/recipe-like');
             },
             icon: const Icon(Icons.face),
           ),
@@ -80,8 +83,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
                       ),
                       const Text(
                         'Ai가 레시피를 찾고있어요 잠시만 기다려주세요!',
-                        style:
-                            TextStyle(fontFamily: 'school_font', fontSize: 15),
+                        style: TextStyle(fontFamily: 'school_font', fontSize: 12),
                       ),
                     ],
                   ),
@@ -102,9 +104,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
                               width: MediaQuery.of(context).size.width / 3 - 10,
                               decoration: BoxDecoration(
                                 shape: BoxShape.rectangle,
-                                color: _currentPage == index
-                                    ? const Color(0xfffb8c00)
-                                    : Colors.grey.shade200,
+                                color: _currentPage == index ? const Color(0xfffb8c00) : Colors.grey.shade200,
                               ),
                             );
                           },
@@ -113,10 +113,13 @@ class _RecipeScreenState extends State<RecipeScreen> {
                     ),
                     Expanded(
                       child: PageView.builder(
-                        itemCount:
-                            state.recipe.length > 3 ? 3 : state.recipe.length,
+                        itemCount: state.recipe.length > 3 ? 3 : state.recipe.length,
                         controller: _pageController,
                         itemBuilder: (context, index) {
+                          final currentItem = state.recipe.isNotEmpty ? state.recipe[index] : null;
+
+                          final isLiked = index < state.isLike.length ? state.isLike[index] : false;
+
                           return Padding(
                             padding: const EdgeInsets.all(16.0),
                             child: Column(
@@ -131,8 +134,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
                                             index < state.url.length &&
                                             state.url[index] != 'empty')
                                         ? ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(15),
+                                            borderRadius: BorderRadius.circular(15),
                                             child: Container(
                                               decoration: BoxDecoration(
                                                 border: Border.all(
@@ -149,8 +151,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
                                             ),
                                           )
                                         : ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(15),
+                                            borderRadius: BorderRadius.circular(15),
                                             child: Container(
                                               decoration: BoxDecoration(
                                                 border: Border.all(
@@ -170,29 +171,61 @@ class _RecipeScreenState extends State<RecipeScreen> {
                                 ),
                                 Expanded(
                                   flex: 1,
-                                  child: Scrollbar(
-                                    child: SingleChildScrollView(
-                                      scrollDirection: Axis.vertical,
-                                      child: Container(
-                                        width:
-                                            MediaQuery.of(context).size.width,
-                                        decoration: BoxDecoration(
-                                          color: Colors.amber[50],
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                        ),
-                                        padding: const EdgeInsets.all(16.0),
-                                        child: Text(
-                                          state.recipe[index],
-                                          style: const TextStyle(
-                                            fontSize: 20,
-                                            color: Colors.black,
-                                            fontWeight: FontWeight.bold,
-                                            fontFamily: 'hand_font',
+                                  child: Stack(
+                                    children: [
+                                      SingleChildScrollView(
+                                        scrollDirection: Axis.vertical,
+                                        child: Container(
+                                          width: MediaQuery.of(context).size.width,
+                                          decoration: BoxDecoration(
+                                            color: Colors.amber[50],
+                                            borderRadius: BorderRadius.circular(10),
+                                          ),
+                                          padding: const EdgeInsets.all(16.0),
+                                          child: Text(
+                                            state.recipe[index],
+                                            style: const TextStyle(
+                                              fontSize: 20,
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold,
+                                              fontFamily: 'hand_font',
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
+                                      Positioned(
+                                        right: 16,
+                                        top: 16,
+                                        child: IconButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              if (!isLiked) {
+                                                viewModel.addLikeItem(LikeItem(
+                                                  recipe: currentItem!,
+                                                  id: UserInformation().userInfo!.uid!,
+                                                  imageUrl: state.url[_currentPage] != '' ? state.url[_currentPage] : '',
+                                                  isLiked: true,
+                                                ));
+                                                // LikeItem 추가
+                                                viewModel.toggleLike(index, !isLiked);
+                                              } else {
+                                                viewModel.removeLikeItem(LikeItem(
+                                                  recipe: currentItem!,
+                                                  id: UserInformation().userInfo!.uid!,
+                                                  imageUrl: state.url[_currentPage],
+                                                  isLiked: false,
+                                                ));
+                                                viewModel.toggleLike(_currentPage, !isLiked);
+                                              }
+                                            });
+                                          },
+                                          icon: Icon(
+                                            state.isLike[_currentPage] ? Icons.favorite : Icons.favorite_border,
+                                            color: Colors.red,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ],
