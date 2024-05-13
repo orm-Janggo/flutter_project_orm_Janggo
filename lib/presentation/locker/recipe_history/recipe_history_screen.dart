@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_detail/recipe_history_detail_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_view_model.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -51,7 +50,8 @@ class _RecipeHistoryScreenState extends State<RecipeHistoryScreen> {
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () {
-                      context.push('/main/recipe-history-detail',
+                      context.push(
+                        '/main/recipe-history-detail',
                         extra: state.id[index],
                       );
                     },
@@ -78,7 +78,17 @@ class _RecipeHistoryScreenState extends State<RecipeHistoryScreen> {
                                         'assets/images/empty_image.png'),
                                   ),
                           ),
-                          Text(state.recipe[index]),
+                          Expanded(
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: Text(
+                                state.recipe[index],
+                                overflow: TextOverflow.clip,
+                                softWrap: true,
+                              ),
+                            ),
+                          ),
                           Column(
                             children: [
                               IconButton(
@@ -104,7 +114,7 @@ class _RecipeHistoryScreenState extends State<RecipeHistoryScreen> {
                 },
               ),
             )
-          : Center(
+          : const Center(
               child: Text('값이 없습니다!'),
             ),
     );
