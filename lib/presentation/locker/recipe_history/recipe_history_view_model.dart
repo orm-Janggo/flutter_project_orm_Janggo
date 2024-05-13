@@ -60,5 +60,4 @@ class RecipeHistoryViewModel with ChangeNotifier {
 
     notifyListeners();
   }
-
 }
