@@ -16,12 +16,15 @@ class LikeItem extends HiveObject {
   @HiveField(3)
   late bool isLiked;
 
-
-
   LikeItem({
     required this.recipe,
     required this.id,
     required this.imageUrl,
     required this.isLiked,
   });
+
+  @override
+  String toString() {
+    return '$recipe, $id, $imageUrl, $isLiked';
+  }
 }

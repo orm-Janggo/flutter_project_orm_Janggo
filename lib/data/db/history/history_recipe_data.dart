@@ -2,7 +2,7 @@ import 'package:hive/hive.dart';
 
 part 'history_recipe_data.g.dart';
 
-@HiveType(typeId: 0)
+@HiveType(typeId: 1)
 class HistoryRecipeData extends HiveObject {
   @HiveField(0)
   late int id;
