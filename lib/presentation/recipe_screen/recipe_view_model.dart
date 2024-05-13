@@ -70,30 +70,52 @@ class RecipeViewModel with ChangeNotifier {
   }
 
   void loadItem(LikeItem item) {
-    _likeItems = (_likeLoadRecipeUseCase.execute(item)) ;
+    _likeItems = (_likeLoadRecipeUseCase.execute(item));
     notifyListeners();
   }
 
-
   Future<void> addLikeItem(LikeItem item) async {
-    await _likeAddRecipeUseCase.execute(item);
+    // 레시피 텍스트에서 음식 이름 추출
+    print(state.isLike);
+    String foodName = '';
 
-    notifyListeners();
+    // 레시피 텍스트를 줄 단위로 분할하여 처리
+    List<String> lines = item.recipe.split('\n');
 
-    final addLikeList = <bool>[];
+    // 레시피 이름 추출
+    for (int i = 0; i < lines.length; i++) {
+      // 현재 줄의 텍스트
+      String line = lines[i].trim();
 
-    for (int i = 0; i < state.isLike.length; i++) {
-      addLikeList.add(state.isLike[i]);
+      // 음식 이름이 아니면 다음 줄로 넘어감
+      if (line.isEmpty || line.toLowerCase().contains('레시피')) {
+        continue;
+      }
+
+      // 번호가 있으면 제거
+      if (line.startsWith(RegExp(r'\d+\. '))) {
+        line = line.substring(line.indexOf(' ') + 1);
+      }
+
+      // 텍스트가 너무 길면 음식 이름이 아니라고 판단하여 루프 종료
+      if (line.length > 20) {
+        break;
+      }
+
+      // 음식 이름 추출 완료
+      foodName = line;
+      break;
     }
+    final updatedItem = item.copyWith(foodName: foodName);
+    print(updatedItem);
+    await _likeAddRecipeUseCase.execute(updatedItem);
+    _state = state.copyWith(foodName: foodName);
 
-    print(addLikeList);
-    _state = state.copyWith(isLike: addLikeList);
     notifyListeners();
   }
 
   Future<void> removeLikeItem(LikeItem item) async {
     await _likeRemoveRecipeUseCase.execute(item);
-    loadItem(item);
     notifyListeners();
   }
 

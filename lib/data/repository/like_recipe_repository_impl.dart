@@ -11,12 +11,11 @@ class LikeRecipeRepositoryImpl implements LikeRecipeRepository {
   Future<void> addItem(LikeItem item) async {
     try {
       List<LikeItem> likeListItem = await loadItem(item);
-      likeListItem.add(item);
-      // 각 아이템을 개별적으로 Hive 데이터베이스에 저장
-      for (var item in likeListItem) {
-        await likeBox.put(item.id, item);
-        print('LikeItem: ${item.toString()}');
-      }
+
+      await likeBox.add(item);
+      print('--------------');
+      print(likeListItem.length);
+      print('아이템 추가');
     } catch (e) {
       print('아이템 추가 실패: $e');
       throw e;
@@ -33,6 +32,9 @@ class LikeRecipeRepositoryImpl implements LikeRecipeRepository {
         // 각 아이템을 출력
         print('LikeItem: ${likeItem.toString()}');
       }
+      print('--------------');
+      print(likeListItem.length);
+      print('아이템 삭제');
     } catch (e) {
       print('아이템 삭제 실패: $e');
       throw e;

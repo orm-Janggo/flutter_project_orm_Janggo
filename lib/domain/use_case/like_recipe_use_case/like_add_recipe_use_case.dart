@@ -13,5 +13,4 @@ class LikeAddRecipeUseCase {
     return await _likeRecipeRepositoryImpl.addItem(item);
   }
 
-
 }

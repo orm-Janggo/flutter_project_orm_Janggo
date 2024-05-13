@@ -21,6 +21,7 @@ class LikeItemAdapter extends TypeAdapter<LikeItem> {
       id: fields[1] as String,
       imageUrl: fields[2] as String,
       isLiked: fields[3] as bool,
+      foodName: fields[4] as String,
     );
   }
 
@@ -35,7 +36,9 @@ class LikeItemAdapter extends TypeAdapter<LikeItem> {
       ..writeByte(2)
       ..write(obj.imageUrl)
       ..writeByte(3)
-      ..write(obj.isLiked);
+      ..write(obj.isLiked)
+      ..writeByte(4)
+      ..write(obj.foodName);
   }
 
   @override

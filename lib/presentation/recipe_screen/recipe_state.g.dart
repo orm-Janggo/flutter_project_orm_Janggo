@@ -17,6 +17,7 @@ _$RecipeStateImpl _$$RecipeStateImplFromJson(Map<String, dynamic> json) =>
       isLike:
           (json['isLike'] as List<dynamic>?)?.map((e) => e as bool).toList() ??
               const [],
+      foodName: json['foodName'] as String? ?? '',
     );
 
 Map<String, dynamic> _$$RecipeStateImplToJson(_$RecipeStateImpl instance) =>
@@ -24,4 +25,5 @@ Map<String, dynamic> _$$RecipeStateImplToJson(_$RecipeStateImpl instance) =>
       'recipe': instance.recipe,
       'url': instance.url,
       'isLike': instance.isLike,
+      'foodName': instance.foodName,
     };
