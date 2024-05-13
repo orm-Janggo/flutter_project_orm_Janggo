@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_detail/recipe_history_detail_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_view_model.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class RecipeHistoryScreen extends StatefulWidget {
@@ -50,13 +51,8 @@ class _RecipeHistoryScreenState extends State<RecipeHistoryScreen> {
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => RecipeHistoryDetailScreen(
-                            id: state.id[index],
-                          ),
-                        ),
+                      context.push('/main/recipe-history-detail',
+                        extra: state.id[index],
                       );
                     },
                     child: Container(

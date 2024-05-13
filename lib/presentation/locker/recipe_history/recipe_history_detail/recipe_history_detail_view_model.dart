@@ -26,6 +26,8 @@ class RecipeHistoryDetailViewModel with ChangeNotifier{
       }
     }
 
+    print('======================================id: $detailId, url: $detailImagePath, recipe: $detailRecipe');
+
     _state = _state.copyWith(id: detailId, url: detailImagePath, recipe: detailRecipe);
 
     notifyListeners();

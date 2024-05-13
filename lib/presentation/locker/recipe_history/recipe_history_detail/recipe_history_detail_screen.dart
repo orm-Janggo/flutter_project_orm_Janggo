@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_detail/recipe_history_detail_view_model.dart';
-import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_view_model.dart';
 import 'package:provider/provider.dart';
 
 class RecipeHistoryDetailScreen extends StatefulWidget {
@@ -52,7 +51,7 @@ class _RecipeHistoryDetailScreenState extends State<RecipeHistoryDetailScreen> {
                     ),
                   ),
                   child: Image.network(
-                    state.url[0],
+                    state.url,
                     height: 265,
                     width: 400,
                     fit: BoxFit.cover,
@@ -90,7 +89,7 @@ class _RecipeHistoryDetailScreenState extends State<RecipeHistoryDetailScreen> {
                   ),
                   padding: const EdgeInsets.all(16.0),
                   child: Text(
-                    state.recipe[0],
+                    state.recipe,
                     style: const TextStyle(
                       fontSize: 20,
                       color: Colors.black,
