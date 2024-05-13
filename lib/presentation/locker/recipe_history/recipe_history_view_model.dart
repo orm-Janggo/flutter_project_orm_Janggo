@@ -60,27 +60,4 @@ class RecipeHistoryViewModel with ChangeNotifier {
 
     notifyListeners();
   }
-
-  Future<void> getDetailDataListFromHive(int id) async {
-    var box = await Hive.openBox<HistoryRecipeData>('historyRecipeBox');
-    List<HistoryRecipeData> recipeList = box.values.toList();
-
-    List<int> id = [];
-    List<String> imagePath = [];
-    List<String> recipe = [];
-
-    for (var recipeData in recipeList) {
-      if (recipeData.id == id) {
-        id.add(recipeData.id);
-        imagePath.add(recipeData.imagePath);
-        recipe.add(recipeData.recipe);
-        break; // 일치하는 레시피를 찾았으므로 반복문 종료
-      }
-    }
-
-    _state = _state.copyWith(id: id, url: imagePath, recipe: recipe);
-
-    notifyListeners();
-  }
-
 }

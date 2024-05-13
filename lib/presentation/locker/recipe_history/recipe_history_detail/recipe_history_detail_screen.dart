@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_detail/recipe_history_detail_view_model.dart';
 import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -20,12 +21,12 @@ class _RecipeHistoryDetailScreenState extends State<RecipeHistoryDetailScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<RecipeHistoryViewModel>().getDetailDataListFromHive(widget.id);
+    context.read<RecipeHistoryDetailViewModel>().getDetailDataListFromHive(widget.id);
   }
 
   @override
   Widget build(BuildContext context) {
-    final viewModel = context.watch<RecipeHistoryViewModel>();
+    final viewModel = context.watch<RecipeHistoryDetailViewModel>();
     final state = viewModel.state;
 
     // 스크린의 가로화면 사이즈
