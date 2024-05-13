@@ -60,6 +60,7 @@ class RecipeViewModel with ChangeNotifier {
   void getRecipe(String ingredients) async {
     final recipe = await _getRecipeUseCase.execute(ingredients);
     _state = _state.copyWith(recipe: recipe);
+    _adjustIsLikeList();
     notifyListeners();
   }
 
@@ -76,9 +77,18 @@ class RecipeViewModel with ChangeNotifier {
 
   Future<void> addLikeItem(LikeItem item) async {
     await _likeAddRecipeUseCase.execute(item);
-    loadItem(item);
+
     notifyListeners();
 
+    final addLikeList = <bool>[];
+
+    for (int i = 0; i < state.isLike.length; i++) {
+      addLikeList.add(state.isLike[i]);
+    }
+
+    print(addLikeList);
+    _state = state.copyWith(isLike: addLikeList);
+    notifyListeners();
   }
 
   Future<void> removeLikeItem(LikeItem item) async {
@@ -86,14 +96,34 @@ class RecipeViewModel with ChangeNotifier {
     loadItem(item);
     notifyListeners();
   }
+
   void toggleLike(int index, bool isLiked) {
-    if (index >= 0 && index < _state.isLike.length) {
-      _state.isLike[index] = isLiked;
-      notifyListeners();
-    }
+    // isLike 리스트의 복사본을 만든다
+    final newIsLike = List<bool>.from(_state.isLike);
+
+    // 인덱스에 해당하는 값을 변경한다
+    newIsLike[index] = isLiked;
+
+    // 복사본을 사용하여 state를 업데이트한다
+    _state = _state.copyWith(isLike: newIsLike);
+    print(_state.isLike);
+
+    // 변경 사항을 알린다
+    notifyListeners();
   }
 
+  void _adjustIsLikeList() {
+    final recipeLength = _state.recipe.length;
+    final isLikeLength = _state.isLike.length;
 
+    // 레시피 길이가 더 크다면 isLike를 false로 채운다
+    if (isLikeLength < recipeLength) {
+      _state = _state.copyWith(
+        isLike: List<bool>.filled(recipeLength, false),
+      );
+      notifyListeners(); // 업데이트 후 변경 사항 알림
+    }
+  }
 
   RecipeViewModel({
     required GetPictureUseCase getPictureUseCase,

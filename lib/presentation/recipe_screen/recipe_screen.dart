@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_project_orm_janggo/data/db/like_hive/like_item.dart';
+import 'package:flutter_project_orm_janggo/data/user_information/user_information.dart';
 import 'package:flutter_project_orm_janggo/presentation/ads/google_ads_helper.dart';
 import 'package:flutter_project_orm_janggo/presentation/recipe_screen/recipe_view_model.dart';
 import 'package:go_router/go_router.dart';
@@ -96,9 +97,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
           children: [
             Spacer(), // 왼쪽에서 중앙으로 텍스트 이동
             Text(
-              state.recipe.isNotEmpty
-                  ? '${_currentPage + 1} / ${state.recipe.length}'
-                  : '',
+              state.recipe.isNotEmpty ? '${_currentPage + 1} / ${state.recipe.length}' : '',
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
             Spacer(), // 오른쪽 아이콘과 간격 유지
@@ -128,8 +127,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
                       ),
                       const Text(
                         'Ai가 레시피를 찾고있어요 잠시만 기다려주세요!',
-                        style:
-                            TextStyle(fontFamily: 'school_font', fontSize: 12),
+                        style: TextStyle(fontFamily: 'school_font', fontSize: 12),
                       ),
                     ],
                   ),
@@ -150,9 +148,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
                               width: MediaQuery.of(context).size.width / 3 - 10,
                               decoration: BoxDecoration(
                                 shape: BoxShape.rectangle,
-                                color: _currentPage == index
-                                    ? const Color(0xfffb8c00)
-                                    : Colors.grey.shade200,
+                                color: _currentPage == index ? const Color(0xfffb8c00) : Colors.grey.shade200,
                               ),
                             );
                           },
@@ -161,17 +157,12 @@ class _RecipeScreenState extends State<RecipeScreen> {
                     ),
                     Expanded(
                       child: PageView.builder(
-                        itemCount:
-                            state.recipe.length > 3 ? 3 : state.recipe.length,
+                        itemCount: state.recipe.length > 3 ? 3 : state.recipe.length,
                         controller: _pageController,
                         itemBuilder: (context, index) {
-                          final currentItem = state.recipe.isNotEmpty
-                              ? state.recipe[index]
-                              : null;
+                          final currentItem = state.recipe.isNotEmpty ? state.recipe[index] : null;
 
-                          final isLiked = index < state.isLike.length
-                              ? state.isLike[index]
-                              : false;
+                          final isLiked = index < state.isLike.length ? state.isLike[index] : false;
 
                           return Padding(
                             padding: const EdgeInsets.all(16.0),
@@ -187,8 +178,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
                                             index < state.url.length &&
                                             state.url[index] != 'empty')
                                         ? ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(15),
+                                            borderRadius: BorderRadius.circular(15),
                                             child: Container(
                                               decoration: BoxDecoration(
                                                 border: Border.all(
@@ -205,8 +195,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
                                             ),
                                           )
                                         : ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(15),
+                                            borderRadius: BorderRadius.circular(15),
                                             child: Container(
                                               decoration: BoxDecoration(
                                                 border: Border.all(
@@ -231,12 +220,10 @@ class _RecipeScreenState extends State<RecipeScreen> {
                                       SingleChildScrollView(
                                         scrollDirection: Axis.vertical,
                                         child: Container(
-                                          width:
-                                              MediaQuery.of(context).size.width,
+                                          width: MediaQuery.of(context).size.width,
                                           decoration: BoxDecoration(
                                             color: Colors.amber[50],
-                                            borderRadius:
-                                                BorderRadius.circular(10),
+                                            borderRadius: BorderRadius.circular(10),
                                           ),
                                           padding: const EdgeInsets.all(16.0),
                                           child: Text(
@@ -258,23 +245,26 @@ class _RecipeScreenState extends State<RecipeScreen> {
                                             setState(() {
                                               if (!isLiked) {
                                                 viewModel.addLikeItem(LikeItem(
-                                                    recipe: currentItem!,
-                                                    id: '',
-                                                    imageUrl: '',
-                                                    isLiked: true));
+                                                  recipe: currentItem!,
+                                                  id: UserInformation().userInfo!.uid!,
+                                                  imageUrl: state.url[_currentPage] != '' ? state.url[_currentPage] : '',
+                                                  isLiked: true,
+                                                ));
                                                 // LikeItem 추가
-                                                viewModel.toggleLike(
-                                                    index, !isLiked);
+                                                viewModel.toggleLike(index, !isLiked);
                                               } else {
-                                                viewModel.toggleLike(
-                                                    _currentPage, !isLiked);
+                                                viewModel.removeLikeItem(LikeItem(
+                                                  recipe: currentItem!,
+                                                  id: UserInformation().userInfo!.uid!,
+                                                  imageUrl: state.url[_currentPage],
+                                                  isLiked: false,
+                                                ));
+                                                viewModel.toggleLike(_currentPage, !isLiked);
                                               }
                                             });
                                           },
                                           icon: Icon(
-                                            state.isLike[_currentPage]
-                                                ? Icons.favorite
-                                                : Icons.favorite_border,
+                                            state.isLike[_currentPage] ? Icons.favorite : Icons.favorite_border,
                                             color: Colors.red,
                                           ),
                                         ),

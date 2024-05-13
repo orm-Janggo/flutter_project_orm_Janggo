@@ -13,11 +13,15 @@ import 'data/db/like_hive/like_item.dart';
 
 late Box<LikeItem> likeBox;
 
+Future<void> initializeLikeBox() async {
+  likeBox = await Hive.openBox<LikeItem>('likebox'); // 초기화
+}
+
 // 엔트리 포인트,시작점
 void main() async {
   await Hive.initFlutter();
   Hive.registerAdapter<LikeItem>(LikeItemAdapter());
-  likeBox = await Hive.openBox<LikeItem>('likebox');
+  await initializeLikeBox(); // LikeBox 초기화 완료
   Hive.openBox<HistoryRecipeData>('historyRecipeBox');
   Hive.registerAdapter(HistoryRecipeDataAdapter());
 
