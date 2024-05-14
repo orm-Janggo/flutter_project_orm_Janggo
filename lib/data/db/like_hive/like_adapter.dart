@@ -7,11 +7,12 @@ class LikeBoxAdapter extends TypeAdapter<LikeItem> {
   @override
   LikeItem read(BinaryReader reader) {
     return LikeItem(
-
         recipe: reader.readString(),
         id: reader.readString(),
         imageUrl: reader.readString(),
-        isLiked: reader.readBool());
+        isLiked: reader.readBool(),
+        foodName: reader.readString()
+    );
   }
 
   @override
@@ -20,10 +21,10 @@ class LikeBoxAdapter extends TypeAdapter<LikeItem> {
 
   @override
   void write(BinaryWriter writer, LikeItem obj) {
-
     writer.writeString(obj.recipe);
     writer.writeString(obj.id);
     writer.writeString(obj.imageUrl);
+    writer.writeString(obj.foodName);
     writer.writeBool(obj.isLiked);
   }
 

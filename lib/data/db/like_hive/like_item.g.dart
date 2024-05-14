@@ -21,13 +21,14 @@ class LikeItemAdapter extends TypeAdapter<LikeItem> {
       id: fields[1] as String,
       imageUrl: fields[2] as String,
       isLiked: fields[3] as bool,
+      foodName: fields[4] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, LikeItem obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.recipe)
       ..writeByte(1)
@@ -35,7 +36,9 @@ class LikeItemAdapter extends TypeAdapter<LikeItem> {
       ..writeByte(2)
       ..write(obj.imageUrl)
       ..writeByte(3)
-      ..write(obj.isLiked);
+      ..write(obj.isLiked)
+      ..writeByte(4)
+      ..write(obj.foodName);
   }
 
   @override
