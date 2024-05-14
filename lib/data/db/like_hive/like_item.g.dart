@@ -17,18 +17,18 @@ class LikeItemAdapter extends TypeAdapter<LikeItem> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return LikeItem(
-      recipe: fields[0] as String,
-      id: fields[1] as String,
-      imageUrl: fields[2] as String,
-      isLiked: fields[3] as bool,
-      foodName: fields[4] as String,
-    );
+        recipe: fields[0] as String,
+        id: fields[1] as String,
+        imageUrl: fields[2] as String,
+        isLiked: fields[3] as bool,
+        foodName: fields[4] as String,
+        time: fields[5] as DateTime);
   }
 
   @override
   void write(BinaryWriter writer, LikeItem obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(6)
       ..writeByte(0)
       ..write(obj.recipe)
       ..writeByte(1)
@@ -38,7 +38,9 @@ class LikeItemAdapter extends TypeAdapter<LikeItem> {
       ..writeByte(3)
       ..write(obj.isLiked)
       ..writeByte(4)
-      ..write(obj.foodName);
+      ..write(obj.foodName)
+      ..writeByte(5)
+      ..write(obj.time);
   }
 
   @override
@@ -46,8 +48,5 @@ class LikeItemAdapter extends TypeAdapter<LikeItem> {
 
   @override
   bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is LikeItemAdapter &&
-          runtimeType == other.runtimeType &&
-          typeId == other.typeId;
+      identical(this, other) || other is LikeItemAdapter && runtimeType == other.runtimeType && typeId == other.typeId;
 }
