@@ -138,14 +138,9 @@ final router = GoRouter(
                         dataSource: GptDataSource(),
                       ),
                     ),
-                    likeBoxAdapter: LikeBoxAdapter(),
                     likeAddRecipeUseCase: LikeAddRecipeUseCase(
                         likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
-                    likeLoadRecipeUseCase: LikeLoadRecipeUseCase(
-                        likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
                     likeRemoveRecipeUseCase: LikeRemoveRecipeUseCase(
-                        likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
-                    likeSearchRecipeUseCase: LikeSearchRecipeUseCase(
                         likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
 
 
@@ -167,7 +162,6 @@ final router = GoRouter(
                   builder: (context, state) {
                     return ChangeNotifierProvider(
                       create: (_) => RecipeViewModel(
-                        likeBoxAdapter: LikeBoxAdapter(),
                         getPictureUseCase: GetPictureUseCase(
                             repository: PictureRepositoryImpl(
                                 pictureDataSource: PictureDataSource())),
@@ -176,11 +170,7 @@ final router = GoRouter(
                                 dataSource: GptDataSource())),
                         likeAddRecipeUseCase: LikeAddRecipeUseCase(
                             likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
-                        likeLoadRecipeUseCase: LikeLoadRecipeUseCase(
-                            likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
                         likeRemoveRecipeUseCase: LikeRemoveRecipeUseCase(
-                            likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
-                        likeSearchRecipeUseCase: LikeSearchRecipeUseCase(
                             likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
                       ),
                       child: LikeRecipeScreen(),
