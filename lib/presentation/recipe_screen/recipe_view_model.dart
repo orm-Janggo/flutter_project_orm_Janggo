@@ -5,30 +5,22 @@ import 'package:flutter_project_orm_janggo/domain/use_case/like_recipe_use_case/
 import 'package:flutter_project_orm_janggo/domain/use_case/like_recipe_use_case/like_remove_recipe_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/like_recipe_use_case/like_search_recipe_use_case.dart';
 import 'package:flutter_project_orm_janggo/presentation/recipe_screen/recipe_state.dart';
+import 'package:hive/hive.dart';
 
 import '../../data/db/like_hive/like_adapter.dart';
 import '../../data/db/like_hive/like_item.dart';
 import '../../domain/use_case/like_recipe_use_case/like_load_recipe_use_case.dart';
+import '../../main.dart';
 
 class RecipeViewModel with ChangeNotifier {
   final GetPictureUseCase _getPictureUseCase;
   final GetRecipeUseCase _getRecipeUseCase;
   final LikeAddRecipeUseCase _likeAddRecipeUseCase;
-  final LikeLoadRecipeUseCase _likeLoadRecipeUseCase;
   final LikeRemoveRecipeUseCase _likeRemoveRecipeUseCase;
-  final LikeSearchRecipeUseCase _likeSearchRecipeUseCase;
-  final LikeBoxAdapter _likeBoxAdapter;
-
-
-  List<LikeItem?> _likeItems = [];
-
 
   RecipeState _state = const RecipeState();
 
   RecipeState get state => _state;
-
-  List<LikeItem?> get likeItems => _likeItems;
-
 
   void getPicture(List<String> query) async {
     if (_state.url.length == query.length) {
@@ -61,39 +53,61 @@ class RecipeViewModel with ChangeNotifier {
     final recipe = await _getRecipeUseCase.execute(ingredients);
     _state = _state.copyWith(recipe: recipe);
     _adjustIsLikeList();
+    _addIds();
     notifyListeners();
   }
-
-  void search(String query) async {
-    _likeItems = (await _likeSearchRecipeUseCase.execute(query)) ;
-    notifyListeners();
-  }
-
-  void loadItem(LikeItem item) {
-    _likeItems = (_likeLoadRecipeUseCase.execute(item)) ;
-    notifyListeners();
-  }
-
 
   Future<void> addLikeItem(LikeItem item) async {
-    await _likeAddRecipeUseCase.execute(item);
+    // 레시피 텍스트에서 음식 이름 추출
+    print(state.isLike);
+    String foodName = '';
 
-    notifyListeners();
+    // 레시피 텍스트를 줄 단위로 분할하여 처리
+    List<String> lines = item.recipe.split('\n');
 
-    final addLikeList = <bool>[];
+    // 레시피 이름 추출
+    for (int i = 0; i < lines.length; i++) {
+      // 현재 줄의 텍스트
+      String line = lines[i].trim();
 
-    for (int i = 0; i < state.isLike.length; i++) {
-      addLikeList.add(state.isLike[i]);
+      // 음식 이름이 아니면 다음 줄로 넘어감
+      if (line.isEmpty || line.toLowerCase().contains('레시피')) {
+        continue;
+      }
+
+      // 번호가 있으면 제거
+      if (line.startsWith(RegExp(r'\d+\. '))) {
+        line = line.substring(line.indexOf(' ') + 1);
+      }
+
+      // 텍스트가 너무 길면 음식 이름이 아니라고 판단하여 루프 종료
+      if (line.length > 20) {
+        break;
+      }
+
+      // 음식 이름 추출 완료
+      foodName = line;
+      break;
     }
 
-    print(addLikeList);
-    _state = state.copyWith(isLike: addLikeList);
+    final recipe = item.recipe.replaceFirst(foodName, '').trim();
+
+    final updatedItem = item.copyWith(
+      foodName: foodName,
+      recipe: recipe,
+      id: item.id,
+      imageUrl: item.imageUrl,
+      isLiked: item.isLiked
+    );
+
+    await _likeAddRecipeUseCase.execute(updatedItem);
+    _state = state.copyWith(foodName: foodName);
+
     notifyListeners();
   }
 
   Future<void> removeLikeItem(LikeItem item) async {
     await _likeRemoveRecipeUseCase.execute(item);
-    loadItem(item);
     notifyListeners();
   }
 
@@ -125,23 +139,36 @@ class RecipeViewModel with ChangeNotifier {
     }
   }
 
+  void _addIds() {
+    List<int> newIds = [];
+
+    if (likeBox.isEmpty) {
+      // likeBox가 비어있을 때
+      for (int i = 1; i <= 3; i++) {
+        newIds.add(i);
+      }
+    } else {
+      // likeBox에 이미 아이템이 있는 경우
+      int maxId = likeBox.values.map((item) => int.parse(item.id)).reduce((value, element) => value > element ? value : element);
+      for (int i = maxId + 1; i <= maxId + 3; i++) {
+        newIds.add(i);
+      }
+    }
+
+    _state = _state.copyWith(id: newIds);
+  }
+
   RecipeViewModel({
     required GetPictureUseCase getPictureUseCase,
     required GetRecipeUseCase getRecipeUseCase,
     required LikeAddRecipeUseCase likeAddRecipeUseCase,
-    required LikeLoadRecipeUseCase likeLoadRecipeUseCase,
     required LikeRemoveRecipeUseCase likeRemoveRecipeUseCase,
-    required LikeSearchRecipeUseCase likeSearchRecipeUseCase,
-    required LikeBoxAdapter likeBoxAdapter,
-  })
-      : _getPictureUseCase = getPictureUseCase,
+  })  : _getPictureUseCase = getPictureUseCase,
         _getRecipeUseCase = getRecipeUseCase,
         _likeAddRecipeUseCase = likeAddRecipeUseCase,
-        _likeLoadRecipeUseCase = likeLoadRecipeUseCase,
-        _likeRemoveRecipeUseCase = likeRemoveRecipeUseCase,
-        _likeSearchRecipeUseCase = likeSearchRecipeUseCase,
-        _likeBoxAdapter = likeBoxAdapter;
-
+        _likeRemoveRecipeUseCase = likeRemoveRecipeUseCase;
 }
+
+
 
 

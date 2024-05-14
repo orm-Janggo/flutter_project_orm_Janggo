@@ -12,6 +12,8 @@ import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_cas
 import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_case/update_display_name_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_case/update_password_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/get_recipe_use_case.dart';
+import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_detail/recipe_history_detail_screen.dart';
+import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_detail/recipe_history_detail_view_model.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/like_recipe_use_case/like_add_recipe_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/like_recipe_use_case/like_load_recipe_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/like_recipe_use_case/like_remove_recipe_use_case.dart';
@@ -138,14 +140,9 @@ final router = GoRouter(
                         dataSource: GptDataSource(),
                       ),
                     ),
-                    likeBoxAdapter: LikeBoxAdapter(),
                     likeAddRecipeUseCase: LikeAddRecipeUseCase(
                         likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
-                    likeLoadRecipeUseCase: LikeLoadRecipeUseCase(
-                        likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
                     likeRemoveRecipeUseCase: LikeRemoveRecipeUseCase(
-                        likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
-                    likeSearchRecipeUseCase: LikeSearchRecipeUseCase(
                         likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
 
 
@@ -157,17 +154,10 @@ final router = GoRouter(
               },
               routes: [
                 GoRoute(
-                  path: 'recipe-history',
-                  builder: (context, state) {
-                    return RecipeHistoryScreen();
-                  },
-                ),
-                GoRoute(
                   path: 'recipe-like',
                   builder: (context, state) {
                     return ChangeNotifierProvider(
                       create: (_) => RecipeViewModel(
-                        likeBoxAdapter: LikeBoxAdapter(),
                         getPictureUseCase: GetPictureUseCase(
                             repository: PictureRepositoryImpl(
                                 pictureDataSource: PictureDataSource())),
@@ -176,11 +166,7 @@ final router = GoRouter(
                                 dataSource: GptDataSource())),
                         likeAddRecipeUseCase: LikeAddRecipeUseCase(
                             likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
-                        likeLoadRecipeUseCase: LikeLoadRecipeUseCase(
-                            likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
                         likeRemoveRecipeUseCase: LikeRemoveRecipeUseCase(
-                            likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
-                        likeSearchRecipeUseCase: LikeSearchRecipeUseCase(
                             likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
                       ),
                       child: LikeRecipeScreen(),
@@ -189,6 +175,26 @@ final router = GoRouter(
                   },
                 ),
               ],
+            ),
+
+            GoRoute(
+              path: 'recipe-history',
+              builder: (context, state) {
+                return ChangeNotifierProvider(
+                  create: (_) => RecipeHistoryViewModel(),
+                  child: RecipeHistoryScreen(),
+                );
+              },
+            ),
+
+            GoRoute(
+              path: 'recipe-history-detail',
+              builder: (context, state) {
+                return ChangeNotifierProvider(
+                    create: (_) => RecipeHistoryDetailViewModel(),
+                    child: RecipeHistoryDetailScreen(id: state.extra as int,)
+                );
+              },
             ),
             GoRoute(
               path: 'my-page',

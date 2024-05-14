@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project_orm_janggo/data/db/like_hive/like_item.dart';
+import 'package:flutter_project_orm_janggo/data/user_information/user_information.dart';
 
 class LikeWidget extends StatelessWidget {
   final LikeItem? recipe;
 
   const LikeWidget({
+    super.key,
     required this.recipe,
   });
 
@@ -22,13 +24,18 @@ class LikeWidget extends StatelessWidget {
               child: Stack(
                 alignment: Alignment.topLeft,
                 children: [
-                  recipe?.imageUrl != null
-                  ? Image.network(recipe!.imageUrl, fit: BoxFit.cover,width: double.infinity,)
-                  :Image.asset(
-                    "assets/images/empty_image.png",
-                    fit: BoxFit.cover,
-                    width: double.infinity,
-                  ),
+                  if (recipe?.imageUrl != null && recipe!.imageUrl.isNotEmpty && recipe!.imageUrl != 'empty')
+                    Image.network(
+                      recipe!.imageUrl,
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                    )
+                  else
+                    Image.asset(
+                      "assets/images/empty_image.png",
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                    ),
                   Positioned(
                     top: 10,
                     left: 10,
@@ -117,8 +124,8 @@ class LikeWidget extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      'Gilled Cheese and tomato Sandwich',
-                      style: TextStyle(fontSize: 25, fontFamily: 'school_font'),
+                      recipe!.foodName ?? '',
+                      style: TextStyle(fontSize: 30, fontFamily: 'school_font'),
                     ),
                   ),
                   Row(
@@ -126,7 +133,10 @@ class LikeWidget extends StatelessWidget {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text('John Li', style: TextStyle(fontSize: 15, fontFamily: 'school_font'),),
+                        child: Text(
+                          UserInformation().userInfo!.displayName ?? '',
+                          style: TextStyle(fontSize: 15, fontFamily: 'school_font'),
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -144,6 +154,4 @@ class LikeWidget extends StatelessWidget {
       ),
     );
   }
-
-
 }
