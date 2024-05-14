@@ -28,7 +28,7 @@ class LikeItemAdapter extends TypeAdapter<LikeItem> {
   @override
   void write(BinaryWriter writer, LikeItem obj) {
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.recipe)
       ..writeByte(1)
