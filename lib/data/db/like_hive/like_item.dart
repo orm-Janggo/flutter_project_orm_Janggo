@@ -19,12 +19,16 @@ class LikeItem extends HiveObject {
   @HiveField(4)
   late String foodName;
 
+  @HiveField(5)
+  late DateTime time;
+
   LikeItem({
     required this.recipe,
     required this.id,
     required this.imageUrl,
     required this.isLiked,
     required this.foodName,
+    required this.time,
   });
 
   LikeItem copyWith({
@@ -33,6 +37,7 @@ class LikeItem extends HiveObject {
     String? imageUrl,
     bool? isLiked,
     String? foodName,
+    DateTime? time,
   }) {
     return LikeItem(
       recipe: recipe ?? this.recipe,
@@ -40,6 +45,7 @@ class LikeItem extends HiveObject {
       imageUrl: imageUrl ?? this.imageUrl,
       isLiked: isLiked ?? this.isLiked,
       foodName: foodName ?? this.foodName,
+      time: time ?? this.time
     );
   }
 
