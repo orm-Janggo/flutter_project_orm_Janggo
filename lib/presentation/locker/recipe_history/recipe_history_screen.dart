@@ -119,6 +119,11 @@ class _RecipeHistoryScreenState extends State<RecipeHistoryScreen> {
                           Column(
                             children: [
                               IconButton(
+                                onPressed: () {},
+                                icon:
+                                const Icon(Icons.favorite_border_outlined),
+                              ),
+                              IconButton(
                                 onPressed: () {
                                   viewModel.deleteDataFromHive(state.id[index]);
                                   setState(() {
@@ -127,11 +132,7 @@ class _RecipeHistoryScreenState extends State<RecipeHistoryScreen> {
                                 },
                                 icon: const Icon(Icons.delete_outline),
                               ),
-                              IconButton(
-                                onPressed: () {},
-                                icon:
-                                    const Icon(Icons.favorite_border_outlined),
-                              ),
+
                             ],
                           ),
                         ],
