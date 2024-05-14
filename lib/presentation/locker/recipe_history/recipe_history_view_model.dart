@@ -15,6 +15,7 @@ class RecipeHistoryViewModel with ChangeNotifier {
     List<int> ids = [];
     List<String> imagePaths = [];
     List<String> recipes = [];
+    List<String> dates = [];
 
     if (recipeList != []) {
       for (var recipeData in recipeList) {
@@ -28,10 +29,11 @@ class RecipeHistoryViewModel with ChangeNotifier {
           recipeName = sentences.first;
         }
         recipes.add(recipeName);
+        dates.add(recipeData.date);
       }
     }
 
-    _state = _state.copyWith(id: ids, url: imagePaths, recipe: recipes);
+    _state = _state.copyWith(id: ids, url: imagePaths, recipe: recipes, searchDate: dates);
 
     notifyListeners();
   }

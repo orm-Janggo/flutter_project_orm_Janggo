@@ -10,7 +10,7 @@ class RecipeHistoryState with _$RecipeHistoryState {
       {@Default([]) List<int> id,
       @Default([]) List<String> recipe,
       @Default([]) List<String> url,
-        @Default([]) List<DateTime> searchDate,
+        @Default([]) List<String> searchDate,
       }) = _RecipeHistoryState;
 
   factory RecipeHistoryState.fromJson(Map<String, Object?> json) =>

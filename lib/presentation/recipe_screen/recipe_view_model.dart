@@ -139,9 +139,11 @@ class RecipeViewModel with ChangeNotifier {
     for (int i = 0; i < imagePathList.length; i++) {
       String imagePath = imagePathList[i];
       String recipe = recipeList[i];
+      String date = '${DateTime.now().year}${DateTime.now().month}${DateTime.now().day}';
 
-      box.add(HistoryRecipeData(nextId++, imagePath, recipe));
+      box.add(HistoryRecipeData(nextId++, imagePath, recipe, date));
     }
+
 
     print('---------------------------add 완료');
   }
