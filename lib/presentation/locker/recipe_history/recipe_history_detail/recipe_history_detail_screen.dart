@@ -16,11 +16,12 @@ class RecipeHistoryDetailScreen extends StatefulWidget {
 }
 
 class _RecipeHistoryDetailScreenState extends State<RecipeHistoryDetailScreen> {
-
   @override
   void initState() {
     super.initState();
-    context.read<RecipeHistoryDetailViewModel>().getDetailDataListFromHive(widget.id);
+    context
+        .read<RecipeHistoryDetailViewModel>()
+        .getDetailDataListFromHive(widget.id);
   }
 
   @override
@@ -33,52 +34,54 @@ class _RecipeHistoryDetailScreenState extends State<RecipeHistoryDetailScreen> {
 
     return Scaffold(
       appBar: AppBar(),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: SizedBox(
-              height: 265,
-              width: 400,
-              child: state.url != 'empty' ? ClipRRect(
-                borderRadius: BorderRadius.circular(15),
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.white70,
-                      width: 1,
-                    ),
-                  ),
-                  child: Image.network(
-                    state.url,
-                    height: 265,
-                    width: 400,
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ) : ClipRRect(
-                borderRadius:
-                BorderRadius.circular(15),
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border.all(
-                      color: Colors.white70,
-                      width: 1,
-                    ),
-                  ),
-                  child: Image.asset(
-                    'assets/images/empty_image.png',
-                    height: 265,
-                    width: 400,
-                    fit: BoxFit.cover,
-                  ),
-                ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: SizedBox(
+                height: 265,
+                width: 400,
+                child: state.url != 'empty'
+                    ? ClipRRect(
+                        borderRadius: BorderRadius.circular(15),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.white70,
+                              width: 1,
+                            ),
+                          ),
+                          child: Image.network(
+                            state.url,
+                            height: 265,
+                            width: 400,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      )
+                    : ClipRRect(
+                        borderRadius: BorderRadius.circular(15),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.white70,
+                              width: 1,
+                            ),
+                          ),
+                          child: Image.asset(
+                            'assets/images/empty_image.png',
+                            height: 265,
+                            width: 400,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
               ),
             ),
-          ),
-          Expanded(
-            child: Scrollbar(
+            Expanded(
               child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
                 child: Container(
@@ -100,8 +103,8 @@ class _RecipeHistoryDetailScreenState extends State<RecipeHistoryDetailScreen> {
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

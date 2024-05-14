@@ -19,6 +19,10 @@ _$RecipeHistoryStateImpl _$$RecipeHistoryStateImplFromJson(
           const [],
       url: (json['url'] as List<dynamic>?)?.map((e) => e as String).toList() ??
           const [],
+      searchDate: (json['searchDate'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const [],
     );
 
 Map<String, dynamic> _$$RecipeHistoryStateImplToJson(
@@ -27,4 +31,5 @@ Map<String, dynamic> _$$RecipeHistoryStateImplToJson(
       'id': instance.id,
       'recipe': instance.recipe,
       'url': instance.url,
+      'searchDate': instance.searchDate,
     };

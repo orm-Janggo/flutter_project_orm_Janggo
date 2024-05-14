@@ -78,7 +78,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              context.push('/main/recipe/recipe-like');
+              context.push('/main/recipe-history');
             },
             icon: const Icon(Icons.face),
           ),

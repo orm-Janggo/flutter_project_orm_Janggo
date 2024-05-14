@@ -15,6 +15,7 @@ class RecipeHistoryViewModel with ChangeNotifier {
     List<int> ids = [];
     List<String> imagePaths = [];
     List<String> recipes = [];
+    List<String> dates = [];
 
     if (recipeList != []) {
       for (var recipeData in recipeList) {
@@ -28,10 +29,11 @@ class RecipeHistoryViewModel with ChangeNotifier {
           recipeName = sentences.first;
         }
         recipes.add(recipeName);
+        dates.add(recipeData.date);
       }
     }
 
-    _state = _state.copyWith(id: ids, url: imagePaths, recipe: recipes);
+    _state = _state.copyWith(id: ids, url: imagePaths, recipe: recipes, searchDate: dates);
 
     notifyListeners();
   }
@@ -59,5 +61,21 @@ class RecipeHistoryViewModel with ChangeNotifier {
     print('데이터 전체 삭제');
 
     notifyListeners();
+  }
+
+  String searchDateText(String date) {
+    String showDate = '';
+
+    int searchDate = int.parse(date);
+    int today = int.parse('${DateTime.now().year}${DateTime.now().month}${DateTime.now().day}');
+
+    if (today == searchDate) {
+      showDate = '오늘';
+    } else if (today - searchDate == 1) {
+      showDate = '하루 전';
+    } else {
+      showDate = '${today - searchDate}일 전';
+    }
+    return showDate;
   }
 }

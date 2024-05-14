@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter_project_orm_janggo/data/db/history/history_recipe_data.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/get_picture_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/get_recipe_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/like_recipe_use_case/like_add_recipe_use_case.dart';
@@ -41,6 +42,8 @@ class RecipeViewModel with ChangeNotifier {
       }
 
       _state = _state.copyWith(url: images);
+
+      addDataListToHive(state.url, state.recipe);
 
       print(_state.url);
       notifyListeners();
@@ -154,8 +157,26 @@ class RecipeViewModel with ChangeNotifier {
         newIds.add(i);
       }
     }
-
     _state = _state.copyWith(id: newIds);
+  }
+
+  Future<void> addDataListToHive(
+      List<String> imagePathList, List<String> recipeList) async {
+    Box box = Hive.box<HistoryRecipeData>('historyRecipeBox');
+
+    // 박스의 길이를 id로 사용하여 새로운 id를 생성
+    int nextId = box.length;
+
+    for (int i = 0; i < imagePathList.length; i++) {
+      String imagePath = imagePathList[i];
+      String recipe = recipeList[i];
+      String date = '${DateTime.now().year}${DateTime.now().month}${DateTime.now().day}';
+
+      box.add(HistoryRecipeData(nextId++, imagePath, recipe, date));
+    }
+
+
+    print('---------------------------add 완료');
   }
 
   RecipeViewModel({

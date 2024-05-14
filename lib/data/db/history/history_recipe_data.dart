@@ -13,5 +13,8 @@ class HistoryRecipeData extends HiveObject {
   @HiveField(2)
   late String recipe;
 
-  HistoryRecipeData(this.id, this.imagePath, this.recipe);
+  @HiveField(3)
+  late String date;
+
+  HistoryRecipeData(this.id, this.imagePath, this.recipe, this.date);
 }
