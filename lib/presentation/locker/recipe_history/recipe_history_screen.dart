@@ -121,7 +121,7 @@ class _RecipeHistoryScreenState extends State<RecipeHistoryScreen> {
                               IconButton(
                                 onPressed: () {},
                                 icon:
-                                const Icon(Icons.favorite_border_outlined),
+                                    const Icon(Icons.favorite_border_outlined),
                               ),
                               IconButton(
                                 onPressed: () {
@@ -130,9 +130,8 @@ class _RecipeHistoryScreenState extends State<RecipeHistoryScreen> {
                                     viewModel.getDataListFromHive();
                                   });
                                 },
-                                icon: const Icon(Icons.delete_outline),
+                                icon: const Icon(Icons.close),
                               ),
-
                             ],
                           ),
                         ],
