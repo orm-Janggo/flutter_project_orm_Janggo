@@ -13,7 +13,6 @@ class LikeRecipeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<RecipeViewModel>();
-    print(viewModel.likeItems);
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -76,19 +75,7 @@ class LikeRecipeScreen extends StatelessWidget {
                   ],
                 ),
                 children: [
-                  for (final recipe in viewModel.likeItems)
-                    Container(
-                      color: Colors.black,
-                      child: ListTile(
-                        title: Text(
-                          recipe!.recipe,
-                          style: TextStyle(
-                            fontFamily: 'school_font',
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
+
                 ],
               ),
             ),
