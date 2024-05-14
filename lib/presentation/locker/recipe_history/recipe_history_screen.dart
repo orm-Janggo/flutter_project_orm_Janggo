@@ -88,16 +88,6 @@ class _RecipeHistoryScreenState extends State<RecipeHistoryScreen> {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   SizedBox(
-                                    child: Text(
-                                      state.recipe[index],
-                                      overflow: TextOverflow.clip,
-                                      softWrap: true,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: screenHeight * 0.02,
-                                  ),
-                                  SizedBox(
                                     child: Container(
                                       padding: const EdgeInsets.fromLTRB(
                                           8.0, 2.0, 8.0, 0),
@@ -106,7 +96,20 @@ class _RecipeHistoryScreenState extends State<RecipeHistoryScreen> {
                                         borderRadius:
                                             BorderRadius.circular(48.0),
                                       ),
-                                      child: Text(viewModel.searchDateText(state.searchDate[index])),
+                                      child: Text(
+                                        viewModel.searchDateText(
+                                            state.searchDate[index]),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: screenHeight * 0.02,
+                                  ),
+                                  SizedBox(
+                                    child: Text(
+                                      state.recipe[index],
+                                      overflow: TextOverflow.clip,
+                                      softWrap: true,
                                     ),
                                   ),
                                 ],
