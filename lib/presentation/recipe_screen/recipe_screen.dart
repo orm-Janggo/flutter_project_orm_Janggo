@@ -187,7 +187,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
                                                 if (!isLiked) {
                                                   viewModel.addLikeItem(LikeItem(
                                                     recipe: currentItem!,
-                                                    id: UserInformation().userInfo!.uid!,
+                                                    id: state.id[currentPageIndex].toString(),
                                                     imageUrl: state.url[currentPageIndex],
                                                     isLiked: true,
                                                     foodName: state.foodName,
@@ -195,7 +195,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
                                                 } else {
                                                   viewModel.removeLikeItem(LikeItem(
                                                     recipe: currentItem!,
-                                                    id: UserInformation().userInfo!.uid!,
+                                                    id: state.id[currentPageIndex].toString(),
                                                     imageUrl: state.url[currentPageIndex],
                                                     isLiked: false,
                                                     foodName: state.foodName,
@@ -205,7 +205,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
                                                 if (!isLiked) {
                                                   viewModel.addLikeItem(LikeItem(
                                                     recipe: currentItem!,
-                                                    id: UserInformation().userInfo!.uid!,
+                                                    id: state.id[currentPageIndex].toString(),
                                                     imageUrl: '',
                                                     isLiked: true,
                                                     foodName: state.foodName,
@@ -213,7 +213,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
                                                 } else {
                                                   viewModel.removeLikeItem(LikeItem(
                                                     recipe: currentItem!,
-                                                    id: UserInformation().userInfo!.uid!,
+                                                    id: state.id[currentPageIndex].toString(),
                                                     imageUrl: '',
                                                     isLiked: false,
                                                     foodName: state.foodName,
