@@ -1,5 +1,7 @@
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_project_orm_janggo/main.dart';
 import 'package:flutter_project_orm_janggo/presentation/components/like_widget.dart';
 import 'package:provider/provider.dart';
 
@@ -43,18 +45,14 @@ class LikeRecipeScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 750,
-                width: double.infinity,
+              Expanded(
                 child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: viewModel.likeItems.length,
+                  itemCount: likeBox.length,
                   itemBuilder: (context, index) {
-                    final recipe = viewModel.likeItems[index];
+                    final recipe = likeBox.getAt(index);
                     return Padding(
                       padding: const EdgeInsets.all(16.0),
-                      child: LikeWidget(recipe :recipe),
+                      child: LikeWidget(recipe: recipe),
                     );
                   },
                 ),
@@ -77,19 +75,7 @@ class LikeRecipeScreen extends StatelessWidget {
                   ],
                 ),
                 children: [
-                  for (final recipe in viewModel.likeItems)
-                    Container(
-                      color: Colors.black,
-                      child: ListTile(
-                        title: Text(
-                          recipe!.recipe,
-                          style: TextStyle(
-                            fontFamily: 'school_font',
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
+
                 ],
               ),
             ),
