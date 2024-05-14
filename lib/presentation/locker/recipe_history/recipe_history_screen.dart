@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_detail/recipe_history_detail_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_view_model.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -51,7 +50,8 @@ class _RecipeHistoryScreenState extends State<RecipeHistoryScreen> {
                 itemBuilder: (context, index) {
                   return GestureDetector(
                     onTap: () {
-                      context.push('/main/recipe-history-detail',
+                      context.push(
+                        '/main/recipe-history-detail',
                         extra: state.id[index],
                       );
                     },
@@ -78,7 +78,44 @@ class _RecipeHistoryScreenState extends State<RecipeHistoryScreen> {
                                         'assets/images/empty_image.png'),
                                   ),
                           ),
-                          Text(state.recipe[index]),
+                          Expanded(
+                            flex: 1,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  SizedBox(
+                                    child: Container(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          8.0, 2.0, 8.0, 0),
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xffFB8C00),
+                                        borderRadius:
+                                            BorderRadius.circular(48.0),
+                                      ),
+                                      child: Text(
+                                        viewModel.searchDateText(
+                                            state.searchDate[index]),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: screenHeight * 0.02,
+                                  ),
+                                  SizedBox(
+                                    child: Text(
+                                      state.recipe[index],
+                                      overflow: TextOverflow.clip,
+                                      softWrap: true,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
                           Column(
                             children: [
                               IconButton(
@@ -88,7 +125,7 @@ class _RecipeHistoryScreenState extends State<RecipeHistoryScreen> {
                                     viewModel.getDataListFromHive();
                                   });
                                 },
-                                icon: const Icon(Icons.delete_outline),
+                                icon: const Icon(Icons.close),
                               ),
                               IconButton(
                                 onPressed: () {},
@@ -104,7 +141,7 @@ class _RecipeHistoryScreenState extends State<RecipeHistoryScreen> {
                 },
               ),
             )
-          : Center(
+          : const Center(
               child: Text('값이 없습니다!'),
             ),
     );
