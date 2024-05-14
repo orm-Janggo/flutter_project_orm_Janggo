@@ -24,6 +24,7 @@ mixin _$RecipeState {
   List<String> get url => throw _privateConstructorUsedError;
   List<bool> get isLike => throw _privateConstructorUsedError;
   String get foodName => throw _privateConstructorUsedError;
+  List<int> get id => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -41,7 +42,8 @@ abstract class $RecipeStateCopyWith<$Res> {
       {List<String> recipe,
       List<String> url,
       List<bool> isLike,
-      String foodName});
+      String foodName,
+      List<int> id});
 }
 
 /// @nodoc
@@ -61,6 +63,7 @@ class _$RecipeStateCopyWithImpl<$Res, $Val extends RecipeState>
     Object? url = null,
     Object? isLike = null,
     Object? foodName = null,
+    Object? id = null,
   }) {
     return _then(_value.copyWith(
       recipe: null == recipe
@@ -79,6 +82,10 @@ class _$RecipeStateCopyWithImpl<$Res, $Val extends RecipeState>
           ? _value.foodName
           : foodName // ignore: cast_nullable_to_non_nullable
               as String,
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as List<int>,
     ) as $Val);
   }
 }
@@ -95,7 +102,8 @@ abstract class _$$RecipeStateImplCopyWith<$Res>
       {List<String> recipe,
       List<String> url,
       List<bool> isLike,
-      String foodName});
+      String foodName,
+      List<int> id});
 }
 
 /// @nodoc
@@ -113,6 +121,7 @@ class __$$RecipeStateImplCopyWithImpl<$Res>
     Object? url = null,
     Object? isLike = null,
     Object? foodName = null,
+    Object? id = null,
   }) {
     return _then(_$RecipeStateImpl(
       recipe: null == recipe
@@ -131,6 +140,10 @@ class __$$RecipeStateImplCopyWithImpl<$Res>
           ? _value.foodName
           : foodName // ignore: cast_nullable_to_non_nullable
               as String,
+      id: null == id
+          ? _value._id
+          : id // ignore: cast_nullable_to_non_nullable
+              as List<int>,
     ));
   }
 }
@@ -142,10 +155,12 @@ class _$RecipeStateImpl implements _RecipeState {
       {final List<String> recipe = const [],
       final List<String> url = const [],
       final List<bool> isLike = const [],
-      this.foodName = ''})
+      this.foodName = '',
+      final List<int> id = const []})
       : _recipe = recipe,
         _url = url,
-        _isLike = isLike;
+        _isLike = isLike,
+        _id = id;
 
   factory _$RecipeStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$RecipeStateImplFromJson(json);
@@ -173,16 +188,25 @@ class _$RecipeStateImpl implements _RecipeState {
   @JsonKey()
   List<bool> get isLike {
     if (_isLike is EqualUnmodifiableListView) return _isLike;
+    // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_isLike);
   }
 
   @override
   @JsonKey()
   final String foodName;
+  final List<int> _id;
+  @override
+  @JsonKey()
+  List<int> get id {
+    if (_id is EqualUnmodifiableListView) return _id;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_id);
+  }
 
   @override
   String toString() {
-    return 'RecipeState(recipe: $recipe, url: $url, isLike: $isLike, foodName: $foodName)';
+    return 'RecipeState(recipe: $recipe, url: $url, isLike: $isLike, foodName: $foodName, id: $id)';
   }
 
   @override
@@ -194,7 +218,8 @@ class _$RecipeStateImpl implements _RecipeState {
             const DeepCollectionEquality().equals(other._url, _url) &&
             const DeepCollectionEquality().equals(other._isLike, _isLike) &&
             (identical(other.foodName, foodName) ||
-                other.foodName == foodName));
+                other.foodName == foodName) &&
+            const DeepCollectionEquality().equals(other._id, _id));
   }
 
   @JsonKey(ignore: true)
@@ -204,7 +229,8 @@ class _$RecipeStateImpl implements _RecipeState {
       const DeepCollectionEquality().hash(_recipe),
       const DeepCollectionEquality().hash(_url),
       const DeepCollectionEquality().hash(_isLike),
-      foodName);
+      foodName,
+      const DeepCollectionEquality().hash(_id));
 
   @JsonKey(ignore: true)
   @override
@@ -225,7 +251,8 @@ abstract class _RecipeState implements RecipeState {
       {final List<String> recipe,
       final List<String> url,
       final List<bool> isLike,
-      final String foodName}) = _$RecipeStateImpl;
+      final String foodName,
+      final List<int> id}) = _$RecipeStateImpl;
 
   factory _RecipeState.fromJson(Map<String, dynamic> json) =
       _$RecipeStateImpl.fromJson;
@@ -238,6 +265,8 @@ abstract class _RecipeState implements RecipeState {
   List<bool> get isLike;
   @override
   String get foodName;
+  @override
+  List<int> get id;
   @override
   @JsonKey(ignore: true)
   _$$RecipeStateImplCopyWith<_$RecipeStateImpl> get copyWith =>
