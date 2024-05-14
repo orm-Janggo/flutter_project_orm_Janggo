@@ -162,9 +162,10 @@ class _RecipeScreenState extends State<RecipeScreen> {
                         itemBuilder: (context, index) {
                           final currentItem = state.recipe.isNotEmpty ? state.recipe[index] : null;
                           final isLiked = index < state.isLike.length ? state.isLike[index] : false;
-                          final imageUrl = state.url.isNotEmpty && index < state.url.length && state.url[index] != 'empty'
-                              ? state.url[index]
-                              : '';
+                          final imageUrl =
+                              state.url.isNotEmpty && index < state.url.length && state.url[index] != 'empty'
+                                  ? state.url[index]
+                                  : '';
 
                           return Padding(
                             padding: const EdgeInsets.all(16.0),
@@ -180,17 +181,17 @@ class _RecipeScreenState extends State<RecipeScreen> {
                                       borderRadius: BorderRadius.circular(15),
                                       child: imageUrl.isNotEmpty
                                           ? Image.network(
-                                        imageUrl,
-                                        height: 265,
-                                        width: 400,
-                                        fit: BoxFit.cover,
-                                      )
+                                              imageUrl,
+                                              height: 265,
+                                              width: 400,
+                                              fit: BoxFit.cover,
+                                            )
                                           : Image.asset(
-                                        'assets/images/empty_image.png',
-                                        height: 265,
-                                        width: 400,
-                                        fit: BoxFit.cover,
-                                      ),
+                                              'assets/images/empty_image.png',
+                                              height: 265,
+                                              width: 400,
+                                              fit: BoxFit.cover,
+                                            ),
                                     ),
                                   ),
                                 ),
@@ -219,59 +220,60 @@ class _RecipeScreenState extends State<RecipeScreen> {
                                         ),
                                       ),
                                       Positioned(
-                                        right: 16,
-                                        top: 16,
-                                        child: IconButton(
-                                          onPressed: () {
-                                            setState(() {
-                                              final currentPageIndex = _currentPage.clamp(0, state.isLike.length - 1);
-                                              final isLiked = state.isLike[currentPageIndex];
-                                              viewModel.toggleLike(currentPageIndex, !isLiked);
-                                              if (state.url.isNotEmpty && state.url[currentPageIndex] != "empty") { // 이미지가 있을 때
-                                                if (!isLiked) {
-                                                  viewModel.addLikeItem(LikeItem(
-                                                    recipe: currentItem!,
-                                                    id: state.id[currentPageIndex].toString(),
-                                                    imageUrl: state.url[currentPageIndex],
-                                                    isLiked: true,
-                                                    foodName: state.foodName,
-                                                  ));
+                                          right: 16,
+                                          top: 16,
+                                          child: IconButton(
+                                            onPressed: () {
+                                              setState(() {
+                                                final currentPageIndex = _currentPage.clamp(0, state.isLike.length - 1);
+                                                final isLiked = state.isLike[currentPageIndex];
+                                                viewModel.toggleLike(currentPageIndex, !isLiked);
+                                                if (state.url.isNotEmpty && state.url[currentPageIndex] != "empty") {
+                                                  // 이미지가 있을 때
+                                                  if (!isLiked) {
+                                                    viewModel.addLikeItem(LikeItem(
+                                                        recipe: currentItem!,
+                                                        id: state.id[currentPageIndex].toString(),
+                                                        imageUrl: state.url[currentPageIndex],
+                                                        isLiked: true,
+                                                        foodName: state.foodName,
+                                                        time: DateTime.now()));
+                                                  } else {
+                                                    viewModel.removeLikeItem(LikeItem(
+                                                        recipe: currentItem!,
+                                                        id: state.id[currentPageIndex].toString(),
+                                                        imageUrl: state.url[currentPageIndex],
+                                                        isLiked: false,
+                                                        foodName: state.foodName,
+                                                        time: DateTime.now()));
+                                                  }
                                                 } else {
-                                                  viewModel.removeLikeItem(LikeItem(
-                                                    recipe: currentItem!,
-                                                    id: state.id[currentPageIndex].toString(),
-                                                    imageUrl: state.url[currentPageIndex],
-                                                    isLiked: false,
-                                                    foodName: state.foodName,
-                                                  ));
+                                                  // 이미지가 없을 때
+                                                  if (!isLiked) {
+                                                    viewModel.addLikeItem(LikeItem(
+                                                        recipe: currentItem!,
+                                                        id: state.id[currentPageIndex].toString(),
+                                                        imageUrl: '',
+                                                        isLiked: true,
+                                                        foodName: state.foodName,
+                                                        time: DateTime.now()));
+                                                  } else {
+                                                    viewModel.removeLikeItem(LikeItem(
+                                                        recipe: currentItem!,
+                                                        id: state.id[currentPageIndex].toString(),
+                                                        imageUrl: '',
+                                                        isLiked: false,
+                                                        foodName: state.foodName,
+                                                        time: DateTime.now()));
+                                                  }
                                                 }
-                                              } else { // 이미지가 없을 때
-                                                if (!isLiked) {
-                                                  viewModel.addLikeItem(LikeItem(
-                                                    recipe: currentItem!,
-                                                    id: state.id[currentPageIndex].toString(),
-                                                    imageUrl: '',
-                                                    isLiked: true,
-                                                    foodName: state.foodName,
-                                                  ));
-                                                } else {
-                                                  viewModel.removeLikeItem(LikeItem(
-                                                    recipe: currentItem!,
-                                                    id: state.id[currentPageIndex].toString(),
-                                                    imageUrl: '',
-                                                    isLiked: false,
-                                                    foodName: state.foodName,
-                                                  ));
-                                                }
-                                              }
-                                            });
-                                          },
-                                          icon: Icon(
-                                            state.isLike[_currentPage] ? Icons.favorite : Icons.favorite_border,
-                                            color: Colors.red,
-                                          ),
-                                        )
-                                      ),
+                                              });
+                                            },
+                                            icon: Icon(
+                                              state.isLike[_currentPage] ? Icons.favorite : Icons.favorite_border,
+                                              color: Colors.red,
+                                            ),
+                                          )),
                                     ],
                                   ),
                                 ),

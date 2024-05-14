@@ -211,8 +211,6 @@ class SplashScreen5 extends StatelessWidget {
             right: screenSize.width * 0.40,
             child: TextButton(
               onPressed: () {
-                // SKIP 버튼 눌렀을 때 처리
-                UserInformation().updateLoginMethod(LoginMethod.none);
                 context.push('/main');
               },
               child: const Text(

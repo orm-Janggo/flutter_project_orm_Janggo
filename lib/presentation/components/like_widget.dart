@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project_orm_janggo/data/db/like_hive/like_item.dart';
 import 'package:flutter_project_orm_janggo/data/user_information/user_information.dart';
+import 'package:intl/intl.dart';
 
 class LikeWidget extends StatelessWidget {
   final LikeItem? recipe;
@@ -20,7 +21,7 @@ class LikeWidget extends StatelessWidget {
         child: Column(
           children: [
             Expanded(
-              flex: 3,
+              flex: 2,
               child: Stack(
                 alignment: Alignment.topLeft,
                 children: [
@@ -38,7 +39,7 @@ class LikeWidget extends StatelessWidget {
                     ),
                   Positioned(
                     top: 10,
-                    left: 10,
+                    right: 10,
                     child: Container(
                       decoration: BoxDecoration(
                         color: Colors.white, // 테두리 안쪽 배경색
@@ -50,13 +51,8 @@ class LikeWidget extends StatelessWidget {
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0), // 테두리 안쪽의 패딩
-                        child: Text(
-                          '10min',
-                          style: TextStyle(
-                            fontSize: 10,
-                            fontFamily: 'school_font',
-                            color: Colors.black, // 텍스트 색상
-                          ),
+                        child: ImageIcon(
+                          AssetImage('assets/images/x.png'),
                         ),
                       ),
                     ),
@@ -65,87 +61,45 @@ class LikeWidget extends StatelessWidget {
               ),
             ),
             Expanded(
-              flex: 2,
+              flex: 1,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: const EdgeInsets.all(16.0),
                         child: Container(
                           decoration: BoxDecoration(
-                            color: Colors.orange, // 테두리 안쪽 배경색
-                            border: Border.all(
-                              color: Colors.black, // 테두리 색상
-                              width: 2, // 테두리 두께
-                            ),
-                            borderRadius: BorderRadius.circular(8), // 테두리의 둥근 모서리 반경
+                            color: Colors.orange,
+                            borderRadius: BorderRadius.circular(8),
                           ),
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0), // 테두리 안쪽의 패딩
+                            padding: const EdgeInsets.all(8.0),
                             child: Text(
-                              '#From Chef',
-                              style: TextStyle(
-                                fontSize: 10,
-                                fontFamily: 'school_font',
-                                color: Colors.black, // 텍스트 색상
-                              ),
+                              DateFormat('MM/dd HH:mm').format(recipe!.time),
+                              style: TextStyle(fontSize: 15, fontFamily: 'school_font'),
                             ),
                           ),
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            color: Colors.orange, // 테두리 안쪽 배경색
-                            border: Border.all(
-                              color: Colors.black, // 테두리 색상
-                              width: 2, // 테두리 두께
-                            ),
-                            borderRadius: BorderRadius.circular(8), // 테두리의 둥근 모서리 반경
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0), // 테두리 안쪽의 패딩
-                            child: Text(
-                              '#Challenge',
-                              style: TextStyle(
-                                fontSize: 10,
-                                fontFamily: 'school_font',
-                                color: Colors.black, // 텍스트 색상
-                              ),
-                            ),
-                          ),
+                        child: Icon(
+                          Icons.favorite,
+                          color: Colors.red,
                         ),
                       ),
                     ],
                   ),
                   Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(16.0),
                     child: Text(
                       recipe!.foodName ?? '',
                       style: TextStyle(fontSize: 30, fontFamily: 'school_font'),
                     ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          UserInformation().userInfo!.displayName ?? '',
-                          style: TextStyle(fontSize: 15, fontFamily: 'school_font'),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: ImageIcon(
-                          AssetImage('assets/images/heart.png'),
-                        ),
-                      ),
-                    ],
-                  )
                 ],
               ),
             ),

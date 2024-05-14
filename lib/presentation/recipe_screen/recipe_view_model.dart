@@ -4,13 +4,9 @@ import 'package:flutter_project_orm_janggo/domain/use_case/get_picture_use_case.
 import 'package:flutter_project_orm_janggo/domain/use_case/get_recipe_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/like_recipe_use_case/like_add_recipe_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/like_recipe_use_case/like_remove_recipe_use_case.dart';
-import 'package:flutter_project_orm_janggo/domain/use_case/like_recipe_use_case/like_search_recipe_use_case.dart';
 import 'package:flutter_project_orm_janggo/presentation/recipe_screen/recipe_state.dart';
 import 'package:hive/hive.dart';
-
-import '../../data/db/like_hive/like_adapter.dart';
 import '../../data/db/like_hive/like_item.dart';
-import '../../domain/use_case/like_recipe_use_case/like_load_recipe_use_case.dart';
 import '../../main.dart';
 
 class RecipeViewModel with ChangeNotifier {
@@ -100,7 +96,8 @@ class RecipeViewModel with ChangeNotifier {
       recipe: recipe,
       id: item.id,
       imageUrl: item.imageUrl,
-      isLiked: item.isLiked
+      isLiked: item.isLiked,
+      time: item.time,
     );
 
     await _likeAddRecipeUseCase.execute(updatedItem);
@@ -152,7 +149,9 @@ class RecipeViewModel with ChangeNotifier {
       }
     } else {
       // likeBox에 이미 아이템이 있는 경우
-      int maxId = likeBox.values.map((item) => int.parse(item.id)).reduce((value, element) => value > element ? value : element);
+      int maxId = likeBox.values
+          .map((item) => int.parse(item.id))
+          .reduce((value, element) => value > element ? value : element);
       for (int i = maxId + 1; i <= maxId + 3; i++) {
         newIds.add(i);
       }
@@ -189,7 +188,3 @@ class RecipeViewModel with ChangeNotifier {
         _likeAddRecipeUseCase = likeAddRecipeUseCase,
         _likeRemoveRecipeUseCase = likeRemoveRecipeUseCase;
 }
-
-
-
-

@@ -37,7 +37,6 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../data/data_source/picture_data_source.dart';
-import '../data/db/like_hive/like_adapter.dart';
 import '../data/repository/picture_repository_impl.dart';
 import '../domain/use_case/get_picture_use_case.dart';
 
