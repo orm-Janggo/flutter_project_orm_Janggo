@@ -106,7 +106,7 @@ class _RecipeHistoryScreenState extends State<RecipeHistoryScreen> {
                                         borderRadius:
                                             BorderRadius.circular(48.0),
                                       ),
-                                      child: Text('${state.searchDate[index]} 일전'),
+                                      child: Text(viewModel.searchDateText(state.searchDate[index])),
                                     ),
                                   ),
                                 ],

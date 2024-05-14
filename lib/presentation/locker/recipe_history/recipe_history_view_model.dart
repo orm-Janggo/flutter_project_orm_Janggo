@@ -62,4 +62,20 @@ class RecipeHistoryViewModel with ChangeNotifier {
 
     notifyListeners();
   }
+
+  String searchDateText(String date) {
+    String showDate = '';
+
+    int searchDate = int.parse(date);
+    int today = int.parse('${DateTime.now().year}${DateTime.now().month}${DateTime.now().day}');
+
+    if (today == searchDate) {
+      showDate = '오늘';
+    } else if (today - searchDate == 1) {
+      showDate = '하루 전';
+    } else {
+      showDate = '${today - searchDate}일 전';
+    }
+    return showDate;
+  }
 }
