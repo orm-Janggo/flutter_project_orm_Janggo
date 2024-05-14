@@ -10,11 +10,8 @@ class LikeRecipeRepositoryImpl implements LikeRecipeRepository {
   @override
   Future<void> addItem(LikeItem item) async {
     try {
-      List<LikeItem> likeListItem = await loadItem(item);
 
-      await likeBox.add(item);
-      print('--------------');
-      print(likeListItem.length);
+      await likeBox.put(item.id, item);
       print('아이템 추가');
     } catch (e) {
       print('아이템 추가 실패: $e');
@@ -25,15 +22,8 @@ class LikeRecipeRepositoryImpl implements LikeRecipeRepository {
 
   @override
   Future<void> removeItem(LikeItem item) async {
-    List<LikeItem> likeListItem = loadItem(item);
     try {
       await likeBox.delete(item.id);
-      for (var likeItem in likeListItem) {
-        // 각 아이템을 출력
-        print('LikeItem: ${likeItem.toString()}');
-      }
-      print('--------------');
-      print(likeListItem.length);
       print('아이템 삭제');
     } catch (e) {
       print('아이템 삭제 실패: $e');
