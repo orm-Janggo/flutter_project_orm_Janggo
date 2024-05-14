@@ -5,6 +5,7 @@ import 'package:flutter_project_orm_janggo/domain/use_case/get_recipe_use_case.d
 import 'package:flutter_project_orm_janggo/domain/use_case/like_recipe_use_case/like_add_recipe_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/like_recipe_use_case/like_remove_recipe_use_case.dart';
 import 'package:flutter_project_orm_janggo/presentation/recipe_screen/recipe_state.dart';
+import 'package:hive/hive.dart';
 import '../../data/db/like_hive/like_item.dart';
 import '../../main.dart';
 
