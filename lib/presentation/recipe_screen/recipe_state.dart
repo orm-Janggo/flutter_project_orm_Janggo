@@ -11,6 +11,7 @@ class RecipeState with _$RecipeState {
     @Default([]) List<String> url,
     @Default([]) List<bool> isLike,
     @Default('') String foodName,
+    @Default([]) List<int> id
   }) = _RecipeState;
 
   factory RecipeState.fromJson(Map<String, Object?> json) => _$RecipeStateFromJson(json);
