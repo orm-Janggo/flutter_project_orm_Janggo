@@ -23,6 +23,7 @@ mixin _$RecipeHistoryState {
   List<int> get id => throw _privateConstructorUsedError;
   List<String> get recipe => throw _privateConstructorUsedError;
   List<String> get url => throw _privateConstructorUsedError;
+  List<DateTime> get searchDate => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,7 +37,11 @@ abstract class $RecipeHistoryStateCopyWith<$Res> {
           RecipeHistoryState value, $Res Function(RecipeHistoryState) then) =
       _$RecipeHistoryStateCopyWithImpl<$Res, RecipeHistoryState>;
   @useResult
-  $Res call({List<int> id, List<String> recipe, List<String> url});
+  $Res call(
+      {List<int> id,
+      List<String> recipe,
+      List<String> url,
+      List<DateTime> searchDate});
 }
 
 /// @nodoc
@@ -55,6 +60,7 @@ class _$RecipeHistoryStateCopyWithImpl<$Res, $Val extends RecipeHistoryState>
     Object? id = null,
     Object? recipe = null,
     Object? url = null,
+    Object? searchDate = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -69,6 +75,10 @@ class _$RecipeHistoryStateCopyWithImpl<$Res, $Val extends RecipeHistoryState>
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      searchDate: null == searchDate
+          ? _value.searchDate
+          : searchDate // ignore: cast_nullable_to_non_nullable
+              as List<DateTime>,
     ) as $Val);
   }
 }
@@ -81,7 +91,11 @@ abstract class _$$RecipeHistoryStateImplCopyWith<$Res>
       __$$RecipeHistoryStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<int> id, List<String> recipe, List<String> url});
+  $Res call(
+      {List<int> id,
+      List<String> recipe,
+      List<String> url,
+      List<DateTime> searchDate});
 }
 
 /// @nodoc
@@ -98,6 +112,7 @@ class __$$RecipeHistoryStateImplCopyWithImpl<$Res>
     Object? id = null,
     Object? recipe = null,
     Object? url = null,
+    Object? searchDate = null,
   }) {
     return _then(_$RecipeHistoryStateImpl(
       id: null == id
@@ -112,6 +127,10 @@ class __$$RecipeHistoryStateImplCopyWithImpl<$Res>
           ? _value._url
           : url // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      searchDate: null == searchDate
+          ? _value._searchDate
+          : searchDate // ignore: cast_nullable_to_non_nullable
+              as List<DateTime>,
     ));
   }
 }
@@ -122,10 +141,12 @@ class _$RecipeHistoryStateImpl implements _RecipeHistoryState {
   const _$RecipeHistoryStateImpl(
       {final List<int> id = const [],
       final List<String> recipe = const [],
-      final List<String> url = const []})
+      final List<String> url = const [],
+      final List<DateTime> searchDate = const []})
       : _id = id,
         _recipe = recipe,
-        _url = url;
+        _url = url,
+        _searchDate = searchDate;
 
   factory _$RecipeHistoryStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$RecipeHistoryStateImplFromJson(json);
@@ -157,9 +178,18 @@ class _$RecipeHistoryStateImpl implements _RecipeHistoryState {
     return EqualUnmodifiableListView(_url);
   }
 
+  final List<DateTime> _searchDate;
+  @override
+  @JsonKey()
+  List<DateTime> get searchDate {
+    if (_searchDate is EqualUnmodifiableListView) return _searchDate;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_searchDate);
+  }
+
   @override
   String toString() {
-    return 'RecipeHistoryState(id: $id, recipe: $recipe, url: $url)';
+    return 'RecipeHistoryState(id: $id, recipe: $recipe, url: $url, searchDate: $searchDate)';
   }
 
   @override
@@ -169,7 +199,9 @@ class _$RecipeHistoryStateImpl implements _RecipeHistoryState {
             other is _$RecipeHistoryStateImpl &&
             const DeepCollectionEquality().equals(other._id, _id) &&
             const DeepCollectionEquality().equals(other._recipe, _recipe) &&
-            const DeepCollectionEquality().equals(other._url, _url));
+            const DeepCollectionEquality().equals(other._url, _url) &&
+            const DeepCollectionEquality()
+                .equals(other._searchDate, _searchDate));
   }
 
   @JsonKey(ignore: true)
@@ -178,7 +210,8 @@ class _$RecipeHistoryStateImpl implements _RecipeHistoryState {
       runtimeType,
       const DeepCollectionEquality().hash(_id),
       const DeepCollectionEquality().hash(_recipe),
-      const DeepCollectionEquality().hash(_url));
+      const DeepCollectionEquality().hash(_url),
+      const DeepCollectionEquality().hash(_searchDate));
 
   @JsonKey(ignore: true)
   @override
@@ -199,7 +232,8 @@ abstract class _RecipeHistoryState implements RecipeHistoryState {
   const factory _RecipeHistoryState(
       {final List<int> id,
       final List<String> recipe,
-      final List<String> url}) = _$RecipeHistoryStateImpl;
+      final List<String> url,
+      final List<DateTime> searchDate}) = _$RecipeHistoryStateImpl;
 
   factory _RecipeHistoryState.fromJson(Map<String, dynamic> json) =
       _$RecipeHistoryStateImpl.fromJson;
@@ -210,6 +244,8 @@ abstract class _RecipeHistoryState implements RecipeHistoryState {
   List<String> get recipe;
   @override
   List<String> get url;
+  @override
+  List<DateTime> get searchDate;
   @override
   @JsonKey(ignore: true)
   _$$RecipeHistoryStateImplCopyWith<_$RecipeHistoryStateImpl> get copyWith =>

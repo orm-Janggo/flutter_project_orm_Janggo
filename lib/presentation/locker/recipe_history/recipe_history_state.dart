@@ -9,7 +9,9 @@ class RecipeHistoryState with _$RecipeHistoryState {
   const factory RecipeHistoryState(
       {@Default([]) List<int> id,
       @Default([]) List<String> recipe,
-      @Default([]) List<String> url}) = _RecipeHistoryState;
+      @Default([]) List<String> url,
+        @Default([]) List<DateTime> searchDate,
+      }) = _RecipeHistoryState;
 
   factory RecipeHistoryState.fromJson(Map<String, Object?> json) =>
       _$RecipeHistoryStateFromJson(json);
