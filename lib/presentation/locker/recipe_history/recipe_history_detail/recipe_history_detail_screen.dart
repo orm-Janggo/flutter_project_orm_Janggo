@@ -44,41 +44,41 @@ class _RecipeHistoryDetailScreenState extends State<RecipeHistoryDetailScreen> {
               child: SizedBox(
                 height: 265,
                 width: 400,
-                child: state.url != 'empty'
-                    ? ClipRRect(
-                        borderRadius: BorderRadius.circular(15),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.white70,
-                              width: 1,
-                            ),
-                          ),
-                          child: Image.network(
-                            state.url,
-                            height: 265,
-                            width: 400,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      )
-                    : ClipRRect(
-                        borderRadius: BorderRadius.circular(15),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.white70,
-                              width: 1,
-                            ),
-                          ),
-                          child: Image.asset(
-                            'assets/images/empty_image.png',
-                            height: 265,
-                            width: 400,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
+                // child: state.url != 'empty'
+                //     ? ClipRRect(
+                //         borderRadius: BorderRadius.circular(15),
+                //         child: Container(
+                //           decoration: BoxDecoration(
+                //             border: Border.all(
+                //               color: Colors.white70,
+                //               width: 1,
+                //             ),
+                //           ),
+                //           // child: Image.network(
+                //           //   state.url,
+                //           //   height: 265,
+                //           //   width: 400,
+                //           //   fit: BoxFit.cover,
+                //           // ),
+                //         ),
+                //       )
+                //     : ClipRRect(
+                //         borderRadius: BorderRadius.circular(15),
+                //         child: Container(
+                //           decoration: BoxDecoration(
+                //             border: Border.all(
+                //               color: Colors.white70,
+                //               width: 1,
+                //             ),
+                //           ),
+                //           child: Image.asset(
+                //             'assets/images/empty_image.png',
+                //             height: 265,
+                //             width: 400,
+                //             fit: BoxFit.cover,
+                //           ),
+                //         ),
+                //       ),
               ),
             ),
             Expanded(
@@ -91,15 +91,15 @@ class _RecipeHistoryDetailScreenState extends State<RecipeHistoryDetailScreen> {
                     borderRadius: BorderRadius.circular(10),
                   ),
                   padding: const EdgeInsets.all(16.0),
-                  child: Text(
-                    state.recipe,
-                    style: const TextStyle(
-                      fontSize: 20,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontFamily: 'hand_font',
-                    ),
-                  ),
+                  // child: Text(
+                  //   state.recipe,
+                  //   style: const TextStyle(
+                  //     fontSize: 20,
+                  //     color: Colors.black,
+                  //     fontWeight: FontWeight.bold,
+                  //     fontFamily: 'hand_font',
+                  //   ),
+                  // ),
                 ),
               ),
             ),

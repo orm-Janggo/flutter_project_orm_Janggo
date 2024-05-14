@@ -17,12 +17,13 @@ class LikeItemAdapter extends TypeAdapter<LikeItem> {
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
     return LikeItem(
-        recipe: fields[0] as String,
-        id: fields[1] as String,
-        imageUrl: fields[2] as String,
-        isLiked: fields[3] as bool,
-        foodName: fields[4] as String,
-        time: fields[5] as DateTime);
+      recipe: fields[0] as String,
+      id: fields[1] as String,
+      imageUrl: fields[2] as String,
+      isLiked: fields[3] as bool,
+      foodName: fields[4] as String,
+      time: fields[5] as DateTime,
+    );
   }
 
   @override
@@ -48,5 +49,8 @@ class LikeItemAdapter extends TypeAdapter<LikeItem> {
 
   @override
   bool operator ==(Object other) =>
-      identical(this, other) || other is LikeItemAdapter && runtimeType == other.runtimeType && typeId == other.typeId;
+      identical(this, other) ||
+      other is LikeItemAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
 }
