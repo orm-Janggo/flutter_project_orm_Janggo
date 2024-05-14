@@ -27,39 +27,12 @@ class _RecipeScreenState extends State<RecipeScreen> {
   // 현재 페이지의 index 추적
   final PageController _pageController = PageController();
 
-  // 현재 페이지의 index
-  int _currentPage = 0;
-
-  // initialize google mobile ad sdk
-  Future<InitializationStatus> _initGoogleMobileAds() {
-    return MobileAds.instance.initialize();
-  }
-
   // Add _interstitialAd
   InterstitialAd? _interstitialAd;
 
-  // Implement _loadInterstitialAd()
-  void _loadInterstitialAd() {
-    InterstitialAd.load(
-      adUnitId: GoogleAdsIds.interstitialAdUnitId,
-      request: AdRequest(),
-      adLoadCallback: InterstitialAdLoadCallback(
-        onAdLoaded: (ad) {
-          print('------------ad------------');
-          ad.fullScreenContentCallback = FullScreenContentCallback(
-            onAdDismissedFullScreenContent: (ad) {},
-          );
+  // 현재 페이지의 index
+  int _currentPage = 0;
 
-          setState(() {
-            _interstitialAd = ad;
-          });
-        },
-        onAdFailedToLoad: (err) {
-          print('Failed to load an interstitial ad: ${err.message}');
-        },
-      ),
-    );
-  }
 
   @override
   void initState() {
@@ -315,6 +288,34 @@ class _RecipeScreenState extends State<RecipeScreen> {
                   ],
                 ),
               ),
+      ),
+    );
+  }
+
+  // initialize google mobile ad sdk
+  Future<InitializationStatus> _initGoogleMobileAds() {
+    return MobileAds.instance.initialize();
+  }
+
+  // Implement _loadInterstitialAd()
+  void _loadInterstitialAd() {
+    InterstitialAd.load(
+      adUnitId: GoogleAdsIds.interstitialAdUnitId,
+      request: AdRequest(),
+      adLoadCallback: InterstitialAdLoadCallback(
+        onAdLoaded: (ad) {
+          print('------------ad------------');
+          ad.fullScreenContentCallback = FullScreenContentCallback(
+            onAdDismissedFullScreenContent: (ad) {},
+          );
+
+          setState(() {
+            _interstitialAd = ad;
+          });
+        },
+        onAdFailedToLoad: (err) {
+          print('Failed to load an interstitial ad: ${err.message}');
+        },
       ),
     );
   }
