@@ -79,28 +79,37 @@ class _RecipeHistoryScreenState extends State<RecipeHistoryScreen> {
                                   ),
                           ),
                           Expanded(
+                            flex: 1,
                             child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: Container(
-                                color: Colors.grey,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
+                              padding: const EdgeInsets.only(left: 8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  SizedBox(
+                                    child: Text(
                                       state.recipe[index],
                                       overflow: TextOverflow.clip,
                                       softWrap: true,
                                     ),
-                                    Container(
-                                      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
+                                  ),
+                                  SizedBox(
+                                    height: screenHeight * 0.02,
+                                  ),
+                                  SizedBox(
+                                    child: Container(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          8.0, 2.0, 8.0, 0),
                                       decoration: BoxDecoration(
                                         color: const Color(0xffFB8C00),
-                                        borderRadius: BorderRadius.circular(48.0),
+                                        borderRadius:
+                                            BorderRadius.circular(48.0),
                                       ),
                                       child: const Text('? 일전'),
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                             ),
                           ),
