@@ -1,18 +1,20 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_orm_janggo/main.dart';
 import 'package:flutter_project_orm_janggo/presentation/components/like_widget.dart';
-import 'package:provider/provider.dart';
+import 'package:go_router/go_router.dart';
 
-import '../../recipe_screen/recipe_view_model.dart';
-
-class LikeRecipeScreen extends StatelessWidget {
+class LikeRecipeScreen extends StatefulWidget {
   const LikeRecipeScreen({super.key});
 
   @override
+  State<LikeRecipeScreen> createState() => _LikeRecipeScreenState();
+}
+
+class _LikeRecipeScreenState extends State<LikeRecipeScreen> {
+  @override
   Widget build(BuildContext context) {
-    final viewModel = context.watch<RecipeViewModel>();
+    bool _isExpanded = false;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -30,8 +32,7 @@ class LikeRecipeScreen extends StatelessWidget {
                   decoration: InputDecoration(
                     labelText: "좋아요 레시피 검색",
                     hintText: "레시피 이름 검색",
-                    prefixIcon: Icon(Icons.search),
-                    suffixIcon: Icon(Icons.mic),
+                    suffixIcon: Icon(Icons.search),
                     filled: true,
                     fillColor: Colors.white,
                     border: OutlineInputBorder(
@@ -64,6 +65,7 @@ class LikeRecipeScreen extends StatelessWidget {
             child: Positioned(
               top: 50,
               child: ExpansionTile(
+                backgroundColor: Color(0xFFFDBA66), // 타일의 배경색 설정
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -75,7 +77,19 @@ class LikeRecipeScreen extends StatelessWidget {
                   ],
                 ),
                 children: [
-
+                  InkWell(
+                    onTap: () {
+                      context.push('/main/recipe-history');
+                    },
+                    child: ListTile(
+                      title: Center(
+                        child: Text(
+                          "레시피 히스토리 보관함",
+                          style: TextStyle(fontFamily: 'school_font'),
+                        ),
+                      ),
+                    ),
+                  ),
                 ],
               ),
             ),
