@@ -80,12 +80,27 @@ class _RecipeHistoryScreenState extends State<RecipeHistoryScreen> {
                           ),
                           Expanded(
                             child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: Text(
-                                state.recipe[index],
-                                overflow: TextOverflow.clip,
-                                softWrap: true,
+                              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: Container(
+                                color: Colors.grey,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      state.recipe[index],
+                                      overflow: TextOverflow.clip,
+                                      softWrap: true,
+                                    ),
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 2.0),
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xffFB8C00),
+                                        borderRadius: BorderRadius.circular(48.0),
+                                      ),
+                                      child: const Text('? 일전'),
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
