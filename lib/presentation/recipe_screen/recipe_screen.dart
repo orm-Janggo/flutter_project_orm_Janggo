@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_project_orm_janggo/data/db/like_hive/like_item.dart';
 import 'package:flutter_project_orm_janggo/data/user_information/user_information.dart';
+import 'package:flutter_project_orm_janggo/presentation/ads/google_ads_Ids.dart';
 import 'package:flutter_project_orm_janggo/presentation/recipe_screen/recipe_view_model.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:provider/provider.dart';
 
 class RecipeScreen extends StatefulWidget {
@@ -25,20 +27,62 @@ class _RecipeScreenState extends State<RecipeScreen> {
   // 현재 페이지의 index 추적
   final PageController _pageController = PageController();
 
+  // Add _interstitialAd
+  InterstitialAd? _interstitialAd;
+
   // 현재 페이지의 index
   int _currentPage = 0;
+
+  // initialize google mobile ad sdk
+  Future<InitializationStatus> _initGoogleMobileAds() {
+    return MobileAds.instance.initialize();
+  }
+
+  // Implement _loadInterstitialAd()
+  void _loadInterstitialAd() {
+    InterstitialAd.load(
+      adUnitId: GoogleAdsIds.interstitialAdUnitId,
+      request: AdRequest(),
+      adLoadCallback: InterstitialAdLoadCallback(
+        onAdLoaded: (ad) {
+          print('------------ad------------');
+          ad.fullScreenContentCallback = FullScreenContentCallback(
+            onAdDismissedFullScreenContent: (ad) {},
+          );
+
+          setState(() {
+            _interstitialAd = ad;
+          });
+        },
+        onAdFailedToLoad: (err) {
+          print('Failed to load an interstitial ad: ${err.message}');
+        },
+      ),
+    );
+  }
 
   @override
   void initState() {
     super.initState();
+    _initGoogleMobileAds();
+    _loadInterstitialAd();
     final ingredients = widget.ingredients;
     context.read<RecipeViewModel>().getRecipe(ingredients);
+  }
+
+  // add for ad
+  @override
+  void dispose() {
+    _interstitialAd?.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<RecipeViewModel>();
     final state = viewModel.state;
+
+    _interstitialAd?.show();
 
     if (state.recipe.isNotEmpty) {
       viewModel.getPicture(state.recipe);
@@ -250,4 +294,5 @@ class _RecipeScreenState extends State<RecipeScreen> {
       ),
     );
   }
+
 }

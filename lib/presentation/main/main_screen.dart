@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project_orm_janggo/presentation/kakao_login/kakao_login_view_model.dart';
+import 'package:flutter_project_orm_janggo/presentation/main/main_screen_view_model.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
-import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
 import '../../data/user_information/user_information.dart';
 import '../../domain/model/social_login/kakao_login.dart';
-import 'main_screen_view_model.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -81,9 +80,9 @@ class _MainScreenState extends State<MainScreen> {
     final double centerX = screenWidth / 2;
     final double centerY = screenHeight / 2;
 
-    final userInformation = UserInformation();  // 싱글턴 인스턴스
-    final loginMethod = userInformation.loginMethod;  // 로그인 방식 가져오기
-    final userInfo = userInformation.userInfo;  // 사용자 정보 가져오기
+    final userInformation = UserInformation(); // 싱글턴 인스턴스
+    final loginMethod = userInformation.loginMethod; // 로그인 방식 가져오기
+    final userInfo = userInformation.userInfo; // 사용자 정보 가져오기
 
     return Scaffold(
       // 키보드에 의한 UI 이동방지
@@ -102,7 +101,7 @@ class _MainScreenState extends State<MainScreen> {
           },
         ),
         actions: [
-          if (loginMethod == LoginMethod.kakao)  // 카카오 로그인
+          if (loginMethod == LoginMethod.kakao) // 카카오 로그인
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Column(
@@ -110,7 +109,7 @@ class _MainScreenState extends State<MainScreen> {
                 children: [
                   TextButton(
                     onPressed: () {
-                      context.push('/main/my-page');  // 사용자 정보 페이지로 이동
+                      context.push('/main/my-page'); // 사용자 정보 페이지로 이동
                     },
                     child: Text(
                       userInfo?.displayName ?? 'Unknown Kakao User',
@@ -120,7 +119,7 @@ class _MainScreenState extends State<MainScreen> {
                 ],
               ),
             )
-          else if (loginMethod == LoginMethod.google)  // 구글 로그인
+          else if (loginMethod == LoginMethod.google) // 구글 로그인
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Column(
@@ -128,10 +127,12 @@ class _MainScreenState extends State<MainScreen> {
                 children: [
                   TextButton(
                     onPressed: () {
-                      context.push('/main/my-page');  // 사용자 정보 페이지로 이동
+                      context.push('/main/my-page'); // 사용자 정보 페이지로 이동
                     },
                     child: Text(
-                      userInfo?.displayName ?? userInfo?.email ?? 'Unknown Google User',
+                      userInfo?.displayName ??
+                          userInfo?.email ??
+                          'Unknown Google User',
                       style: const TextStyle(fontFamily: 'school_font'),
                     ),
                   ),
