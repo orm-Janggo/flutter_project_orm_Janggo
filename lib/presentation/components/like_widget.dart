@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project_orm_janggo/data/db/like_hive/like_item.dart';
-import 'package:flutter_project_orm_janggo/data/user_information/user_information.dart';
 import 'package:intl/intl.dart';
 
 class LikeWidget extends StatelessWidget {
@@ -96,7 +95,7 @@ class LikeWidget extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Text(
-                      recipe!.foodName ?? '',
+                      recipe!.foodName,
                       style: TextStyle(fontSize: 30, fontFamily: 'school_font'),
                     ),
                   ),

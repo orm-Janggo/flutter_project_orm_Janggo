@@ -1,10 +1,6 @@
-import 'dart:ffi';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_project_orm_janggo/data/db/like_hive/like_item.dart';
-import 'package:flutter_project_orm_janggo/data/user_information/user_information.dart';
 import 'package:flutter_project_orm_janggo/presentation/ads/google_ads_Ids.dart';
 import 'package:flutter_project_orm_janggo/presentation/recipe_screen/recipe_view_model.dart';
 import 'package:go_router/go_router.dart';
@@ -161,7 +157,6 @@ class _RecipeScreenState extends State<RecipeScreen> {
                         controller: _pageController,
                         itemBuilder: (context, index) {
                           final currentItem = state.recipe.isNotEmpty ? state.recipe[index] : null;
-                          final isLiked = index < state.isLike.length ? state.isLike[index] : false;
                           final imageUrl =
                               state.url.isNotEmpty && index < state.url.length && state.url[index] != 'empty'
                                   ? state.url[index]
