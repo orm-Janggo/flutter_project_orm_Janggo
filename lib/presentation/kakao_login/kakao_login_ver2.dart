@@ -15,7 +15,6 @@ Future<bool> signInWithKakao() async {
       accessToken: token.accessToken,
     );
     await Auth.FirebaseAuth.instance.signInWithCredential(credential);
-    final firebaseUser = Auth.FirebaseAuth.instance.currentUser;
 
     print('카카오톡으로 로그인 성공 ${token.accessToken}');
     User user = await UserApi.instance.me();
@@ -39,7 +38,6 @@ Future<bool> signInWithKakao() async {
         accessToken: token.accessToken,
       );
       await Auth.FirebaseAuth.instance.signInWithCredential(credential);
-      final firebaseUser = Auth.FirebaseAuth.instance.currentUser;
       print('카카오계정으로 로그인 성공');
 
       User user = await UserApi.instance.me();
