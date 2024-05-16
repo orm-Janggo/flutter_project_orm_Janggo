@@ -41,12 +41,13 @@ class _MainScreenState extends State<MainScreen> {
 
   void _removeTextField(int index) {
     // 재료 삭제
-    if (_controllers.length > 1) {
-      // 최소 1개 이상이 되도록 제한
-      setState(() {
-        _controllers.removeAt(index);
-      });
-    }
+    setState(() {
+      _controllers[index].clear();
+      if (_controllers.length > 1) {
+        // 최소 1개 이상이 되도록 제한
+        _controllers.removeAt(index); // 컨트롤러를 제거하여 해당 텍스트 필드를 삭제함
+      }
+    });
   }
 
   List<String> _getTextFieldValues() {
@@ -171,7 +172,7 @@ class _MainScreenState extends State<MainScreen> {
                 ),
               ),
           const SizedBox(
-            width: 16,
+            width: 8,
           ),
         ],
       ),
@@ -196,7 +197,6 @@ class _MainScreenState extends State<MainScreen> {
                   '재료를 넣어주세요!',
                   style: TextStyle(
                     fontSize: 24,
-                    fontWeight: FontWeight.bold,
                     fontFamily: 'school_font',
                   ),
                 ),
@@ -294,7 +294,6 @@ class _MainScreenState extends State<MainScreen> {
                               '재료 추가',
                               style: TextStyle(
                                 fontSize: 16,
-                                fontWeight: FontWeight.bold,
                                 color: Colors.black,
                                 fontFamily: 'school_font',
                               ),
@@ -365,7 +364,6 @@ class _MainScreenState extends State<MainScreen> {
                               '레시피 보기',
                               style: TextStyle(
                                 fontSize: 16,
-                                fontWeight: FontWeight.bold,
                                 color: Colors.black,
                                 fontFamily: 'school_font',
                               ),

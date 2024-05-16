@@ -56,7 +56,7 @@ Widget googleLoginButton(BuildContext context) {
       height: 50,
       decoration: BoxDecoration(
         color: Color(0xFFF2F2F2),
-        borderRadius: BorderRadius.circular(16.0),
+        borderRadius: BorderRadius.circular(10.0),
       ),
       child: Center(
         child: SizedBox(
