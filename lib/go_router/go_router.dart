@@ -142,29 +142,29 @@ final router = GoRouter(
                   ),
                 );
               },
+            ),
+            GoRoute(
+              path: 'recipe-like',
+              builder: (context, state) {
+                return ChangeNotifierProvider(
+                  create: (_) => LikeRecipeViewModel(
+                    likeRemoveRecipeUseCase: LikeRemoveRecipeUseCase(
+                      likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl(),
+                    ),
+                  ),
+                  child: const LikeRecipeScreen(),
+                );
+              },
               routes: [
                 GoRoute(
-                    path: 'recipe-like',
-                    builder: (context, state) {
-                      return ChangeNotifierProvider(
-                        create: (_) => LikeRecipeViewModel(
-                          likeRemoveRecipeUseCase: LikeRemoveRecipeUseCase(
-                            likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl(),
-                          ),
-                        ),
-                        child: const LikeRecipeScreen(),
-                      );
-                    },
-                    routes: [
-                      GoRoute(
-                          path: 'recipe-like-detail',
-                          builder: (context, state) {
-                            return LikeRecipeDetailScreen(
-                              recipe: state.extra as LikeItem,
-                            );
-                          })
-                    ]),
-              ],
+                  path: 'recipe-like-detail',
+                  builder: (context, state) {
+                    return LikeRecipeDetailScreen(
+                      recipe: state.extra as LikeItem,
+                    );
+                  },
+                ),
+              ]
             ),
             GoRoute(
               path: 'recipe-history',
