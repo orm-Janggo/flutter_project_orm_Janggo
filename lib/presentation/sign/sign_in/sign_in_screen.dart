@@ -47,14 +47,12 @@ class _SignInScreenState extends State<SignInScreen> {
                       '안녕하세요! 👋',
                       style: TextStyle(
                         fontSize: 32.0,
-                        fontWeight: FontWeight.bold,
                       ),
                     ),
                     Text(
                       '장고처리 어플을 사용해보세요!',
                       style: TextStyle(
                         fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ],
@@ -72,7 +70,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       child: TextFormField(
                         key: const ValueKey(1),
                         decoration: InputDecoration(
-                          hintText: '이메일 e.g. emailAddress@gmail.com',
+                          hintText: '이메일 주소를 입력하세요.',
                           hintStyle: TextStyle(fontFamily: 'school_font'),
                           filled: true,
                           fillColor: const Color(0xfff8f8f8),
@@ -169,7 +167,10 @@ class _SignInScreenState extends State<SignInScreen> {
                     onPressed: () {
                       context.push('/sign-in/forgot-password');
                     },
-                    child: const Text('비밀번호 찾기'),
+                    child: const Text(
+                      '비밀번호 찾기',
+                      style: TextStyle(fontSize: 14, fontFamily: 'school_font'),
+                    ),
                   ),
                 ],
               ),
@@ -193,7 +194,7 @@ class _SignInScreenState extends State<SignInScreen> {
                   height: 50,
                   decoration: BoxDecoration(
                     color: Colors.orange,
-                    borderRadius: BorderRadius.circular(16.0),
+                    borderRadius: BorderRadius.circular(12.0),
                   ),
                   child: TextButton(
                     onPressed: () async {
@@ -202,10 +203,6 @@ class _SignInScreenState extends State<SignInScreen> {
                       }
 
                       try {
-                        // await _authentication.signInWithEmailAndPassword(
-                        //   email: inputEmail.toString(),
-                        //   password: inputPassword.toString(),
-                        // );
                         await viewModel.signInWithFirebaseAuth(
                             inputEmail!, inputPassword!);
                         debugPrint('로그인 성공');
@@ -229,7 +226,10 @@ class _SignInScreenState extends State<SignInScreen> {
                     },
                     child: const Text(
                       '로그인',
-                      style: TextStyle(fontSize: 20, fontFamily: 'school_font'),
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontFamily: 'school_font',
+                          color: Colors.black),
                     ),
                   ),
                 ),

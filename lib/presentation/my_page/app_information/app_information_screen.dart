@@ -17,9 +17,7 @@ class AppInformationScreen extends StatelessWidget {
             child: const Text(
               '앱 정보',
               style: TextStyle(
-                fontSize: 32.0,
-                fontWeight: FontWeight.bold,
-              ),
+                  fontFamily: 'school_font', color: Colors.black, fontSize: 32),
             ),
           ),
           Padding(
@@ -32,15 +30,15 @@ class AppInformationScreen extends StatelessWidget {
                 context.push('/main/my-page/app-information/qna');
               },
               child: const SizedBox(
+                height: 50,
                 width: double.infinity,
                 child: Center(
                   child: Text(
                     'Q&A',
                     style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18.0,
-                      color: Colors.black,
-                    ),
+                        fontFamily: 'school_font',
+                        color: Colors.black,
+                        fontSize: 16),
                   ),
                 ),
               ),
@@ -56,15 +54,15 @@ class AppInformationScreen extends StatelessWidget {
                 context.push('/main/my-page/app-information/privacy');
               },
               child: const SizedBox(
+                height: 50,
                 width: double.infinity,
                 child: Center(
                   child: Text(
-                    '개인정보처리방침',
+                    '개인정보 처리 방침',
                     style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18.0,
-                      color: Colors.black,
-                    ),
+                        fontFamily: 'school_font',
+                        color: Colors.black,
+                        fontSize: 16),
                   ),
                 ),
               ),
@@ -80,15 +78,15 @@ class AppInformationScreen extends StatelessWidget {
                 context.push('/main/my-page/app-information/license');
               },
               child: const SizedBox(
+                height: 50,
                 width: double.infinity,
                 child: Center(
                   child: Text(
                     '오픈소스 라이선스',
                     style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18.0,
-                      color: Colors.black,
-                    ),
+                        fontFamily: 'school_font',
+                        color: Colors.black,
+                        fontSize: 16),
                   ),
                 ),
               ),

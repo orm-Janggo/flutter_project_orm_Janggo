@@ -7,7 +7,13 @@ class PrivacyPolicyScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('개인정보 처리방침'),
+        title: Text(
+          '개인정보 처리 방침',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -15,13 +21,6 @@ class PrivacyPolicyScreen extends StatelessWidget {
           child: Column( // 여러 텍스트 위젯을 포함할 수 있는 컬럼 사용
             crossAxisAlignment: CrossAxisAlignment.start, // 텍스트 정렬
             children: [
-              Text(
-                '개인정보 처리방침', // 대제목
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
               SizedBox(height: 16), // 여백 추가
               Text(
                 '본 어플리케이션은 사용자의 개인정보를 중요하게 생각하며, 개인정보 보호를 위해 최선을 다합니다. 이 개인정보 처리방침은 본 어플리케이션이 개인정보를 어떻게 수집, 사용, 저장, 공유하는지에 관한 정보를 제공합니다.',
