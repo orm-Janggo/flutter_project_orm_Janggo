@@ -100,11 +100,41 @@ class _RecipeScreenState extends State<RecipeScreen> {
           ],
         ),
         actions: [
-          IconButton(
-            onPressed: () {
-              context.push('/main/recipe-history');
-            },
-            icon: const Icon(Icons.face),
+          PopupMenuButton<int>(
+            onSelected: (item) => _onSelected(context, item),
+            itemBuilder: (context) => [
+              PopupMenuItem<int>(
+                value: 0,
+                child: DefaultTextStyle(
+                  style: TextStyle(
+                      fontFamily: 'school_font',
+                      fontSize: 14,
+                      color: Colors.black),
+                  child: Text('좋아요 보관함'),
+                ),
+              ),
+              PopupMenuItem<int>(
+                value: 1,
+                child: DefaultTextStyle(
+                  style: TextStyle(
+                      fontFamily: 'school_font',
+                      fontSize: 14,
+                      color: Colors.black),
+                  child: Text('히스토리 보관함'),
+                ),
+              ),
+              PopupMenuItem<int>(
+                value: 2,
+                child: DefaultTextStyle(
+                  style: TextStyle(
+                      fontFamily: 'school_font',
+                      fontSize: 14,
+                      color: Colors.black),
+                  child: Text('MyPage'),
+                ),
+              ),
+            ],
+            icon: const Icon(Icons.menu),
           ),
           const SizedBox(width: 10),
         ],
@@ -290,4 +320,17 @@ class _RecipeScreenState extends State<RecipeScreen> {
     );
   }
 
+  void _onSelected(BuildContext context, int item) {
+    switch (item) {
+      case 0:
+        context.push('/main/recipe/recipe-like');
+        break;
+      case 1:
+        context.push('/main/recipe-history');
+        break;
+      case 2:
+        context.push('/main/my-page');
+        break;
+    }
+  }
 }
