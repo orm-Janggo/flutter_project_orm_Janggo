@@ -323,7 +323,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
   void _onSelected(BuildContext context, int item) {
     switch (item) {
       case 0:
-        context.push('/main/recipe/recipe-like');
+        context.push('/main/recipe-like');
         break;
       case 1:
         context.push('/main/recipe-history');
