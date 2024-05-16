@@ -19,7 +19,7 @@ class LikeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.go('/main/recipe/recipe-like/recipe-like-detail', extra: recipe);
+        context.go('/main/recipe-like/recipe-like-detail', extra: recipe);
       },
       child: SizedBox(
         width: 500,

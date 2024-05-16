@@ -165,7 +165,7 @@ class _RecipeHistoryScreenState extends State<RecipeHistoryScreen> {
                     InkWell(
                       onTap: () {
                         Navigator.of(context).pop();
-                        context.push('/main/recipe/recipe-like');
+                        context.push('/main/recipe-like');
                       },
                       child: const ListTile(
                         title: Center(
