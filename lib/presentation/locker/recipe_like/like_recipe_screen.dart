@@ -2,7 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_orm_janggo/main.dart';
 import 'package:flutter_project_orm_janggo/presentation/components/like_widget.dart';
+import 'package:flutter_project_orm_janggo/presentation/locker/recipe_like/like_recipe_viewmodel.dart';
+import 'package:flutter_project_orm_janggo/presentation/main/main_screen.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+
+import '../../../data/db/like_hive/like_item.dart';
 
 class LikeRecipeScreen extends StatefulWidget {
   const LikeRecipeScreen({super.key});
@@ -12,8 +17,16 @@ class LikeRecipeScreen extends StatefulWidget {
 }
 
 class _LikeRecipeScreenState extends State<LikeRecipeScreen> {
+
   @override
   Widget build(BuildContext context) {
+    final viewModel = context.watch<LikeRecipeViewModel>();
+
+    void removeFromLikedRecipes(LikeItem recipe) {
+      setState(() {
+        viewModel.deleteLikeRecipe(recipe);
+      });
+    }
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -52,7 +65,12 @@ class _LikeRecipeScreenState extends State<LikeRecipeScreen> {
                     final recipe = likeBox.getAt(index);
                     return Padding(
                       padding: const EdgeInsets.all(16.0),
-                      child: LikeWidget(recipe: recipe),
+                      child: LikeWidget(
+                        recipe: recipe,
+                        onTap: () {
+                          removeFromLikedRecipes(recipe!);
+                        },
+                      ),
                     );
                   },
                 ),
@@ -64,7 +82,7 @@ class _LikeRecipeScreenState extends State<LikeRecipeScreen> {
             child: Positioned(
               top: 50,
               child: ExpansionTile(
-                backgroundColor: Color(0xFFFDBA66), // 타일의 배경색 설정
+                backgroundColor: Color(0xFFFDBA66),
                 title: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_project_orm_janggo/data/db/like_hive/like_item.dart';
 import 'package:flutter_project_orm_janggo/data/gpt_data_source/gpt_data_source.dart';
 import 'package:flutter_project_orm_janggo/data/repository/chat_gpt_repository_impl.dart';
 import 'package:flutter_project_orm_janggo/data/repository/firebase_auth_repository/firebase_auth_repository_impl.dart';
@@ -18,6 +19,8 @@ import 'package:flutter_project_orm_janggo/domain/use_case/like_recipe_use_case/
 import 'package:flutter_project_orm_janggo/domain/use_case/like_recipe_use_case/like_remove_recipe_use_case.dart';
 import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_view_model.dart';
+import 'package:flutter_project_orm_janggo/presentation/locker/recipe_like/like_recipe_detail_screen.dart';
+import 'package:flutter_project_orm_janggo/presentation/locker/recipe_like/like_recipe_viewmodel.dart';
 import 'package:flutter_project_orm_janggo/presentation/my_page/app_information/app_information_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/my_page/app_information/privacy_policy_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/my_page/app_information/question_answer_screen.dart';
@@ -44,7 +47,6 @@ import '../presentation/main/main_screen_view_model.dart';
 import '../presentation/recipe_screen/recipe_screen.dart';
 import '../presentation/recipe_screen/recipe_view_model.dart';
 
-
 final router = GoRouter(
   routes: [
     GoRoute(
@@ -55,9 +57,7 @@ final router = GoRouter(
             authStateChangesUseCase: AuthStateChangesUseCase(
               FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
             ),
-
-            signOutUseCase: SignOutUseCase(
-                FirebaseAuthRepositoryImpl(FirebaseAuth.instance)),
+            signOutUseCase: SignOutUseCase(FirebaseAuthRepositoryImpl(FirebaseAuth.instance)),
           ),
           child: const SplashScreen(),
         );
@@ -71,8 +71,7 @@ final router = GoRouter(
                 signInWithEmailPasswordUseCase: SignInWithEmailPasswordUseCase(
                   FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
                 ),
-                authStateChangesUseCase: AuthStateChangesUseCase(
-                    FirebaseAuthRepositoryImpl(FirebaseAuth.instance)),
+                authStateChangesUseCase: AuthStateChangesUseCase(FirebaseAuthRepositoryImpl(FirebaseAuth.instance)),
               ),
               child: const SignInScreen(),
             );
@@ -83,8 +82,7 @@ final router = GoRouter(
               builder: (context, state) {
                 return ChangeNotifierProvider(
                   create: (_) => ForgotPasswordViewModel(
-                    sendPasswordResetEmailUseCase:
-                        SendPasswordResetEmailUseCase(
+                    sendPasswordResetEmailUseCase: SendPasswordResetEmailUseCase(
                       FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
                     ),
                   ),
@@ -116,7 +114,6 @@ final router = GoRouter(
                   FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
                 ),
               ),
-
               child: const MainScreen(),
             );
           },
@@ -131,18 +128,14 @@ final router = GoRouter(
                         pictureDataSource: PictureDataSource(),
                       ),
                     ),
-
                     getRecipeUseCase: GetRecipeUseCase(
                       chatGptRepositoryImpl: ChatGptRepositoryImpl(
                         dataSource: GptDataSource(),
                       ),
                     ),
-                    likeAddRecipeUseCase: LikeAddRecipeUseCase(
-                        likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
-                    likeRemoveRecipeUseCase: LikeRemoveRecipeUseCase(
-                        likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
-
-
+                    likeAddRecipeUseCase: LikeAddRecipeUseCase(likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
+                    likeRemoveRecipeUseCase:
+                        LikeRemoveRecipeUseCase(likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
                   ),
                   child: RecipeScreen(
                     ingredients: state.extra as String,
@@ -151,46 +144,45 @@ final router = GoRouter(
               },
               routes: [
                 GoRoute(
-                  path: 'recipe-like',
-                  builder: (context, state) {
-                    return ChangeNotifierProvider(
-                      create: (_) => RecipeViewModel(
-                        getPictureUseCase: GetPictureUseCase(
-                            repository: PictureRepositoryImpl(
-                                pictureDataSource: PictureDataSource())),
-                        getRecipeUseCase: GetRecipeUseCase(
-                            chatGptRepositoryImpl: ChatGptRepositoryImpl(
-                                dataSource: GptDataSource())),
-                        likeAddRecipeUseCase: LikeAddRecipeUseCase(
-                            likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
-                        likeRemoveRecipeUseCase: LikeRemoveRecipeUseCase(
-                            likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
-                      ),
-                      child: LikeRecipeScreen(),
-                    );
-
-                  },
-                ),
+                    path: 'recipe-like',
+                    builder: (context, state) {
+                      return ChangeNotifierProvider(
+                        create: (_) => LikeRecipeViewModel(
+                          likeRemoveRecipeUseCase: LikeRemoveRecipeUseCase(
+                            likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl(),
+                          ),
+                        ),
+                        child: const LikeRecipeScreen(),
+                      );
+                    },
+                    routes: [
+                      GoRoute(
+                          path: 'recipe-like-detail',
+                          builder: (context, state) {
+                            return LikeRecipeDetailScreen(
+                              recipe: state.extra as LikeItem,
+                            );
+                          })
+                    ]),
               ],
             ),
-
             GoRoute(
               path: 'recipe-history',
               builder: (context, state) {
                 return ChangeNotifierProvider(
                   create: (_) => RecipeHistoryViewModel(),
-                  child: RecipeHistoryScreen(),
+                  child: const RecipeHistoryScreen(),
                 );
               },
             ),
-
             GoRoute(
               path: 'recipe-history-detail',
               builder: (context, state) {
                 return ChangeNotifierProvider(
                     create: (_) => RecipeHistoryDetailViewModel(),
-                    child: RecipeHistoryDetailScreen(id: state.extra as int,)
-                );
+                    child: RecipeHistoryDetailScreen(
+                      id: state.extra as int,
+                    ));
               },
             ),
             GoRoute(
@@ -214,7 +206,6 @@ final router = GoRouter(
                   child: const MyPageScreen(),
                 );
               },
-
               routes: [
                 GoRoute(
                   path: 'app-information',
