@@ -28,122 +28,172 @@ class _RecipeHistoryScreenState extends State<RecipeHistoryScreen> {
     final screenHeight = MediaQuery.of(context).size.height;
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color(0xffFB8C00),
-        actions: [
-          IconButton(
-            onPressed: () async {
-              await viewModel.deleteAllDataFromBox();
-              await viewModel.getDataListFromHive();
-              setState(() {});
-            },
-            icon: const Icon(Icons.delete_outline),
-          ),
-        ],
-      ),
-      body: state.recipe.isNotEmpty
-          ? Container(
-              padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
-              color: const Color(0xffFB8C00),
-              child: ListView.builder(
-                itemCount: state.recipe.length,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      context.push(
-                        '/main/recipe-history-detail',
-                        extra: state.id[index],
-                      );
-                    },
-                    child: Container(
-                      margin:
-                          EdgeInsets.symmetric(vertical: screenHeight * 0.01),
-                      padding: EdgeInsets.all(screenWidth * 0.03),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(8.0)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SizedBox(
-                            width: screenWidth * 0.3,
-                            child: state.url[index] != 'empty'
-                                ? ClipRRect(
-                                    borderRadius: BorderRadius.circular(8.0),
-                                    child: Image.network(state.url[index]),
-                                  )
-                                : ClipRRect(
-                                    borderRadius: BorderRadius.circular(8.0),
-                                    child: Image.asset(
-                                        'assets/images/empty_image.png'),
-                                  ),
-                          ),
-                          Expanded(
-                            flex: 1,
-                            child: Padding(
-                              padding: const EdgeInsets.only(left: 8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  SizedBox(
-                                    child: Container(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          8.0, 2.0, 8.0, 0),
-                                      decoration: BoxDecoration(
-                                        color: const Color(0xffFB8C00),
+      resizeToAvoidBottomInset: false,
+      body: Stack(
+        children: [
+          state.recipe.isNotEmpty
+              ? Container(
+                  padding: EdgeInsets.fromLTRB(screenWidth * 0.05,
+                      screenHeight * 0.11, screenWidth * 0.05, 0),
+                  decoration: const BoxDecoration(
+                    color: Color(0xffFB8C00),
+                  ),
+                  child: ListView.builder(
+                    itemCount: state.recipe.length,
+                    itemBuilder: (context, index) {
+                      return GestureDetector(
+                        onTap: () {
+                          context.push(
+                            '/main/recipe-history-detail',
+                            extra: state.id[index],
+                          );
+                        },
+                        child: Container(
+                          margin: EdgeInsets.only(bottom: screenHeight * 0.01),
+                          padding: EdgeInsets.all(screenWidth * 0.03),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(8.0)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              SizedBox(
+                                width: screenWidth * 0.3,
+                                child: state.url[index] != 'empty'
+                                    ? ClipRRect(
                                         borderRadius:
-                                            BorderRadius.circular(48.0),
+                                            BorderRadius.circular(8.0),
+                                        child: Image.network(state.url[index]),
+                                      )
+                                    : ClipRRect(
+                                        borderRadius:
+                                            BorderRadius.circular(8.0),
+                                        child: Image.asset(
+                                            'assets/images/empty_image.png'),
                                       ),
-                                      child: Text(
-                                        viewModel.searchDateText(
-                                            state.searchDate[index]),
+                              ),
+                              Expanded(
+                                flex: 1,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 8.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      SizedBox(
+                                        child: Container(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              8.0, 2.0, 8.0, 0),
+                                          decoration: BoxDecoration(
+                                            color: const Color(0xffFB8C00),
+                                            borderRadius:
+                                                BorderRadius.circular(48.0),
+                                          ),
+                                          child: Text(
+                                            viewModel.searchDateText(
+                                                state.searchDate[index]),
+                                          ),
+                                        ),
                                       ),
-                                    ),
+                                      SizedBox(
+                                        height: screenHeight * 0.02,
+                                      ),
+                                      SizedBox(
+                                        child: Text(
+                                          state.recipe[index],
+                                          overflow: TextOverflow.clip,
+                                          softWrap: true,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                  SizedBox(
-                                    height: screenHeight * 0.02,
+                                ),
+                              ),
+                              Column(
+                                children: [
+                                  IconButton(
+                                    onPressed: () {
+                                      viewModel
+                                          .deleteDataFromHive(state.id[index]);
+                                      setState(() {
+                                        viewModel.getDataListFromHive();
+                                      });
+                                    },
+                                    icon: const Icon(Icons.close),
                                   ),
-                                  SizedBox(
-                                    child: Text(
-                                      state.recipe[index],
-                                      overflow: TextOverflow.clip,
-                                      softWrap: true,
-                                    ),
+                                  IconButton(
+                                    onPressed: () {},
+                                    icon: const Icon(
+                                        Icons.favorite_border_outlined),
                                   ),
                                 ],
                               ),
-                            ),
-                          ),
-                          Column(
-                            children: [
-                              IconButton(
-                                onPressed: () {
-                                  viewModel.deleteDataFromHive(state.id[index]);
-                                  setState(() {
-                                    viewModel.getDataListFromHive();
-                                  });
-                                },
-                                icon: const Icon(Icons.close),
-                              ),
-                              IconButton(
-                                onPressed: () {},
-                                icon:
-                                    const Icon(Icons.favorite_border_outlined),
-                              ),
                             ],
                           ),
-                        ],
+                        ),
+                      );
+                    },
+                  ),
+                )
+              : Container(
+                  height: screenHeight * 0.11,
+                  decoration: const BoxDecoration(
+                    color: Color(0xffFB8C00),
+                  ),
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                    ),
+                    child: const Center(
+                      child: Text('값이 없습니다!'),
+                    ),
+                  ),
+                ),
+          Padding(
+            padding: const EdgeInsets.only(top: 40),
+            child: Positioned(
+              top: 50,
+              child: ExpansionTile(
+                backgroundColor: const Color(0xFFFDBA66), // 타일의 배경색 설정
+                title: const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(width: 30),
+                    Text(
+                      "레시피 히스토리 보관함",
+                      style: TextStyle(
+                        fontFamily: 'school_font',
+                        fontSize: 18.0,
                       ),
                     ),
-                  );
-                },
+                  ],
+                ),
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      context.push('/main/recipe/recipe-like');
+                    },
+                    child: const ListTile(
+                      title: Center(
+                        child: Text(
+                          "레시피 좋아요 보관함",
+                          style: TextStyle(
+                            fontFamily: 'school_font',
+                            fontSize: 18.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
-            )
-          : const Center(
-              child: Text('값이 없습니다!'),
             ),
+          ),
+        ],
+      ),
     );
   }
 }

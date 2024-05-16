@@ -38,7 +38,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
   void _loadInterstitialAd() {
     InterstitialAd.load(
       adUnitId: GoogleAdsIds.interstitialAdUnitId,
-      request: AdRequest(),
+      request: const AdRequest(),
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (ad) {
           print('------------ad------------');
@@ -91,19 +91,19 @@ class _RecipeScreenState extends State<RecipeScreen> {
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center, // 중앙 정렬
           children: [
-            Spacer(), // 왼쪽에서 중앙으로 텍스트 이동
+            const Spacer(), // 왼쪽에서 중앙으로 텍스트 이동
             Text(
               state.recipe.isNotEmpty ? '${_currentPage + 1} / ${state.recipe.length}' : '',
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
-            Spacer(), // 오른쪽 아이콘과 간격 유지
+            const Spacer(), // 오른쪽 아이콘과 간격 유지
           ],
         ),
         actions: [
           PopupMenuButton<int>(
             onSelected: (item) => _onSelected(context, item),
             itemBuilder: (context) => [
-              PopupMenuItem<int>(
+              const PopupMenuItem<int>(
                 value: 0,
                 child: DefaultTextStyle(
                   style: TextStyle(
@@ -113,7 +113,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
                   child: Text('좋아요 보관함'),
                 ),
               ),
-              PopupMenuItem<int>(
+              const PopupMenuItem<int>(
                 value: 1,
                 child: DefaultTextStyle(
                   style: TextStyle(
@@ -123,7 +123,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
                   child: Text('히스토리 보관함'),
                 ),
               ),
-              PopupMenuItem<int>(
+              const PopupMenuItem<int>(
                 value: 2,
                 child: DefaultTextStyle(
                   style: TextStyle(
