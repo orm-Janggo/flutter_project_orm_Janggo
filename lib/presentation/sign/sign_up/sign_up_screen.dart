@@ -57,7 +57,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       child: TextFormField(
                         key: const ValueKey(1),
                         decoration: InputDecoration(
-                          hintText: '이메일 e.g. email@gmail.com',
+                          hintText: '이메일 주소를 입력해 주세요',
                           hintStyle: TextStyle(fontFamily: 'school_font'),
                           filled: true,
                           fillColor: const Color(0xfff8f8f8),
@@ -313,15 +313,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           }
                         },
                         child: const SizedBox(
+                          height: 50,
                           width: double.infinity,
                           child: Center(
                             child: Text(
                               '회원 가입',
                               style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20.0,
-                                color: Colors.black,
-                              ),
+                                  fontFamily: 'school_font',
+                                  color: Colors.black,
+                                  fontSize: 20),
                             ),
                           ),
                         ),
