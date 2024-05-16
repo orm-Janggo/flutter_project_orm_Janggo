@@ -73,14 +73,14 @@ class _RecipeHistoryScreenState extends State<RecipeHistoryScreen> {
                                       ),
                               ),
                               Expanded(
-                                flex: 1,
                                 child: Padding(
-                                  padding: const EdgeInsets.only(left: 8.0),
+                                  padding:
+                                      EdgeInsets.only(left: screenWidth * 0.03),
                                   child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
-                                    mainAxisSize: MainAxisSize.max,
-                                    mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
                                       SizedBox(
                                         child: Container(
@@ -100,35 +100,23 @@ class _RecipeHistoryScreenState extends State<RecipeHistoryScreen> {
                                       SizedBox(
                                         height: screenHeight * 0.02,
                                       ),
-                                      SizedBox(
-                                        child: Text(
-                                          state.recipe[index],
-                                          overflow: TextOverflow.clip,
-                                          softWrap: true,
-                                        ),
+                                      Text(
+                                        state.recipe[index],
+                                        overflow: TextOverflow.clip,
+                                        softWrap: true,
                                       ),
                                     ],
                                   ),
                                 ),
                               ),
-                              Column(
-                                children: [
-                                  IconButton(
-                                    onPressed: () {
-                                      viewModel
-                                          .deleteDataFromHive(state.id[index]);
-                                      setState(() {
-                                        viewModel.getDataListFromHive();
-                                      });
-                                    },
-                                    icon: const Icon(Icons.close),
-                                  ),
-                                  IconButton(
-                                    onPressed: () {},
-                                    icon: const Icon(
-                                        Icons.favorite_border_outlined),
-                                  ),
-                                ],
+                              IconButton(
+                                onPressed: () {
+                                  viewModel.deleteDataFromHive(state.id[index]);
+                                  setState(() {
+                                    viewModel.getDataListFromHive();
+                                  });
+                                },
+                                icon: const Icon(Icons.close),
                               ),
                             ],
                           ),
@@ -151,44 +139,48 @@ class _RecipeHistoryScreenState extends State<RecipeHistoryScreen> {
                     ),
                   ),
                 ),
-          Padding(
+          Container(
             padding: const EdgeInsets.only(top: 40),
             child: Positioned(
-              top: 50,
-              child: ExpansionTile(
-                backgroundColor: const Color(0xFFFDBA66), // 타일의 배경색 설정
-                title: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(width: 30),
-                    Text(
-                      "레시피 히스토리 보관함",
-                      style: TextStyle(
-                        fontFamily: 'school_font',
-                        fontSize: 18.0,
-                      ),
-                    ),
-                  ],
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: Color(0xffFB8C00),
                 ),
-                children: [
-                  InkWell(
-                    onTap: () {
-                      Navigator.of(context).pop();
-                      context.push('/main/recipe/recipe-like');
-                    },
-                    child: const ListTile(
-                      title: Center(
-                        child: Text(
-                          "레시피 좋아요 보관함",
-                          style: TextStyle(
-                            fontFamily: 'school_font',
-                            fontSize: 18.0,
+                child: ExpansionTile(
+                  backgroundColor: const Color(0xFFFDBA66), // 타일의 배경색 설정
+                  title: const Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SizedBox(width: 30),
+                      Text(
+                        "레시피 히스토리 보관함",
+                        style: TextStyle(
+                          fontFamily: 'school_font',
+                          fontSize: 18.0,
+                        ),
+                      ),
+                    ],
+                  ),
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context).pop();
+                        context.push('/main/recipe/recipe-like');
+                      },
+                      child: const ListTile(
+                        title: Center(
+                          child: Text(
+                            "레시피 좋아요 보관함",
+                            style: TextStyle(
+                              fontFamily: 'school_font',
+                              fontSize: 18.0,
+                            ),
                           ),
                         ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
