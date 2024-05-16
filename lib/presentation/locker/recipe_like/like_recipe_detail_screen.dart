@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_orm_janggo/data/db/like_hive/like_item.dart';
 
@@ -17,34 +18,56 @@ class _LikeRecipeDetailScreenState extends State<LikeRecipeDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(widget.recipe.foodName),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.of(context).pop(); // 현재 화면을 pop하여 이전 화면으로 이동
-          },
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text(widget.recipe.foodName),
         ),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Recipe Detail Screen',
-              style: TextStyle(fontSize: 24),
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                // 네비게이션 로직 추가
-              },
-              child: Text('Go to Like Recipe Screen'),
-            ),
-          ],
-        ),
-      ),
-    );
+        body: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              SizedBox(
+                height: 265,
+                width: 400,
+                child: widget.recipe.imageUrl.isNotEmpty
+                    ? Image.network(
+                        widget.recipe.imageUrl,
+                        height: 265,
+                        width: 400,
+                        fit: BoxFit.cover,
+                      )
+                    : Image.asset(
+                        'assets/images/empty_image.png',
+                        height: 265,
+                        width: 400,
+                        fit: BoxFit.cover,
+                      ),
+              ),
+              SizedBox(height: 10,),
+              Expanded(
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.vertical,
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      color: Colors.amber[50],
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                      widget.recipe.recipe,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'hand_font',
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ));
   }
 }
