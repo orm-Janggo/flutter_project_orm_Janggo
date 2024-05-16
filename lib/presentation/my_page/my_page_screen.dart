@@ -237,15 +237,15 @@ class _MyPageScreenState extends State<MyPageScreen> {
                             // context.push('/main');
                           },
                           child: const SizedBox(
+                            height: 50,
                             width: double.infinity,
                             child: Center(
                               child: Text(
                                 '수정하기',
                                 style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20.0,
-                                  color: Colors.black,
-                                ),
+                                    fontFamily: 'school_font',
+                                    color: Colors.black,
+                                    fontSize: 16),
                               ),
                             ),
                           ),
@@ -265,15 +265,13 @@ class _MyPageScreenState extends State<MyPageScreen> {
                             context.push('/');
                           },
                           child: const SizedBox(
+                            height: 50,
                             width: double.infinity,
                             child: Center(
                               child: Text(
                                 '로그아웃',
                                 style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18.0,
-                                  color: Colors.black,
-                                ),
+                                    fontFamily: 'school_font', fontSize: 16),
                               ),
                             ),
                           ),
@@ -290,15 +288,13 @@ class _MyPageScreenState extends State<MyPageScreen> {
                             context.push('/main');
                           },
                           child: const SizedBox(
+                            height: 50,
                             width: double.infinity,
                             child: Center(
                               child: Text(
                                 '뒤로가기',
                                 style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 18.0,
-                                  color: Colors.black,
-                                ),
+                                    fontFamily: 'school_font', fontSize: 16),
                               ),
                             ),
                           ),
@@ -309,14 +305,15 @@ class _MyPageScreenState extends State<MyPageScreen> {
                 ),
 
                 Align(
-                  alignment: Alignment.bottomLeft,
+                  alignment: Alignment.bottomRight,
                   child: Padding(
-                    padding: EdgeInsets.all(16.0), // 여백 추가
+                    padding: EdgeInsets.only(right: 16), // 여백 추가
                     child: TextButton(
                       style: TextButton.styleFrom(
-                        backgroundColor: Color(0xFF865794),
+                        backgroundColor: Color(0xFFFDBA66),
                         padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20), // 패딩
-                        foregroundColor: Colors.black, // 텍스트 색상
+                        foregroundColor: Colors.black,
+                        // 텍스트 색상
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16), // 둥근 모서리
                         ),
@@ -324,7 +321,10 @@ class _MyPageScreenState extends State<MyPageScreen> {
                       onPressed: () {
                         context.go('/main/my-page/app-information');
                       },
-                      child: Text('앱 정보', style: TextStyle(fontWeight: FontWeight.bold),),
+                      child: Text(
+                        '앱 정보',
+                        style: TextStyle(fontFamily: 'school_font'),
+                      ),
                     ),
                   ),
                 ),

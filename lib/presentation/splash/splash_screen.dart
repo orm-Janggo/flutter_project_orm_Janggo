@@ -115,7 +115,6 @@ class SplashScreen5 extends StatelessWidget {
                   "회원가입",
                   style: TextStyle(
                     fontSize: 16,
-                    fontWeight: FontWeight.bold,
                     color: Colors.black,
                     fontFamily: 'school_font',
                   ),
@@ -143,7 +142,6 @@ class SplashScreen5 extends StatelessWidget {
                   "로그인",
                   style: TextStyle(
                     fontSize: 16,
-                    fontWeight: FontWeight.bold,
                     color: Colors.black,
                     fontFamily: 'school_font',
                   ),
@@ -169,7 +167,6 @@ class SplashScreen5 extends StatelessWidget {
                   "로그아웃",
                   style: TextStyle(
                     fontSize: 16,
-                    fontWeight: FontWeight.bold,
                     color: Colors.black,
                     fontFamily: 'school_font',
                   ),
@@ -191,9 +188,7 @@ class SplashScreen5 extends StatelessWidget {
                 const Text(
                   'or',
                   style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'school_font',
-                  ),
+                    fontFamily: 'school_font', fontSize: 14),
                 ),
                 const SizedBox(width: 10),
                 Container(
@@ -214,8 +209,7 @@ class SplashScreen5 extends StatelessWidget {
               child: const Text(
                 "둘러보기",
                 style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
                   color: Colors.black,
                   fontFamily: 'school_font',
                 ),
