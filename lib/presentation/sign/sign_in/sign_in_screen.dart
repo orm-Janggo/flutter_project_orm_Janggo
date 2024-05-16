@@ -167,7 +167,10 @@ class _SignInScreenState extends State<SignInScreen> {
                     onPressed: () {
                       context.push('/sign-in/forgot-password');
                     },
-                    child: const Text('비밀번호 찾기'),
+                    child: const Text(
+                      '비밀번호 찾기',
+                      style: TextStyle(fontSize: 14, fontFamily: 'school_font'),
+                    ),
                   ),
                 ],
               ),
