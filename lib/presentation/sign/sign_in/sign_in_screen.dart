@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project_orm_janggo/data/user_information/user_information.dart';
 import 'package:flutter_project_orm_janggo/presentation/kakao_login/kakao_login_ver2.dart';
 import 'package:flutter_project_orm_janggo/presentation/sign/sign_in/sign_in_view_model.dart';
 import 'package:go_router/go_router.dart';

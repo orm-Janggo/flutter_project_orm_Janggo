@@ -30,7 +30,7 @@ class RecipeViewModel with ChangeNotifier {
         final recipeTitle = recipe.split('\n')[0].trim();
         final pic = await _getPictureUseCase.execute(recipeTitle);
 
-        if (pic == null || pic.url == null || pic.url.isEmpty) {
+        if (pic == null || pic.url.isEmpty) {
           images.add("empty"); // 이미지가 없는 경우
         } else {
           images.add(pic.url); // 이미지 URL 추가

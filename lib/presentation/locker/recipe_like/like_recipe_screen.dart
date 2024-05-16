@@ -14,7 +14,6 @@ class LikeRecipeScreen extends StatefulWidget {
 class _LikeRecipeScreenState extends State<LikeRecipeScreen> {
   @override
   Widget build(BuildContext context) {
-    bool _isExpanded = false;
 
     return Scaffold(
       resizeToAvoidBottomInset: false,

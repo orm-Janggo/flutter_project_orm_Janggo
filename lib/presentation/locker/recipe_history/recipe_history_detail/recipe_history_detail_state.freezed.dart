@@ -22,10 +22,13 @@ RecipeHistoryDetailState _$RecipeHistoryDetailStateFromJson(
 /// @nodoc
 mixin _$RecipeHistoryDetailState {
   int get id => throw _privateConstructorUsedError;
+
   String get recipe => throw _privateConstructorUsedError;
+
   String get url => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
   @JsonKey(ignore: true)
   $RecipeHistoryDetailStateCopyWith<RecipeHistoryDetailState> get copyWith =>
       throw _privateConstructorUsedError;
@@ -36,6 +39,7 @@ abstract class $RecipeHistoryDetailStateCopyWith<$Res> {
   factory $RecipeHistoryDetailStateCopyWith(RecipeHistoryDetailState value,
           $Res Function(RecipeHistoryDetailState) then) =
       _$RecipeHistoryDetailStateCopyWithImpl<$Res, RecipeHistoryDetailState>;
+
   @useResult
   $Res call({int id, String recipe, String url});
 }
@@ -48,6 +52,7 @@ class _$RecipeHistoryDetailStateCopyWithImpl<$Res,
 
   // ignore: unused_field
   final $Val _value;
+
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -82,6 +87,7 @@ abstract class _$$RecipeHistoryDetailStateImplCopyWith<$Res>
           _$RecipeHistoryDetailStateImpl value,
           $Res Function(_$RecipeHistoryDetailStateImpl) then) =
       __$$RecipeHistoryDetailStateImplCopyWithImpl<$Res>;
+
   @override
   @useResult
   $Res call({int id, String recipe, String url});
@@ -185,10 +191,13 @@ abstract class _RecipeHistoryDetailState implements RecipeHistoryDetailState {
 
   @override
   int get id;
+
   @override
   String get recipe;
+
   @override
   String get url;
+
   @override
   @JsonKey(ignore: true)
   _$$RecipeHistoryDetailStateImplCopyWith<_$RecipeHistoryDetailStateImpl>
