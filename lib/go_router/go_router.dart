@@ -17,7 +17,7 @@ import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/re
 import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_detail/recipe_history_detail_view_model.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/like_recipe_use_case/like_add_recipe_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/like_recipe_use_case/like_remove_recipe_use_case.dart';
-import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_screen.dart';
+import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history/recipe_history_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_view_model.dart';
 import 'package:flutter_project_orm_janggo/presentation/locker/recipe_like/like_recipe_detail_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/locker/recipe_like/like_recipe_viewmodel.dart';

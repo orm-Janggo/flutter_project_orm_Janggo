@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_state.dart';
+import 'package:flutter_project_orm_janggo/data/db/history/history_recipe_data.dart';
+import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history/recipe_history_state.dart';
 import 'package:hive/hive.dart';
-
-import '../../../data/db/history/history_recipe_data.dart';
 
 class RecipeHistoryViewModel with ChangeNotifier {
   RecipeHistoryState _state = const RecipeHistoryState();
