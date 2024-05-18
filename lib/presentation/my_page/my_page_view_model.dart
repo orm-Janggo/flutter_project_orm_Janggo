@@ -22,26 +22,24 @@ class MyPageViewModel with ChangeNotifier {
         _updatePasswordUseCase = updatePasswordUseCase,
         _signOutUseCase = signOutUseCase;
 
-  String? _userEmail;
   String? _userDisplayName;
+  String? _userPassword;
   UserInfoModel? _firebaseUser;
-
-  String? get userEmail => _userEmail;
+  bool _isChange = false;
 
   String? get userDisplayName => _userDisplayName;
 
+  String? get userPassword => _userPassword;
+
   UserInfoModel? get firebaseUser => _firebaseUser;
+
+  bool get isChange => _isChange;
 
   void fetchCurrentUserInfo() {
     _firebaseUser = _authStateChangesUseCase.execute();
-
-    _userEmail = firebaseUser?.email;
-
-    _userDisplayName = firebaseUser?.displayName;
   }
 
   void updateCurrentUserDisplayName(String inputDisplayName) async {
-    _userDisplayName = inputDisplayName;
     await _updateDisplayNameUseCase.execute(inputDisplayName);
 
     notifyListeners();
@@ -50,11 +48,31 @@ class MyPageViewModel with ChangeNotifier {
   void updateCurrentUserPassword(String inputPassword) async {
     await _updatePasswordUseCase.execute(inputPassword);
 
+    debugPrint('password change ok');
+
     notifyListeners();
   }
 
   void signOutCurrentUser() async {
     await _signOutUseCase.execute();
+
+    notifyListeners();
+  }
+
+  void changeUserDisplayName(String value) {
+    _userDisplayName = value;
+
+    notifyListeners();
+  }
+
+  void changeUserPassword(String value) {
+    _userPassword = value;
+
+    notifyListeners();
+  }
+
+  void changeCanModify() {
+    _isChange = !_isChange;
 
     notifyListeners();
   }

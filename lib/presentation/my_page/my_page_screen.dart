@@ -13,21 +13,13 @@ class MyPageScreen extends StatefulWidget {
 class _MyPageScreenState extends State<MyPageScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  String? originUserDisplayName;
-  String? userEmail;
-  String? userDisplayName;
-  String userPassword = '';
-
-  // 설정 버튼 눌렀을때 수정 가능여부  => true : textFormField 수정 가능, false : textFormField 수정 불가능
-  bool isChanged = false;
-
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<MyPageViewModel>();
     viewModel.fetchCurrentUserInfo();
 
     debugPrint('---test get current user---');
-    debugPrint(viewModel.userEmail);
+    debugPrint(viewModel.firebaseUser?.email.toString());
 
     return Scaffold(
       appBar: AppBar(
@@ -36,7 +28,8 @@ class _MyPageScreenState extends State<MyPageScreen> {
           IconButton(
             onPressed: () {
               setState(() {
-                isChanged = !isChanged;
+                // isChanged = !isChanged;
+                viewModel.changeCanModify();
               });
             },
             icon: const Icon(Icons.settings),
@@ -94,13 +87,12 @@ class _MyPageScreenState extends State<MyPageScreen> {
                             ),
                           ),
                           TextFormField(
-                            // controller: _accountController,
                             decoration: const InputDecoration(
                               border: InputBorder.none,
                               enabled: false,
                             ),
                             style: const TextStyle(fontFamily: 'school_font'),
-                            initialValue: viewModel.userEmail,
+                            initialValue: viewModel.firebaseUser?.email,
                           ),
                         ],
                       ),
@@ -136,13 +128,13 @@ class _MyPageScreenState extends State<MyPageScreen> {
                             key: const ValueKey(1),
                             decoration: InputDecoration(
                               border: InputBorder.none,
-                              enabled: isChanged,
+                              enabled: viewModel.isChange,
                             ),
                             style: const TextStyle(fontFamily: 'school_font'),
-                            initialValue: viewModel.userDisplayName,
-                            onChanged: (String? value) {
-                              // _nickNameController.text = value!;
-                              userDisplayName = value;
+                            initialValue: viewModel.firebaseUser?.displayName,
+                            onSaved: (String? value) {
+                              // userDisplayName = value;
+                              viewModel.changeUserDisplayName(value!);
                             },
                           ),
                         ],
@@ -178,11 +170,12 @@ class _MyPageScreenState extends State<MyPageScreen> {
                             key: const ValueKey(2),
                             decoration: InputDecoration(
                               border: InputBorder.none,
-                              enabled: isChanged,
+                              enabled: viewModel.isChange,
                             ),
                             style: const TextStyle(fontFamily: 'school_font'),
                             onChanged: (String? value) {
-                              userPassword = value!;
+                              // userPassword = value!;
+                              viewModel.changeUserPassword(value!);
                             },
                           ),
                         ],
@@ -203,22 +196,20 @@ class _MyPageScreenState extends State<MyPageScreen> {
                               backgroundColor: const Color(0xfffb8c00)),
                           onPressed: () {
                             setState(() {
-                              if (originUserDisplayName != userDisplayName) {
+                              if (viewModel.userDisplayName != '' &&
+                                  viewModel.userDisplayName != null) {
                                 viewModel.updateCurrentUserDisplayName(
-                                    userDisplayName!);
+                                    viewModel.userDisplayName!);
                               }
 
-                              if (userPassword != '') {
-                                viewModel
-                                    .updateCurrentUserPassword(userPassword);
+                              if (viewModel.userPassword != '' &&
+                                  viewModel.userPassword != null) {
+                                viewModel.updateCurrentUserPassword(
+                                    viewModel.userPassword!);
                               }
 
-                              if (!context.mounted) return;
-
-                              isChanged = !isChanged;
+                              viewModel.changeCanModify();
                             });
-
-                            // context.push('/main');
                           },
                           child: const SizedBox(
                             height: 50,
