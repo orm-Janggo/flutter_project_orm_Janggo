@@ -2,11 +2,11 @@ import 'package:flutter_project_orm_janggo/domain/model/user_info_model/user_inf
 import 'package:flutter_project_orm_janggo/domain/repository/auth_repository/auth_repository.dart';
 
 class AuthStateChangesUseCase {
-  final AuthRepository _firebaseAuthRepository;
+  final AuthRepository _authRepository;
 
-  AuthStateChangesUseCase(this._firebaseAuthRepository);
+  AuthStateChangesUseCase(this._authRepository);
 
   UserInfoModel? execute() {
-    return _firebaseAuthRepository.callCurrentUser();
+    return _authRepository.getCurrentUser();
   }
 }

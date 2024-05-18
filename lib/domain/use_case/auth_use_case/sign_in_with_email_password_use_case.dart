@@ -7,7 +7,7 @@ class SignInWithEmailPasswordUseCase {
   SignInWithEmailPasswordUseCase(this._authRepository);
 
   Future<UserInfoModel> execute(String inputEmail, String inputPassword) async {
-    return await _authRepository.callSignInWithEmailAndPassword(
+    return await _authRepository.signInWithEmailAndPassword(
         inputEmail, inputPassword);
   }
 }

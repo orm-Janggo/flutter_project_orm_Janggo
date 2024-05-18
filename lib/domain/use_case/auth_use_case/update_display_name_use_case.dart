@@ -6,6 +6,6 @@ class UpdateDisplayNameUseCase {
   UpdateDisplayNameUseCase(this._authRepository);
 
   Future<void> execute(String inputDisplayName) async {
-    await _authRepository.callUpdateDisplayName(inputDisplayName);
+    await _authRepository.updateDisplayName(inputDisplayName);
   }
 }

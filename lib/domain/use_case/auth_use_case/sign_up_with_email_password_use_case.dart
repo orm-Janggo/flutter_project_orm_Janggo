@@ -11,7 +11,7 @@ class SignUpWithEmailPasswordUseCase {
     String inputPassword,
     String inputDisplayName,
   ) async {
-    return await _authRepository.callCreateUserWithEmailAndPassword(
+    return await _authRepository.createUserWithEmailAndPassword(
       inputEmail,
       inputPassword,
       inputDisplayName,

@@ -6,6 +6,6 @@ class UpdatePasswordUseCase {
   UpdatePasswordUseCase(this._authRepository);
 
   Future<void> execute(String inputPassword) async {
-    await _authRepository.callUpdatePassword(inputPassword);
+    await _authRepository.updatePassword(inputPassword);
   }
 }

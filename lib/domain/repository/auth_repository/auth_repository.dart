@@ -1,24 +1,24 @@
 import 'package:flutter_project_orm_janggo/domain/model/user_info_model/user_info_model.dart';
 
 abstract interface class AuthRepository {
-  Future<UserInfoModel> callSignInWithEmailAndPassword(
+  Future<UserInfoModel> signInWithEmailAndPassword(
     String inputEmail,
     String inputPassword,
   );
 
-  Future<UserInfoModel> callCreateUserWithEmailAndPassword(
+  Future<UserInfoModel> createUserWithEmailAndPassword(
     String inputEmail,
     String inputPassword,
     String inputDisplayName,
   );
 
-  UserInfoModel? callCurrentUser();
+  UserInfoModel? getCurrentUser();
 
-  Future<void> callSendPasswordResetEmail(String inputEmail);
+  Future<void> sendPasswordResetEmail(String inputEmail);
 
-  Future<void> callUpdateDisplayName(String inputDisplayName);
+  Future<void> updateDisplayName(String inputDisplayName);
 
-  Future<void> callUpdatePassword(String inputPassword);
+  Future<void> updatePassword(String inputPassword);
 
-  Future<void> callSignOut();
+  Future<void> signOut();
 }

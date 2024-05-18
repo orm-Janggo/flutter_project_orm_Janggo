@@ -6,6 +6,6 @@ class SendPasswordResetEmailUseCase {
   SendPasswordResetEmailUseCase(this._authRepository);
 
   Future<void> execute(String inputEmail) async {
-    await _authRepository.callSendPasswordResetEmail(inputEmail);
+    await _authRepository.sendPasswordResetEmail(inputEmail);
   }
 }
