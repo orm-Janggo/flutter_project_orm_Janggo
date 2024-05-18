@@ -151,7 +151,7 @@ class _MainScreenState extends State<MainScreen> {
                       context.push('/main/my-page'); // 사용자 정보 페이지로 이동
                     },
                     child: Text(
-                      userInfo?.displayName ?? userInfo!.email!,
+                      viewModelForFetchUser.firebaseUser?.displayName ?? 'No nickname',
                       style: const TextStyle(fontFamily: 'school_font'),
                     ),
                   ),
