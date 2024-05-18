@@ -133,7 +133,6 @@ class _MyPageScreenState extends State<MyPageScreen> {
                             style: const TextStyle(fontFamily: 'school_font'),
                             initialValue: viewModel.firebaseUser?.displayName,
                             onSaved: (String? value) {
-                              // userDisplayName = value;
                               viewModel.changeUserDisplayName(value!);
                             },
                           ),
@@ -174,7 +173,6 @@ class _MyPageScreenState extends State<MyPageScreen> {
                             ),
                             style: const TextStyle(fontFamily: 'school_font'),
                             onChanged: (String? value) {
-                              // userPassword = value!;
                               viewModel.changeUserPassword(value!);
                             },
                           ),
