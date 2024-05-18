@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_project_orm_janggo/data/db/like_hive/like_item.dart';
 import 'package:flutter_project_orm_janggo/data/gpt_data_source/gpt_data_source.dart';
 import 'package:flutter_project_orm_janggo/data/repository/chat_gpt_repository_impl.dart';
-import 'package:flutter_project_orm_janggo/data/repository/firebase_auth_repository/firebase_auth_repository_impl.dart';
+import 'package:flutter_project_orm_janggo/data/repository/auth_repository_impl.dart';
 import 'package:flutter_project_orm_janggo/data/repository/like_recipe_repository_impl.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_case/auth_state_changes_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_case/send_password_reset_email_use_case.dart';
@@ -55,9 +55,9 @@ final router = GoRouter(
         return ChangeNotifierProvider(
           create: (_) => SplashScreenViewModel(
             authStateChangesUseCase: AuthStateChangesUseCase(
-              FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
+              AuthRepositoryImpl(FirebaseAuth.instance),
             ),
-            signOutUseCase: SignOutUseCase(FirebaseAuthRepositoryImpl(FirebaseAuth.instance)),
+            signOutUseCase: SignOutUseCase(AuthRepositoryImpl(FirebaseAuth.instance)),
           ),
           child: const SplashScreen(),
         );
@@ -69,9 +69,9 @@ final router = GoRouter(
             return ChangeNotifierProvider(
               create: (_) => SignInViewModel(
                 signInWithEmailPasswordUseCase: SignInWithEmailPasswordUseCase(
-                  FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
+                  AuthRepositoryImpl(FirebaseAuth.instance),
                 ),
-                authStateChangesUseCase: AuthStateChangesUseCase(FirebaseAuthRepositoryImpl(FirebaseAuth.instance)),
+                authStateChangesUseCase: AuthStateChangesUseCase(AuthRepositoryImpl(FirebaseAuth.instance)),
               ),
               child: const SignInScreen(),
             );
@@ -83,7 +83,7 @@ final router = GoRouter(
                 return ChangeNotifierProvider(
                   create: (_) => ForgotPasswordViewModel(
                     sendPasswordResetEmailUseCase: SendPasswordResetEmailUseCase(
-                      FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
+                      AuthRepositoryImpl(FirebaseAuth.instance),
                     ),
                   ),
                   child: const ForgotPasswordScreen(),
@@ -98,7 +98,7 @@ final router = GoRouter(
             return ChangeNotifierProvider(
               create: (_) => SignUpViewModel(
                 signUpWithEmailPasswordUseCase: SignUpWithEmailPasswordUseCase(
-                  FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
+                  AuthRepositoryImpl(FirebaseAuth.instance),
                 ),
               ),
               child: const SignUpScreen(),
@@ -111,7 +111,7 @@ final router = GoRouter(
             return ChangeNotifierProvider(
               create: (_) => MainScreenViewModel(
                 authStateChangesUseCase: AuthStateChangesUseCase(
-                  FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
+                  AuthRepositoryImpl(FirebaseAuth.instance),
                 ),
               ),
               child: const MainScreen(),
@@ -191,16 +191,16 @@ final router = GoRouter(
                 return ChangeNotifierProvider(
                   create: (_) => MyPageViewModel(
                     authStateChangesUseCase: AuthStateChangesUseCase(
-                      FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
+                      AuthRepositoryImpl(FirebaseAuth.instance),
                     ),
                     updateDisplayNameUseCase: UpdateDisplayNameUseCase(
-                      FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
+                      AuthRepositoryImpl(FirebaseAuth.instance),
                     ),
                     updatePasswordUseCase: UpdatePasswordUseCase(
-                      FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
+                      AuthRepositoryImpl(FirebaseAuth.instance),
                     ),
                     signOutUseCase: SignOutUseCase(
-                      FirebaseAuthRepositoryImpl(FirebaseAuth.instance),
+                      AuthRepositoryImpl(FirebaseAuth.instance),
                     ),
                   ),
                   child: const MyPageScreen(),
