@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_case/sign_up_with_email_password_use_case.dart';
+import 'package:flutter_project_orm_janggo/domain/use_case/auth_use_case/sign_up_with_email_password_use_case.dart';
 
 class SignUpViewModel with ChangeNotifier {
   final SignUpWithEmailPasswordUseCase _signUpWithEmailPasswordUseCase;

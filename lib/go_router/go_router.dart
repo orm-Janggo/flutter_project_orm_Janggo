@@ -5,13 +5,14 @@ import 'package:flutter_project_orm_janggo/data/gpt_data_source/gpt_data_source.
 import 'package:flutter_project_orm_janggo/data/repository/chat_gpt_repository_impl.dart';
 import 'package:flutter_project_orm_janggo/data/repository/auth_repository_impl.dart';
 import 'package:flutter_project_orm_janggo/data/repository/like_recipe_repository_impl.dart';
-import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_case/auth_state_changes_use_case.dart';
-import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_case/send_password_reset_email_use_case.dart';
-import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_case/sign_in_with_email_password_use_case.dart';
-import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_case/sign_out_use_case.dart';
-import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_case/sign_up_with_email_password_use_case.dart';
-import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_case/update_display_name_use_case.dart';
-import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_case/update_password_use_case.dart';
+import 'package:flutter_project_orm_janggo/domain/use_case/auth_use_case/auth_state_changes_use_case.dart';
+import 'package:flutter_project_orm_janggo/domain/use_case/auth_use_case/send_password_reset_email_use_case.dart';
+import 'package:flutter_project_orm_janggo/domain/use_case/auth_use_case/sign_in_with_email_password_use_case.dart';
+import 'package:flutter_project_orm_janggo/domain/use_case/auth_use_case/sign_out_use_case.dart';
+import 'package:flutter_project_orm_janggo/domain/use_case/auth_use_case/sign_up_with_email_password_use_case.dart';
+import 'package:flutter_project_orm_janggo/domain/use_case/auth_use_case/update_display_name_use_case.dart';
+import 'package:flutter_project_orm_janggo/domain/use_case/auth_use_case/update_password_use_case.dart';
+
 import 'package:flutter_project_orm_janggo/domain/use_case/get_recipe_use_case.dart';
 import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_detail/recipe_history_detail_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_detail/recipe_history_detail_view_model.dart';
@@ -57,7 +58,8 @@ final router = GoRouter(
             authStateChangesUseCase: AuthStateChangesUseCase(
               AuthRepositoryImpl(FirebaseAuth.instance),
             ),
-            signOutUseCase: SignOutUseCase(AuthRepositoryImpl(FirebaseAuth.instance)),
+            signOutUseCase:
+                SignOutUseCase(AuthRepositoryImpl(FirebaseAuth.instance)),
           ),
           child: const SplashScreen(),
         );
@@ -71,7 +73,8 @@ final router = GoRouter(
                 signInWithEmailPasswordUseCase: SignInWithEmailPasswordUseCase(
                   AuthRepositoryImpl(FirebaseAuth.instance),
                 ),
-                authStateChangesUseCase: AuthStateChangesUseCase(AuthRepositoryImpl(FirebaseAuth.instance)),
+                authStateChangesUseCase: AuthStateChangesUseCase(
+                    AuthRepositoryImpl(FirebaseAuth.instance)),
               ),
               child: const SignInScreen(),
             );
@@ -82,7 +85,8 @@ final router = GoRouter(
               builder: (context, state) {
                 return ChangeNotifierProvider(
                   create: (_) => ForgotPasswordViewModel(
-                    sendPasswordResetEmailUseCase: SendPasswordResetEmailUseCase(
+                    sendPasswordResetEmailUseCase:
+                        SendPasswordResetEmailUseCase(
                       AuthRepositoryImpl(FirebaseAuth.instance),
                     ),
                   ),
@@ -133,9 +137,10 @@ final router = GoRouter(
                         dataSource: GptDataSource(),
                       ),
                     ),
-                    likeAddRecipeUseCase: LikeAddRecipeUseCase(likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
-                    likeRemoveRecipeUseCase:
-                        LikeRemoveRecipeUseCase(likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
+                    likeAddRecipeUseCase: LikeAddRecipeUseCase(
+                        likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
+                    likeRemoveRecipeUseCase: LikeRemoveRecipeUseCase(
+                        likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
                   ),
                   child: RecipeScreen(
                     ingredients: state.extra as String,
@@ -144,28 +149,27 @@ final router = GoRouter(
               },
             ),
             GoRoute(
-              path: 'recipe-like',
-              builder: (context, state) {
-                return ChangeNotifierProvider(
-                  create: (_) => LikeRecipeViewModel(
-                    likeRemoveRecipeUseCase: LikeRemoveRecipeUseCase(
-                      likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl(),
+                path: 'recipe-like',
+                builder: (context, state) {
+                  return ChangeNotifierProvider(
+                    create: (_) => LikeRecipeViewModel(
+                      likeRemoveRecipeUseCase: LikeRemoveRecipeUseCase(
+                        likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl(),
+                      ),
                     ),
+                    child: const LikeRecipeScreen(),
+                  );
+                },
+                routes: [
+                  GoRoute(
+                    path: 'recipe-like-detail',
+                    builder: (context, state) {
+                      return LikeRecipeDetailScreen(
+                        recipe: state.extra as LikeItem,
+                      );
+                    },
                   ),
-                  child: const LikeRecipeScreen(),
-                );
-              },
-              routes: [
-                GoRoute(
-                  path: 'recipe-like-detail',
-                  builder: (context, state) {
-                    return LikeRecipeDetailScreen(
-                      recipe: state.extra as LikeItem,
-                    );
-                  },
-                ),
-              ]
-            ),
+                ]),
             GoRoute(
               path: 'recipe-history',
               builder: (context, state) {
