@@ -31,7 +31,7 @@ class MyPageViewModel with ChangeNotifier {
 
   UserInfoModel? get firebaseUser => _firebaseUser;
 
-  void getCurrentUserInfo() {
+  void fetchCurrentUserInfo() {
     _firebaseUser = _authStateChangesUseCase.execute();
 
     _userEmail = firebaseUser?.email;
