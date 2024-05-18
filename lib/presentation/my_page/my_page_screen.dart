@@ -13,7 +13,6 @@ class MyPageScreen extends StatefulWidget {
 class _MyPageScreenState extends State<MyPageScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  String? originUserEmail;
   String? originUserDisplayName;
   String? userEmail;
   String? userDisplayName;
@@ -26,7 +25,6 @@ class _MyPageScreenState extends State<MyPageScreen> {
   @override
   void initState() {
     super.initState();
-    // getSetUserInfo();
   }
 
   @override
@@ -37,7 +35,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<MyPageViewModel>();
-    viewModel.getCurrentUserInfo();
+    viewModel.fetchCurrentUserInfo();
 
     debugPrint('---test get current user---');
     debugPrint(viewModel.userEmail);
@@ -114,9 +112,6 @@ class _MyPageScreenState extends State<MyPageScreen> {
                             ),
                             style: const TextStyle(fontFamily: 'school_font'),
                             initialValue: viewModel.userEmail,
-                            onChanged: (String? value) {
-                              userEmail = value;
-                            },
                           ),
                         ],
                       ),
@@ -303,7 +298,6 @@ class _MyPageScreenState extends State<MyPageScreen> {
                     ],
                   ),
                 ),
-
                 Align(
                   alignment: Alignment.bottomRight,
                   child: Padding(
@@ -311,7 +305,8 @@ class _MyPageScreenState extends State<MyPageScreen> {
                     child: TextButton(
                       style: TextButton.styleFrom(
                         backgroundColor: const Color(0xFFFDBA66),
-                        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20), // 패딩
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 10, horizontal: 20), // 패딩
                         foregroundColor: Colors.black,
                         // 텍스트 색상
                         shape: RoundedRectangleBorder(
