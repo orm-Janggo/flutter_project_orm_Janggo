@@ -39,14 +39,19 @@ class MyPageViewModel with ChangeNotifier {
     _firebaseUser = _authStateChangesUseCase.execute();
   }
 
-  void updateCurrentUserDisplayName(String inputDisplayName) async {
-    await _updateDisplayNameUseCase.execute(inputDisplayName);
-
+  void updateCurrentUserDisplayName(String? inputDisplayName) async {
+    if (inputDisplayName != '' && inputDisplayName != null) {
+      changeUserDisplayName(inputDisplayName);
+      await _updateDisplayNameUseCase.execute(inputDisplayName);
+    }
     notifyListeners();
   }
 
-  void updateCurrentUserPassword(String inputPassword) async {
-    await _updatePasswordUseCase.execute(inputPassword);
+  void updateCurrentUserPassword(String? inputPassword) async {
+    if (inputPassword != '' && inputPassword != null) {
+      changeUserPassword(inputPassword);
+      await _updatePasswordUseCase.execute(inputPassword);
+    }
 
     notifyListeners();
   }
