@@ -44,7 +44,7 @@ import '../domain/use_case/get_picture_use_case.dart';
 
 import '../presentation/locker/recipe_like/like_recipe_screen.dart';
 import '../presentation/main/main_screen.dart';
-import '../presentation/main/main_screen_view_model.dart';
+import '../presentation/main/main_view_model.dart';
 import '../presentation/recipe_screen/recipe_screen.dart';
 import '../presentation/recipe_screen/recipe_view_model.dart';
 
