@@ -15,7 +15,6 @@ class SplashScreenViewModel with ChangeNotifier {
         _signOutUseCase = signOutUseCase;
 
   String? _userEmail;
-  String? _userDisplayName;
   UserInfoModel? _firebaseUser;
   kakao.User? _kakaoUser;
 
@@ -23,16 +22,10 @@ class SplashScreenViewModel with ChangeNotifier {
 
   String? get userEmail => _userEmail;
 
-  String? get userDisplayName => _userDisplayName;
-
   UserInfoModel? get firebaseUser => _firebaseUser;
 
   void fetchCurrentUserInfo() {
     _firebaseUser = _authStateChangesUseCase.execute();
-
-    _userEmail = firebaseUser?.email;
-
-    _userDisplayName = firebaseUser?.displayName;
 
     _updateKaKaoUserInfo();
   }
@@ -55,5 +48,6 @@ class SplashScreenViewModel with ChangeNotifier {
 
   void signOutCurrentUser() async {
     await _signOutUseCase.execute();
+    debugPrint(firebaseUser.toString());
   }
 }
