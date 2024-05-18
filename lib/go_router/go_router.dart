@@ -113,7 +113,7 @@ final router = GoRouter(
           path: 'main',
           builder: (context, state) {
             return ChangeNotifierProvider(
-              create: (_) => MainScreenViewModel(
+              create: (_) => MainViewModel(
                 authStateChangesUseCase: AuthStateChangesUseCase(
                   AuthRepositoryImpl(FirebaseAuth.instance),
                 ),

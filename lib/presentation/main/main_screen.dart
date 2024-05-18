@@ -72,7 +72,7 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final viewModelForFetchUser = context.watch<MainScreenViewModel>();
+    final viewModelForFetchUser = context.watch<MainViewModel>();
     viewModelForFetchUser.fetchCurrentUserInfo();
 
     final double screenWidth = MediaQuery.of(context).size.width;
