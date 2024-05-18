@@ -146,7 +146,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             obscureText: _isObscure,
                             decoration: InputDecoration(
                               hintText: '비밀번호를 입력하세요',
-                              hintStyle: const TextStyle(fontFamily: 'school_font'),
+                              hintStyle:
+                                  const TextStyle(fontFamily: 'school_font'),
                               filled: true,
                               fillColor: const Color(0xfff8f8f8),
                               border: InputBorder.none,
@@ -202,7 +203,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             obscureText: _isObscure,
                             decoration: InputDecoration(
                               hintText: '비밀번호 확인',
-                              hintStyle: const TextStyle(fontFamily: 'school_font'),
+                              hintStyle:
+                                  const TextStyle(fontFamily: 'school_font'),
                               filled: true,
                               fillColor: const Color(0xfff8f8f8),
                               border: InputBorder.none,
@@ -337,119 +339,3 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 }
-
-// Widget editIdTextField(String hintText, inputEmail) {
-//   return Padding(
-//     padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-//     child: TextFormField(
-//       key: const ValueKey(1),
-//       decoration: InputDecoration(
-//         hintText: hintText,
-//         filled: true,
-//         fillColor: const Color(0xfff8f8f8),
-//         border: InputBorder.none,
-//         enabledBorder: OutlineInputBorder(
-//           borderRadius: BorderRadius.circular(16.0),
-//           borderSide: const BorderSide(
-//             color: Colors.transparent,
-//           ),
-//         ),
-//         focusedBorder: OutlineInputBorder(
-//           borderRadius: BorderRadius.circular(16.0),
-//           borderSide: const BorderSide(
-//             color: Color(0xfffb8c00),
-//           ),
-//         ),
-//       ),
-//       validator: (value) {
-//         if (value?.isEmpty ?? false) {
-//           return '이메일을 입력해주세요.';
-//         }
-//         return null;
-//       },
-//       onSaved: (String? value) {
-//         inputEmail = value;
-//       },
-//     ),
-//   );
-// }
-//
-// Widget editPasswordTextField(String hintText, bool isObscure, inputPassword) {
-//   return Padding(
-//     padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-//     child: TextFormField(
-//       key: const ValueKey(2),
-//       obscureText: isObscure,
-//       decoration: InputDecoration(
-//         hintText: hintText,
-//         filled: true,
-//         fillColor: const Color(0xfff8f8f8),
-//         border: InputBorder.none,
-//         enabledBorder: OutlineInputBorder(
-//           borderRadius: BorderRadius.circular(16.0),
-//           borderSide: const BorderSide(
-//             color: Colors.transparent,
-//           ),
-//         ),
-//         focusedBorder: OutlineInputBorder(
-//           borderRadius: BorderRadius.circular(16.0),
-//           borderSide: const BorderSide(
-//             color: Color(0xfffb8c00),
-//           ),
-//         ),
-//       ),
-//       validator: (value) {
-//         if (value?.isEmpty ?? false) {
-//           return '비밀번호를 입력해주세요.';
-//         }
-//         return null;
-//       },
-//       onSaved: (String? value) {
-//         inputPassword = value;
-//       },
-//     ),
-//   );
-// }
-//
-// Widget editCheckPasswordTextField(
-//     String hintText, bool isObscure, inputPassword, inputCheckPassword) {
-//   return Padding(
-//     padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-//     child: TextFormField(
-//       key: const ValueKey(3),
-//       obscureText: isObscure,
-//       decoration: InputDecoration(
-//         hintText: hintText,
-//         filled: true,
-//         fillColor: const Color(0xfff8f8f8),
-//         border: InputBorder.none,
-//         enabledBorder: OutlineInputBorder(
-//           borderRadius: BorderRadius.circular(16.0),
-//           borderSide: const BorderSide(
-//             color: Colors.transparent,
-//           ),
-//         ),
-//         focusedBorder: OutlineInputBorder(
-//           borderRadius: BorderRadius.circular(16.0),
-//           borderSide: const BorderSide(
-//             color: Color(0xfffb8c00),
-//           ),
-//         ),
-//       ),
-//       validator: (value) {
-//         if (value?.isEmpty ?? false) {
-//           return '비밀번호를 입력해주세요.';
-//         }
-//
-//         if (value != inputPassword) {
-//           return '위와 동일한 비밀번호를 입력해주세요.';
-//         }
-//
-//         return null;
-//       },
-//       onSaved: (String? value) {
-//         inputCheckPassword = value;
-//       },
-//     ),
-//   );
-// }
