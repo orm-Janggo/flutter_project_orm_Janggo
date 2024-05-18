@@ -72,8 +72,8 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final viewModelForgetUser = context.watch<MainScreenViewModel>();
-    viewModelForgetUser.getCurrentUserInfo();
+    final viewModelForFetchUser = context.watch<MainScreenViewModel>();
+    viewModelForFetchUser.fetchCurrentUserInfo();
 
     final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
@@ -93,7 +93,7 @@ class _MainScreenState extends State<MainScreen> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            if (viewModelForgetUser.firebaseUser != null) {
+            if (viewModelForFetchUser.firebaseUser != null) {
               context.push('/');
               return;
             }
