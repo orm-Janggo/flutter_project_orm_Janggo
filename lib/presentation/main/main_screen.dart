@@ -85,6 +85,8 @@ class _MainScreenState extends State<MainScreen> {
     final loginMethod = userInformation.loginMethod; // 로그인 방식 가져오기
     final userInfo = userInformation.userInfo; // 사용자 정보 가져오기
 
+    debugPrint(viewModelForFetchUser.firebaseUser.toString());
+
     return Scaffold(
       // 키보드에 의한 UI 이동방지
       resizeToAvoidBottomInset: false,
@@ -140,7 +142,9 @@ class _MainScreenState extends State<MainScreen> {
                 ],
               ),
             )
-          else if (loginMethod == LoginMethod.email) // Firebase 이메일 로그인
+            // 이메일 로그인하였음에도 Guest로 나오는 문제 뷰모델 파이어베이스로 해결
+          else if (loginMethod == LoginMethod.email ||
+              viewModelForFetchUser.firebaseUser != null) // Firebase 이메일 로그인
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Column(
@@ -151,7 +155,8 @@ class _MainScreenState extends State<MainScreen> {
                       context.push('/main/my-page'); // 사용자 정보 페이지로 이동
                     },
                     child: Text(
-                      viewModelForFetchUser.firebaseUser?.displayName ?? 'No nickname',
+                      viewModelForFetchUser.firebaseUser?.displayName ??
+                          'No nickname',
                       style: const TextStyle(fontFamily: 'school_font'),
                     ),
                   ),
