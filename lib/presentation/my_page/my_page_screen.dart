@@ -21,17 +21,6 @@ class _MyPageScreenState extends State<MyPageScreen> {
   // 설정 버튼 눌렀을때 수정 가능여부  => true : textFormField 수정 가능, false : textFormField 수정 불가능
   bool isChanged = false;
 
-  // DB에서 받아온 개인정보로 초기화하고 그 내용이 처음 화면에 보입니다.
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<MyPageViewModel>();
