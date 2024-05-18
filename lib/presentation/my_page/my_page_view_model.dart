@@ -48,8 +48,6 @@ class MyPageViewModel with ChangeNotifier {
   void updateCurrentUserPassword(String inputPassword) async {
     await _updatePasswordUseCase.execute(inputPassword);
 
-    debugPrint('password change ok');
-
     notifyListeners();
   }
 
