@@ -48,6 +48,8 @@ import '../presentation/main/main_view_model.dart';
 import '../presentation/recipe_screen/recipe_screen.dart';
 import '../presentation/recipe_screen/recipe_view_model.dart';
 
+final authRepository = AuthRepositoryImpl(FirebaseAuth.instance);
+
 final router = GoRouter(
   routes: [
     GoRoute(
@@ -56,10 +58,9 @@ final router = GoRouter(
         return ChangeNotifierProvider(
           create: (_) => SplashScreenViewModel(
             authStateChangesUseCase: AuthStateChangesUseCase(
-              AuthRepositoryImpl(FirebaseAuth.instance),
+              authRepository,
             ),
-            signOutUseCase:
-                SignOutUseCase(AuthRepositoryImpl(FirebaseAuth.instance)),
+            signOutUseCase: SignOutUseCase(authRepository),
           ),
           child: const SplashScreen(),
         );
@@ -71,10 +72,10 @@ final router = GoRouter(
             return ChangeNotifierProvider(
               create: (_) => SignInViewModel(
                 signInWithEmailPasswordUseCase: SignInWithEmailPasswordUseCase(
-                  AuthRepositoryImpl(FirebaseAuth.instance),
+                  authRepository,
                 ),
-                authStateChangesUseCase: AuthStateChangesUseCase(
-                    AuthRepositoryImpl(FirebaseAuth.instance)),
+                authStateChangesUseCase:
+                    AuthStateChangesUseCase(authRepository),
               ),
               child: const SignInScreen(),
             );
@@ -87,7 +88,7 @@ final router = GoRouter(
                   create: (_) => ForgotPasswordViewModel(
                     sendPasswordResetEmailUseCase:
                         SendPasswordResetEmailUseCase(
-                      AuthRepositoryImpl(FirebaseAuth.instance),
+                      authRepository,
                     ),
                   ),
                   child: const ForgotPasswordScreen(),
@@ -102,7 +103,7 @@ final router = GoRouter(
             return ChangeNotifierProvider(
               create: (_) => SignUpViewModel(
                 signUpWithEmailPasswordUseCase: SignUpWithEmailPasswordUseCase(
-                  AuthRepositoryImpl(FirebaseAuth.instance),
+                  authRepository,
                 ),
               ),
               child: const SignUpScreen(),
@@ -115,7 +116,7 @@ final router = GoRouter(
             return ChangeNotifierProvider(
               create: (_) => MainViewModel(
                 authStateChangesUseCase: AuthStateChangesUseCase(
-                  AuthRepositoryImpl(FirebaseAuth.instance),
+                  authRepository,
                 ),
               ),
               child: const MainScreen(),
@@ -195,16 +196,16 @@ final router = GoRouter(
                 return ChangeNotifierProvider(
                   create: (_) => MyPageViewModel(
                     authStateChangesUseCase: AuthStateChangesUseCase(
-                      AuthRepositoryImpl(FirebaseAuth.instance),
+                      authRepository,
                     ),
                     updateDisplayNameUseCase: UpdateDisplayNameUseCase(
-                      AuthRepositoryImpl(FirebaseAuth.instance),
+                      authRepository,
                     ),
                     updatePasswordUseCase: UpdatePasswordUseCase(
-                      AuthRepositoryImpl(FirebaseAuth.instance),
+                      authRepository,
                     ),
                     signOutUseCase: SignOutUseCase(
-                      AuthRepositoryImpl(FirebaseAuth.instance),
+                      authRepository,
                     ),
                   ),
                   child: const MyPageScreen(),
