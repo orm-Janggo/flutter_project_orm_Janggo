@@ -58,7 +58,5 @@ class SplashScreenViewModel with ChangeNotifier {
 
   void signOutCurrentUser() async {
     await _signOutUseCase.execute();
-
-    // notifyListeners();
   }
 }

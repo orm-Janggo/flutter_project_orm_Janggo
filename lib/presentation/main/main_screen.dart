@@ -142,7 +142,7 @@ class _MainScreenState extends State<MainScreen> {
                 ],
               ),
             )
-            // 이메일 로그인하였음에도 Guest로 나오는 문제 뷰모델 파이어베이스로 해결
+          // 이메일 로그인하였음에도 Guest로 나오는 문제 뷰모델 파이어베이스로 해결
           else if (loginMethod == LoginMethod.email ||
               viewModelForFetchUser.firebaseUser != null) // Firebase 이메일 로그인
             Padding(

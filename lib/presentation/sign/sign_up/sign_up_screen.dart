@@ -58,7 +58,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         key: const ValueKey(1),
                         decoration: InputDecoration(
                           hintText: '이메일 주소를 입력해 주세요',
-                          hintStyle: TextStyle(fontFamily: 'school_font'),
+                          hintStyle: const TextStyle(fontFamily: 'school_font'),
                           filled: true,
                           fillColor: const Color(0xfff8f8f8),
                           border: InputBorder.none,
@@ -75,7 +75,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                           ),
                         ),
-                        style: TextStyle(fontFamily: 'school_font'),
+                        style: const TextStyle(fontFamily: 'school_font'),
                         validator: (value) {
                           if (value?.isEmpty ?? false) {
                             return '이메일을 입력해주세요.';
@@ -97,7 +97,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         key: const ValueKey(2),
                         decoration: InputDecoration(
                           hintText: '닉네임',
-                          hintStyle: TextStyle(fontFamily: 'school_font'),
+                          hintStyle: const TextStyle(fontFamily: 'school_font'),
                           filled: true,
                           fillColor: const Color(0xfff8f8f8),
                           border: InputBorder.none,
@@ -114,7 +114,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                           ),
                         ),
-                        style: TextStyle(fontFamily: 'school_font'),
+                        style: const TextStyle(fontFamily: 'school_font'),
                         inputFormatters: [
                           FilteringTextInputFormatter.deny(RegExp(r'\s')),
                           // Deny spaces
@@ -146,7 +146,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             obscureText: _isObscure,
                             decoration: InputDecoration(
                               hintText: '비밀번호를 입력하세요',
-                              hintStyle: TextStyle(fontFamily: 'school_font'),
+                              hintStyle: const TextStyle(fontFamily: 'school_font'),
                               filled: true,
                               fillColor: const Color(0xfff8f8f8),
                               border: InputBorder.none,
@@ -163,7 +163,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 ),
                               ),
                             ),
-                            style: TextStyle(fontFamily: 'school_font'),
+                            style: const TextStyle(fontFamily: 'school_font'),
                             validator: (value) {
                               if (value?.isEmpty ?? false) {
                                 return '비밀번호를 입력해주세요.';
@@ -202,7 +202,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             obscureText: _isObscure,
                             decoration: InputDecoration(
                               hintText: '비밀번호 확인',
-                              hintStyle: TextStyle(fontFamily: 'school_font'),
+                              hintStyle: const TextStyle(fontFamily: 'school_font'),
                               filled: true,
                               fillColor: const Color(0xfff8f8f8),
                               border: InputBorder.none,
@@ -219,7 +219,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 ),
                               ),
                             ),
-                            style: TextStyle(fontFamily: 'school_font'),
+                            style: const TextStyle(fontFamily: 'school_font'),
                             validator: (value) {
                               if (value?.isEmpty ?? false) {
                                 return '비밀번호를 입력해주세요.';

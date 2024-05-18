@@ -12,5 +12,6 @@ class UserInfoModel with _$UserInfoModel {
     required String uid,
   }) = _UserInfoModel;
 
-  factory UserInfoModel.fromJson(Map<String, Object?> json) => _$UserInfoModelFromJson(json);
+  factory UserInfoModel.fromJson(Map<String, Object?> json) =>
+      _$UserInfoModelFromJson(json);
 }
