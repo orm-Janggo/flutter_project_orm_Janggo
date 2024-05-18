@@ -1,6 +1,6 @@
 import 'package:flutter_project_orm_janggo/domain/model/user_info_model/user_info_model.dart';
 
-abstract interface class FirebaseAuthRepository {
+abstract interface class AuthRepository {
   Future<UserInfoModel> callSignInWithEmailAndPassword(
     String inputEmail,
     String inputPassword,

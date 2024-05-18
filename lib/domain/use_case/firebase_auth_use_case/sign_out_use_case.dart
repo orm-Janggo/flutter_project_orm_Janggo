@@ -1,11 +1,11 @@
-import 'package:flutter_project_orm_janggo/domain/repository/firebase_auth_repository/firebase_auth_repository.dart';
+import 'package:flutter_project_orm_janggo/domain/repository/auth_repository/auth_repository.dart';
 
 class SignOutUseCase {
-  final FirebaseAuthRepository _firebaseAuthRepository;
+  final AuthRepository _authRepository;
 
-  SignOutUseCase(this._firebaseAuthRepository);
+  SignOutUseCase(this._authRepository);
 
   Future<void> execute() async {
-    await _firebaseAuthRepository.callSignOut();
+    await _authRepository.callSignOut();
   }
 }

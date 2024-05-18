@@ -1,11 +1,11 @@
-import 'package:flutter_project_orm_janggo/domain/repository/firebase_auth_repository/firebase_auth_repository.dart';
+import 'package:flutter_project_orm_janggo/domain/repository/auth_repository/auth_repository.dart';
 
 class UpdatePasswordUseCase {
-  final FirebaseAuthRepository _firebaseAuthRepository;
+  final AuthRepository _authRepository;
 
-  UpdatePasswordUseCase(this._firebaseAuthRepository);
+  UpdatePasswordUseCase(this._authRepository);
 
   Future<void> execute(String inputPassword) async {
-    await _firebaseAuthRepository.callUpdatePassword(inputPassword);
+    await _authRepository.callUpdatePassword(inputPassword);
   }
 }

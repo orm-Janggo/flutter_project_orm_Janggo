@@ -1,17 +1,17 @@
 import 'package:flutter_project_orm_janggo/domain/model/user_info_model/user_info_model.dart';
-import 'package:flutter_project_orm_janggo/domain/repository/firebase_auth_repository/firebase_auth_repository.dart';
+import 'package:flutter_project_orm_janggo/domain/repository/auth_repository/auth_repository.dart';
 
 class SignUpWithEmailPasswordUseCase {
-  final FirebaseAuthRepository _firebaseAuthRepository;
+  final AuthRepository _authRepository;
 
-  SignUpWithEmailPasswordUseCase(this._firebaseAuthRepository);
+  SignUpWithEmailPasswordUseCase(this._authRepository);
 
   Future<UserInfoModel> execute(
     String inputEmail,
     String inputPassword,
     String inputDisplayName,
   ) async {
-    return await _firebaseAuthRepository.callCreateUserWithEmailAndPassword(
+    return await _authRepository.callCreateUserWithEmailAndPassword(
       inputEmail,
       inputPassword,
       inputDisplayName,
