@@ -201,50 +201,6 @@ class _MyPageScreenState extends State<MyPageScreen> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      // Padding(
-                      //   padding: const EdgeInsets.symmetric(
-                      //       horizontal: 16.0, vertical: 4.0),
-                      //   child: ElevatedButton(
-                      //     style: ElevatedButton.styleFrom(
-                      //         backgroundColor: const Color(0xfffb8c00)),
-                      //     onPressed: () {
-                      //       setState(() {
-                      //         // if (viewModel.userDisplayName != '' &&
-                      //         //     viewModel.userDisplayName != null) {
-                      //         //   viewModel.updateCurrentUserDisplayName(
-                      //         //       viewModel.userDisplayName!);
-                      //         // }
-                      //
-                      //         viewModel.updateCurrentUserDisplayName(
-                      //             viewModel.userDisplayName!);
-                      //
-                      //         // if (viewModel.userPassword != '' &&
-                      //         //     viewModel.userPassword != null) {
-                      //         //   viewModel.updateCurrentUserPassword(
-                      //         //       viewModel.userPassword!);
-                      //         // }
-                      //
-                      //         viewModel.updateCurrentUserPassword(
-                      //             viewModel.userPassword!);
-                      //
-                      //         viewModel.changeCanModify();
-                      //       });
-                      //     },
-                      //     child: const SizedBox(
-                      //       height: 50,
-                      //       width: double.infinity,
-                      //       child: Center(
-                      //         child: Text(
-                      //           '수정하기',
-                      //           style: TextStyle(
-                      //               fontFamily: 'school_font',
-                      //               color: Colors.black,
-                      //               fontSize: 16),
-                      //         ),
-                      //       ),
-                      //     ),
-                      //   ),
-                      // ),
                       Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 16.0, vertical: 8.0),
