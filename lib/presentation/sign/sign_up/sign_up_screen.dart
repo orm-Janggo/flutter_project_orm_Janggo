@@ -14,12 +14,10 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  String? inputEmail;
-  String? inputDisplayName;
-  String? inputPassword;
-  String? inputCheckPassword;
-
-  bool _isObscure = true;
+  // String? inputEmail;
+  // String? inputDisplayName;
+  // String? inputPassword;
+  // String? inputCheckPassword;
 
   @override
   Widget build(BuildContext context) {
@@ -83,7 +81,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           return null;
                         },
                         onChanged: (String? value) {
-                          inputEmail = value;
+                          // inputEmail = value;
+                          viewModel.changeInputEmail(value!);
                         },
                       ),
                     ),
@@ -113,8 +112,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                         style: const TextStyle(fontFamily: 'school_font'),
                         inputFormatters: [
-                          FilteringTextInputFormatter.deny(RegExp(r'\s')),
                           // Deny spaces
+                          FilteringTextInputFormatter.deny(RegExp(r'\s')),
                         ],
                         validator: (value) {
                           if (value?.isEmpty ?? false) {
@@ -124,12 +123,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           return null;
                         },
                         onChanged: (String? value) {
-                          inputDisplayName = value;
+                          // inputDisplayName = value;
+                          viewModel.changeInputDisplayName(value!);
                         },
                       ),
                     ),
-                    // editPasswordTextField(
-                    //     '비밀번호를 입력하세요', _isObscure, inputPassword),
                     Stack(
                       children: [
                         Padding(
@@ -137,7 +135,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               vertical: 8.0, horizontal: 16.0),
                           child: TextFormField(
                             key: const ValueKey(3),
-                            obscureText: _isObscure,
+                            obscureText: viewModel.isObscure,
                             decoration: InputDecoration(
                               hintText: '비밀번호를 입력하세요',
                               hintStyle:
@@ -166,7 +164,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               return null;
                             },
                             onChanged: (String? value) {
-                              inputPassword = value;
+                              // inputPassword = value;
+                              viewModel.changeInputPassword(value!);
                             },
                           ),
                         ),
@@ -176,7 +175,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           child: IconButton(
                             onPressed: () {
                               setState(() {
-                                _isObscure = !_isObscure;
+                                // _isObscure = !_isObscure;
+                                viewModel.changeIsObscure();
                               });
                             },
                             icon: const Icon(Icons.remove_red_eye),
@@ -191,7 +191,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               vertical: 8.0, horizontal: 16.0),
                           child: TextFormField(
                             key: const ValueKey(4),
-                            obscureText: _isObscure,
+                            obscureText: viewModel.isCheckObscure,
                             decoration: InputDecoration(
                               hintText: '비밀번호 확인',
                               hintStyle:
@@ -218,14 +218,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 return '비밀번호를 입력해주세요.';
                               }
 
-                              if (value != inputPassword) {
+                              if (value != viewModel.inputPassword) {
                                 return '위와 동일한 비밀번호를 입력해주세요.';
                               }
 
                               return null;
                             },
                             onChanged: (String? value) {
-                              inputCheckPassword = value;
+                              // inputCheckPassword = value;
+                              viewModel.changeInputCheckPassword(value!);
                             },
                           ),
                         ),
@@ -235,7 +236,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           child: IconButton(
                             onPressed: () {
                               setState(() {
-                                _isObscure = !_isObscure;
+                                // _isObscure = !_isObscure;
+                                viewModel.changeIsCheckObscure();
                               });
                             },
                             icon: const Icon(Icons.remove_red_eye),
@@ -283,9 +285,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                           try {
                             await viewModel.signUpWithFirebaseAuth(
-                              inputEmail!,
-                              inputPassword!,
-                              inputDisplayName!,
+                              viewModel.inputEmail!,
+                              viewModel.inputPassword!,
+                              viewModel.inputDisplayName!,
                             );
 
                             if (!context.mounted) return;
