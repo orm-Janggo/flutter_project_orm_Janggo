@@ -14,11 +14,6 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  // String? inputEmail;
-  // String? inputDisplayName;
-  // String? inputPassword;
-  // String? inputCheckPassword;
-
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<SignUpViewModel>();
@@ -81,7 +76,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           return null;
                         },
                         onChanged: (String? value) {
-                          // inputEmail = value;
                           viewModel.changeInputEmail(value!);
                         },
                       ),
@@ -123,7 +117,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           return null;
                         },
                         onChanged: (String? value) {
-                          // inputDisplayName = value;
                           viewModel.changeInputDisplayName(value!);
                         },
                       ),
@@ -164,7 +157,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               return null;
                             },
                             onChanged: (String? value) {
-                              // inputPassword = value;
                               viewModel.changeInputPassword(value!);
                             },
                           ),
@@ -175,7 +167,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           child: IconButton(
                             onPressed: () {
                               setState(() {
-                                // _isObscure = !_isObscure;
                                 viewModel.changeIsObscure();
                               });
                             },
@@ -225,7 +216,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               return null;
                             },
                             onChanged: (String? value) {
-                              // inputCheckPassword = value;
                               viewModel.changeInputCheckPassword(value!);
                             },
                           ),
@@ -236,7 +226,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           child: IconButton(
                             onPressed: () {
                               setState(() {
-                                // _isObscure = !_isObscure;
                                 viewModel.changeIsCheckObscure();
                               });
                             },
