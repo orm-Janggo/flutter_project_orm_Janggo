@@ -85,9 +85,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         onChanged: (String? value) {
                           inputEmail = value;
                         },
-                        onSaved: (String? value) {
-                          inputEmail = value;
-                        },
                       ),
                     ),
                     Padding(
@@ -127,9 +124,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           return null;
                         },
                         onChanged: (String? value) {
-                          inputDisplayName = value;
-                        },
-                        onSaved: (String? value) {
                           inputDisplayName = value;
                         },
                       ),
@@ -172,9 +166,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               return null;
                             },
                             onChanged: (String? value) {
-                              inputPassword = value;
-                            },
-                            onSaved: (String? value) {
                               inputPassword = value;
                             },
                           ),
@@ -234,9 +225,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               return null;
                             },
                             onChanged: (String? value) {
-                              inputCheckPassword = value;
-                            },
-                            onSaved: (String? value) {
                               inputCheckPassword = value;
                             },
                           ),
