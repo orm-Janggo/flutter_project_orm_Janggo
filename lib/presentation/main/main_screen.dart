@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project_orm_janggo/presentation/kakao_login/kakao_login_view_model.dart';
-import 'package:flutter_project_orm_janggo/presentation/main/main_screen_view_model.dart';
+import 'package:flutter_project_orm_janggo/presentation/main/main_view_model.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -72,8 +72,8 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final viewModelForgetUser = context.watch<MainScreenViewModel>();
-    viewModelForgetUser.getCurrentUserInfo();
+    final viewModelForFetchUser = context.watch<MainViewModel>();
+    viewModelForFetchUser.fetchCurrentUserInfo();
 
     final double screenWidth = MediaQuery.of(context).size.width;
     final double screenHeight = MediaQuery.of(context).size.height;
@@ -85,6 +85,8 @@ class _MainScreenState extends State<MainScreen> {
     final loginMethod = userInformation.loginMethod; // 로그인 방식 가져오기
     final userInfo = userInformation.userInfo; // 사용자 정보 가져오기
 
+    debugPrint(viewModelForFetchUser.firebaseUser.toString());
+
     return Scaffold(
       // 키보드에 의한 UI 이동방지
       resizeToAvoidBottomInset: false,
@@ -93,7 +95,7 @@ class _MainScreenState extends State<MainScreen> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back),
           onPressed: () {
-            if (viewModelForgetUser.firebaseUser != null) {
+            if (viewModelForFetchUser.firebaseUser != null) {
               context.push('/');
               return;
             }
@@ -140,37 +142,40 @@ class _MainScreenState extends State<MainScreen> {
                 ],
               ),
             )
-          else if (loginMethod == LoginMethod.email)  // Firebase 이메일 로그인
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                        context.push('/main/my-page');  // 사용자 정보 페이지로 이동
-                      },
-                      child: Text(
-                        userInfo?.displayName ?? userInfo!.email!,
-                        style: const TextStyle(fontFamily: 'school_font'),
-                      ),
-                    ),
-                  ],
-                ),
-              )
-            else  // 비회원 또는 로그인되지 않은 상태
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const Text(
-                      'Guest',
+          // 이메일 로그인하였음에도 Guest로 나오는 문제 뷰모델 파이어베이스로 해결
+          else if (loginMethod == LoginMethod.email ||
+              viewModelForFetchUser.firebaseUser != null) // Firebase 이메일 로그인
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      context.push('/main/my-page'); // 사용자 정보 페이지로 이동
+                    },
+                    child: Text(
+                      viewModelForFetchUser.firebaseUser?.displayName ??
+                          'No nickname',
                       style: const TextStyle(fontFamily: 'school_font'),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
+            )
+          else // 비회원 또는 로그인되지 않은 상태
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Guest',
+                    style: TextStyle(fontFamily: 'school_font'),
+                  ),
+                ],
+              ),
+            ),
           const SizedBox(
             width: 8,
           ),
@@ -229,7 +234,7 @@ class _MainScreenState extends State<MainScreen> {
                                     },
                                   ),
                                   hintText: '재료를 입력해주세요',
-                                  hintStyle: TextStyle(
+                                  hintStyle: const TextStyle(
                                     fontFamily: 'school_font',
                                   ),
                                   filled: true,
@@ -280,14 +285,14 @@ class _MainScreenState extends State<MainScreen> {
                     Container(
                       width: screenWidth * 0.7,
                       height: 50,
-                      margin: EdgeInsets.only(bottom: 16),
+                      margin: const EdgeInsets.only(bottom: 16),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(24),
                         color: Colors.white70,
                       ),
                       child: TextButton(
                         onPressed: _addTextField,
-                        child: Row(
+                        child: const Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(
@@ -307,7 +312,7 @@ class _MainScreenState extends State<MainScreen> {
                     Container(
                       width: screenWidth * 0.7,
                       height: 50,
-                      margin: EdgeInsets.only(bottom: 16),
+                      margin: const EdgeInsets.only(bottom: 16),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(24),
                         color: Colors.orange,
@@ -319,7 +324,7 @@ class _MainScreenState extends State<MainScreen> {
                             showDialog(
                               context: context,
                               builder: (context) => AlertDialog(
-                                title: Text(
+                                title: const Text(
                                   '알림',
                                   style: TextStyle(
                                     fontSize: 16,
@@ -327,9 +332,9 @@ class _MainScreenState extends State<MainScreen> {
                                   ),
                                   textAlign: TextAlign.center,
                                 ),
-                                content: Padding(
-                                  padding: const EdgeInsets.only(top: 16.0),
-                                  child: const Text(
+                                content: const Padding(
+                                  padding: EdgeInsets.only(top: 16.0),
+                                  child: Text(
                                     '재료가 없습니다!',
                                     style: TextStyle(
                                       fontSize: 18,
@@ -343,7 +348,7 @@ class _MainScreenState extends State<MainScreen> {
                                     onPressed: () {
                                       Navigator.of(context).pop();
                                     },
-                                    child: Text(
+                                    child: const Text(
                                       '확인',
                                       style: TextStyle(
                                         fontFamily: 'school_font',
@@ -357,7 +362,7 @@ class _MainScreenState extends State<MainScreen> {
                             _onButtonPressed(context);
                           }
                         },
-                        child: Row(
+                        child: const Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             Text(

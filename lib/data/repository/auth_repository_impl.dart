@@ -1,15 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:flutter_project_orm_janggo/data/mapper/user_info_mapper/user_info_mapper.dart';
 import 'package:flutter_project_orm_janggo/domain/model/user_info_model/user_info_model.dart';
-import 'package:flutter_project_orm_janggo/domain/repository/firebase_auth_repository/firebase_auth_repository.dart';
+import 'package:flutter_project_orm_janggo/domain/repository/auth_repository/auth_repository.dart';
 
-class FirebaseAuthRepositoryImpl implements FirebaseAuthRepository {
+class AuthRepositoryImpl implements AuthRepository {
   final firebase_auth.FirebaseAuth _authentication;
 
-  FirebaseAuthRepositoryImpl(this._authentication);
+  AuthRepositoryImpl(this._authentication);
 
   @override
-  Future<UserInfoModel> callSignInWithEmailAndPassword(
+  Future<UserInfoModel> signInWithEmailAndPassword(
       String inputEmail, String inputPassword) async {
     final userInfo = await _authentication.signInWithEmailAndPassword(
       email: inputEmail,
@@ -20,7 +20,7 @@ class FirebaseAuthRepositoryImpl implements FirebaseAuthRepository {
   }
 
   @override
-  Future<UserInfoModel> callCreateUserWithEmailAndPassword(
+  Future<UserInfoModel> createUserWithEmailAndPassword(
       String inputEmail, String inputPassword, String inputDisplayName) async {
     final userInfo = await _authentication.createUserWithEmailAndPassword(
       email: inputEmail,
@@ -35,31 +35,31 @@ class FirebaseAuthRepositoryImpl implements FirebaseAuthRepository {
   }
 
   @override
-  UserInfoModel? callCurrentUser() {
+  UserInfoModel? getCurrentUser() {
     return _authentication.currentUser?.toUserInfo();
   }
 
   @override
-  Future<void> callSendPasswordResetEmail(String inputEmail) async {
+  Future<void> sendPasswordResetEmail(String inputEmail) async {
     await _authentication.sendPasswordResetEmail(email: inputEmail);
   }
 
   @override
-  Future<void> callUpdateDisplayName(String inputDisplayName) async {
+  Future<void> updateDisplayName(String inputDisplayName) async {
     firebase_auth.User? currentUser = _authentication.currentUser;
 
     await currentUser?.updateDisplayName(inputDisplayName);
   }
 
   @override
-  Future<void> callUpdatePassword(String inputPassword) async {
+  Future<void> updatePassword(String inputPassword) async {
     firebase_auth.User? currentUser = _authentication.currentUser;
 
     await currentUser?.updatePassword(inputPassword);
   }
 
   @override
-  Future<void> callSignOut() async {
+  Future<void> signOut() async {
     await _authentication.signOut();
   }
 }

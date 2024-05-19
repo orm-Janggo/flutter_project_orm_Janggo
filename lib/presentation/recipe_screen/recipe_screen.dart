@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_project_orm_janggo/data/db/like_hive/like_item.dart';
-import 'package:flutter_project_orm_janggo/presentation/ads/google_ads_Ids.dart';
+import 'package:flutter_project_orm_janggo/presentation/ads/google_ads_ids.dart';
 import 'package:flutter_project_orm_janggo/presentation/recipe_screen/recipe_view_model.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
