@@ -14,12 +14,12 @@ import 'package:flutter_project_orm_janggo/domain/use_case/auth_use_case/update_
 import 'package:flutter_project_orm_janggo/domain/use_case/auth_use_case/update_password_use_case.dart';
 
 import 'package:flutter_project_orm_janggo/domain/use_case/get_recipe_use_case.dart';
+import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history/recipe_history_view_model.dart';
 import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_detail/recipe_history_detail_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_detail/recipe_history_detail_view_model.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/like_recipe_use_case/like_add_recipe_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/like_recipe_use_case/like_remove_recipe_use_case.dart';
-import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_screen.dart';
-import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_view_model.dart';
+import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history/recipe_history_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/locker/recipe_like/like_recipe_detail_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/locker/recipe_like/like_recipe_viewmodel.dart';
 import 'package:flutter_project_orm_janggo/presentation/my_page/app_information/app_information_screen.dart';
@@ -40,7 +40,7 @@ import 'package:provider/provider.dart';
 
 import '../data/data_source/picture_data_source.dart';
 import '../data/repository/picture_repository_impl.dart';
-import '../domain/use_case/get_picture_use_case.dart';
+import '../domain/use_case/get_picture_use_case/get_picture_use_case.dart';
 
 import '../presentation/locker/recipe_like/like_recipe_screen.dart';
 import '../presentation/main/main_screen.dart';
