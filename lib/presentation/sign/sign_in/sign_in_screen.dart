@@ -16,13 +16,6 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  String? inputEmail;
-  String? inputPassword;
-
-  bool isChecked = true;
-
-  bool isObsecure = true;
-
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<SignInViewModel>();
@@ -96,7 +89,8 @@ class _SignInScreenState extends State<SignInScreen> {
                           return null;
                         },
                         onSaved: (String? value) {
-                          inputEmail = value;
+                          // inputEmail = value;
+                          viewModel.changeInputEmail(value!);
                         },
                       ),
                     ),
@@ -109,7 +103,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             icon: const Icon(Icons.remove_red_eye),
                             onPressed: () {
                               setState(() {
-                                isObsecure = !isObsecure;
+                                viewModel.changeIsObscure();
                               });
                             },
                           ),
@@ -132,7 +126,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           ),
                         ),
                         style: const TextStyle(fontFamily: 'school_font'),
-                        obscureText: isObsecure,
+                        obscureText: viewModel.isObscure,
                         validator: (value) {
                           if (value?.isEmpty ?? false) {
                             return '비밀번호를 입력해주세요.';
@@ -140,7 +134,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           return null;
                         },
                         onSaved: (String? value) {
-                          inputPassword = value;
+                          viewModel.changeInputPassword(value!);
                         },
                       ),
                     ),
@@ -153,10 +147,10 @@ class _SignInScreenState extends State<SignInScreen> {
                   Row(
                     children: [
                       Checkbox(
-                        value: isChecked,
+                        value: viewModel.isChecked,
                         onChanged: (bool? value) {
                           setState(() {
-                            isChecked = value!;
+                            viewModel.changeIsChecked();
                           });
                         },
                       ),
@@ -204,7 +198,9 @@ class _SignInScreenState extends State<SignInScreen> {
 
                       try {
                         await viewModel.signInWithFirebaseAuth(
-                            inputEmail!, inputPassword!);
+                          viewModel.inputEmail!,
+                          viewModel.inputPassword!,
+                        );
                         debugPrint('로그인 성공');
                         // check mount
                         if (!context.mounted) return;
@@ -265,11 +261,10 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: googleLoginButton(
-                  context,
-                )
-              ),
+                  padding: const EdgeInsets.all(8.0),
+                  child: googleLoginButton(
+                    context,
+                  )),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: getKakaoLoginButton(

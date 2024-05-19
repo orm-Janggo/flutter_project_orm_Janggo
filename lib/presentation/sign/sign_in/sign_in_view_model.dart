@@ -15,9 +15,46 @@ class SignInViewModel with ChangeNotifier {
   })  : _signInWithEmailPasswordUseCase = signInWithEmailPasswordUseCase,
         _authStateChangesUseCase = authStateChangesUseCase;
 
+  String? _inputEmail;
+  String? _inputPassword;
+  bool _isChecked = true;
+  bool _isObscure = true;
+
+  String? get inputEmail => _inputEmail;
+
+  String? get inputPassword => _inputPassword;
+
+  bool get isChecked => _isChecked;
+
+  bool get isObscure => _isObscure;
+
   UserInfoModel? _firebaseUser;
 
   UserInfoModel? get firebaseUser => _firebaseUser;
+
+  void changeInputEmail(String value) {
+    _inputEmail = value;
+
+    notifyListeners();
+  }
+
+  void changeInputPassword(String value) {
+    _inputPassword = value;
+
+    notifyListeners();
+  }
+
+  void changeIsObscure() {
+    _isObscure = !_isObscure;
+
+    notifyListeners();
+  }
+
+  void changeIsChecked() {
+    _isChecked = !_isChecked;
+
+    notifyListeners();
+  }
 
   Future<void> signInWithFirebaseAuth(
       String inputEmail, String inputPassword) async {
