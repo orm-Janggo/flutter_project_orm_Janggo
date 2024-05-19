@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_project_orm_janggo/presentation/sign/sign_in/kakao/social_login/kakao_login/kakao_login_service.dart';
 import 'package:flutter_project_orm_janggo/presentation/splash/splash_screen_view_model.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-import '../sign/sign_in/kakao/social_login/kakao_login/kakao_login.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -157,9 +157,10 @@ class SplashScreen5 extends StatelessWidget {
                         }
 
                         // 카카오 로그아웃
-                        KakaoLogin kakaoLogin = KakaoLogin();
+                        KakaoLoginService kakaoLoginService =
+                            KakaoLoginService();
                         if (viewModelForFetchUser.kakaoUser != null) {
-                          await kakaoLogin.logout();
+                          await kakaoLoginService.logout();
                         }
 
                         if (!context.mounted) {

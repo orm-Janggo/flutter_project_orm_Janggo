@@ -29,7 +29,6 @@ import 'package:flutter_project_orm_janggo/presentation/my_page/my_page_screen.d
 import 'package:flutter_project_orm_janggo/presentation/my_page/my_page_view_model.dart';
 import 'package:flutter_project_orm_janggo/presentation/sign/forgot_password/forgot_password_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/sign/forgot_password/forgot_password_view_model.dart';
-import 'package:flutter_project_orm_janggo/presentation/sign/sign_in/kakao/social_login/kakao_login/kakao_login.dart';
 import 'package:flutter_project_orm_janggo/presentation/sign/sign_in/kakao/social_login/kakao_login/kakao_login_service.dart';
 import 'package:flutter_project_orm_janggo/presentation/sign/sign_in/sign_in_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/sign/sign_in/sign_in_view_model.dart';
@@ -78,7 +77,7 @@ final router = GoRouter(
                 ),
                 authStateChangesUseCase:
                     AuthStateChangesUseCase(authRepository),
-                kakaoLoginService: KakaoLoginService(kakaoLogin: KakaoLogin()),
+                kakaoLoginService: KakaoLoginService(),
               ),
               child: const SignInScreen(),
             );

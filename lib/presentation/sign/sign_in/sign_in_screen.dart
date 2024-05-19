@@ -268,7 +268,12 @@ class _SignInScreenState extends State<SignInScreen> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: KakaoLoginButton(
-                  onTap: () {},
+                  onTap: () {
+                    viewModel.signInWithKakao();
+                    if (viewModel.isKakaoLogined) {
+                      context.push('/main');
+                    }
+                  },
                 ),
               ),
             ],

@@ -77,14 +77,39 @@ class SignInViewModel with ChangeNotifier {
     }
     notifyListeners();
   }
-
   Future<void> signInWithKakao() async {
-    await _kakaoLoginService.login();
-    if (isKakaoLogined) {
-      UserInformation().updateLoginMethod(LoginMethod.kakao);
-      UserInformation().updateUser(
-          email: kakaoUser?.kakaoAccount?.email ?? '',
-          displayName: kakaoUser?.kakaoAccount?.profile?.nickname ?? '');
+    bool isKakaoLoginSuccess = false;
+    try {
+      // 카카오 로그인 시도
+      isKakaoLoginSuccess = await _kakaoLoginService.login();
+      if (isKakaoLoginSuccess) {
+        // 카카오 로그인 성공
+        User loggedInUser = _kakaoLoginService.user!;
+        UserInformation().updateLoginMethod(LoginMethod.kakao);
+        UserInformation().updateUser(
+            email: loggedInUser.kakaoAccount?.email ?? '',
+            displayName: loggedInUser.kakaoAccount?.profile?.nickname ?? '');
+      }
+    } catch (error) {
+      // 카카오 로그인 실패 시, 카카오 계정으로 로그인 시도
+      print('카카오 로그인 실패: $error');
+      try {
+        // 카카오 계정 로그인 시도
+        bool isKakaoAccountLoginSuccess =
+            await _kakaoLoginService.loginWithKakaoAccount();
+        if (isKakaoAccountLoginSuccess) {
+          // 카카오 계정 로그인 성공
+          User loggedInUser = _kakaoLoginService.user!;
+          UserInformation().updateLoginMethod(LoginMethod.kakao);
+          // 사용자 정보 업데이트
+          UserInformation().updateUser(
+              email: loggedInUser.kakaoAccount?.email ?? '',
+              displayName: loggedInUser.kakaoAccount?.profile?.nickname ?? '');
+        }
+      } catch (error) {
+        // 카카오 계정 로그인 실패
+        print('카카오 계정 로그인 실패: $error');
+      }
     }
     notifyListeners();
   }
