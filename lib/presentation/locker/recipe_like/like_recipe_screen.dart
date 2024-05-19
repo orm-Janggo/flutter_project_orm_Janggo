@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_project_orm_janggo/main.dart';
 import 'package:flutter_project_orm_janggo/presentation/components/like_widget.dart';
 import 'package:flutter_project_orm_janggo/presentation/locker/recipe_like/like_recipe_viewmodel.dart';
-import 'package:flutter_project_orm_janggo/presentation/main/main_screen.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 

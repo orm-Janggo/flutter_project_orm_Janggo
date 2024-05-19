@@ -1,7 +1,8 @@
-import 'package:flutter_project_orm_janggo/domain/model/social_login/kakao_login.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 
-class KakaoLoginViewModel{
+import 'kakao_login.dart';
+
+class KakaoLoginService {
   final KakaoLogin _kakaoLogin;
   bool isLogined = false;
   User? user;
@@ -20,7 +21,7 @@ class KakaoLoginViewModel{
     user = null;
   }
 
-   KakaoLoginViewModel({
+  KakaoLoginService({
     required KakaoLogin kakaoLogin,
   }) : _kakaoLogin = kakaoLogin;
 }

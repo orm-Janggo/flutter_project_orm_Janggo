@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project_orm_janggo/presentation/kakao_login/kakao_login_view_model.dart';
 import 'package:flutter_project_orm_janggo/presentation/main/main_view_model.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../data/user_information/user_information.dart';
-import '../../domain/model/social_login/kakao_login.dart';
+import '../sign/sign_in/sign_in_view_model.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -15,8 +14,6 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  final kakaoLoginViewModel = KakaoLoginViewModel(kakaoLogin: KakaoLogin());
-
   @override
   void initState() {
     super.initState();
@@ -24,7 +21,8 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   Future<void> _initKakaoUser() async {
-    await kakaoLoginViewModel.login();
+    final signInViewModel = context.read<SignInViewModel>();
+    await signInViewModel.signInWithKakao();
     setState(() {}); // 사용자 정보가 업데이트되었으므로 화면 갱신
   }
 

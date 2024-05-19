@@ -1,8 +1,8 @@
-import 'package:flutter_project_orm_janggo/domain/model/social_login/social_login.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:firebase_auth/firebase_auth.dart' as Auth;
 
-import '../../../data/user_information/user_information.dart';
+import '../../../../../../data/user_information/user_information.dart';
+import '../social_login.dart';
 
 class KakaoLogin implements SocialLogin {
   @override
