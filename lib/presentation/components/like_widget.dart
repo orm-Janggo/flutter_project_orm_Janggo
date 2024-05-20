@@ -3,7 +3,6 @@ import 'package:flutter_project_orm_janggo/data/db/like_hive/like_item.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
-import '../locker/recipe_like/like_recipe_detail_screen.dart';
 
 
 class LikeWidget extends StatelessWidget {

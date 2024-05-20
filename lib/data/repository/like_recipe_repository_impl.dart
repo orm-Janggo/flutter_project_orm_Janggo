@@ -15,7 +15,7 @@ class LikeRecipeRepositoryImpl implements LikeRecipeRepository {
       print('아이템 추가');
     } catch (e) {
       print('아이템 추가 실패: $e');
-      throw e;
+      rethrow;
     }
   }
 
@@ -27,7 +27,7 @@ class LikeRecipeRepositoryImpl implements LikeRecipeRepository {
       print('아이템 삭제');
     } catch (e) {
       print('아이템 삭제 실패: $e');
-      throw e;
+      rethrow;
     }
   }
 
@@ -41,7 +41,7 @@ class LikeRecipeRepositoryImpl implements LikeRecipeRepository {
       return items;
     } catch (e) {
       print('검색 실패: $e');
-      throw e;
+      rethrow;
     }
   }
 
