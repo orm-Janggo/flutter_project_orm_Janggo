@@ -1,7 +1,9 @@
+import 'package:flutter_project_orm_janggo/domain/model/like_model.dart';
+
 import '../../data/db/like_hive/like_item.dart';
 
 abstract interface class LikeRecipeRepository {
-  Future<void> addItem(LikeItem item);
+  Future<void> addItem(LikeModel model);
 
   Future<void> removeItem(LikeItem item);
 

@@ -1,4 +1,4 @@
-Map<String, dynamic> requestData = {
+const Map<String, dynamic> requestData = {
   'model': 'gpt-3.5-turbo',
   'messages': [
     {
@@ -19,7 +19,7 @@ Map<String, dynamic> requestData = {
     },
     {
       'role': 'user',
-      'content': '결과를 List로 자르기 쉽도록 레시피 1,2,3의 사이사이에 "next" 텍스트를 끼워줘'
+      'content': '레시피 결과를 List로 자르기 쉽도록 첫 번째, 두 번째, 세 번째 레시피 사이사이에 "next" 텍스트를 끼워줘'
     },
     {
       "role": "user",
@@ -30,10 +30,14 @@ Map<String, dynamic> requestData = {
       "content": "위의 형식을 따라 레시피를 생성해주세요. 음식 이름에 숫자나 다른 텍스트를 붙이지 말고, 재료와 조리과정은 번호를 붙여 자세하게 설명해주세요."
     },
     {
+      "role": "user",
+      "content": "가장 처음 오는 음식 제목(예시 에서 김치전)은 레시피1, 1.김치전 이런식으로 다른 텍스트를 붙이거나 추가하지 말고, 그냥 음식 이름만 적어주세요."
+    },
+    {
       'role': 'user',
       'content': '재료와 조리과정은 최대한 정성스럽고 자세하게 번호를 붙여가며 설명해줘'
     },
   ],
-  'temperature': 0.8,
-  'max_tokens': 1100,  // 더 많은 레시피를 받기 위해 최대 토큰 수 증가
+  'temperature': 0.9,
+  'max_tokens': 1500,  // 더 많은 레시피를 받기 위해 최대 토큰 수 증가
 };

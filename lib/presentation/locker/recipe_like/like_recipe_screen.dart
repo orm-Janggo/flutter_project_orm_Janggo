@@ -34,7 +34,7 @@ class _LikeRecipeScreenState extends State<LikeRecipeScreen> {
         children: [
           Column(
             children: [
-              SizedBox(
+              const SizedBox(
                 height: 100,
               ),
               Padding(
@@ -43,16 +43,16 @@ class _LikeRecipeScreenState extends State<LikeRecipeScreen> {
                   decoration: InputDecoration(
                     labelText: "좋아요 레시피 검색",
                     hintText: "레시피 이름 검색",
-                    suffixIcon: Icon(Icons.search),
+                    suffixIcon: const Icon(Icons.search),
                     filled: true,
                     fillColor: Colors.white,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: Colors.grey, width: 2),
+                      borderSide: const BorderSide(color: Colors.grey, width: 2),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: BorderSide(color: Colors.blue, width: 2),
+                      borderSide: const BorderSide(color: Colors.blue, width: 2),
                     ),
                   ),
                 ),
@@ -81,8 +81,8 @@ class _LikeRecipeScreenState extends State<LikeRecipeScreen> {
             child: Positioned(
               top: 50,
               child: ExpansionTile(
-                backgroundColor: Color(0xFFFDBA66),
-                title: Row(
+                backgroundColor: const Color(0xFFFDBA66),
+                title: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(width: 30),
@@ -97,7 +97,7 @@ class _LikeRecipeScreenState extends State<LikeRecipeScreen> {
                     onTap: () {
                       context.push('/main/recipe-history');
                     },
-                    child: ListTile(
+                    child: const ListTile(
                       title: Center(
                         child: Text(
                           "레시피 히스토리 보관함",

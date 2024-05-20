@@ -31,24 +31,6 @@ class LikeItem extends HiveObject {
     required this.time,
   });
 
-  LikeItem copyWith({
-    String? recipe,
-    String? id,
-    String? imageUrl,
-    bool? isLiked,
-    String? foodName,
-    DateTime? time,
-  }) {
-    return LikeItem(
-      recipe: recipe ?? this.recipe,
-      id: id ?? this.id,
-      imageUrl: imageUrl ?? this.imageUrl,
-      isLiked: isLiked ?? this.isLiked,
-      foodName: foodName ?? this.foodName,
-      time: time ?? this.time
-    );
-  }
-
   @override
   String toString() {
     return '$recipe, $id, $imageUrl, $isLiked, $foodName';

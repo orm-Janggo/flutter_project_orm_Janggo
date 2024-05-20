@@ -1,3 +1,3 @@
-abstract interface class ChatGptrepository {
+abstract interface class RecipeRepository {
   Future<List<String>> getRecipes(String ingredients);
 }

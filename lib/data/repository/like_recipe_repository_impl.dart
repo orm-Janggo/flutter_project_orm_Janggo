@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:flutter_project_orm_janggo/data/mapper/like_recipe_mapper.dart';
+import 'package:flutter_project_orm_janggo/domain/model/like_model.dart';
 import 'package:hive/hive.dart';
 
 import '../../domain/repository/like_recipe_repository.dart';
@@ -8,9 +10,9 @@ import '../db/like_hive/like_item.dart';
 
 class LikeRecipeRepositoryImpl implements LikeRecipeRepository {
   @override
-  Future<void> addItem(LikeItem item) async {
+  Future<void> addItem(LikeModel model) async {
     try {
-
+      LikeItem item = model.toLike();
       await likeBox.put(item.id, item);
       print('아이템 추가');
     } catch (e) {

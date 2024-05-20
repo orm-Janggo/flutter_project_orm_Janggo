@@ -1,12 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_project_orm_janggo/data/db/history/history_recipe_data.dart';
-import 'package:flutter_project_orm_janggo/domain/use_case/get_picture_use_case/get_picture_use_case.dart';
+import 'package:flutter_project_orm_janggo/domain/use_case/get_food_name_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/get_recipe_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/like_recipe_use_case/like_add_recipe_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/like_recipe_use_case/like_remove_recipe_use_case.dart';
 import 'package:flutter_project_orm_janggo/presentation/recipe_screen/recipe_state.dart';
 import 'package:hive/hive.dart';
 import '../../data/db/like_hive/like_item.dart';
+import '../../domain/model/like_model.dart';
+import '../../domain/use_case/get_picture_use_case/get_picture_use_case.dart';
 import '../../main.dart';
 
 class RecipeViewModel with ChangeNotifier {
@@ -14,6 +16,7 @@ class RecipeViewModel with ChangeNotifier {
   final GetRecipeUseCase _getRecipeUseCase;
   final LikeAddRecipeUseCase _likeAddRecipeUseCase;
   final LikeRemoveRecipeUseCase _likeRemoveRecipeUseCase;
+  final GetFoodNameUseCase _getFoodNameUseCase;
 
   RecipeState _state = const RecipeState();
 
@@ -57,15 +60,26 @@ class RecipeViewModel with ChangeNotifier {
   }
 
   Future<void> addLikeItem(LikeItem item) async {
-    try {
-      await _likeAddRecipeUseCase.execute(item);
-      notifyListeners();
-    } catch (e) {
-      print('아이템 추가 실패 $e');
-    }
+    // 레시피 텍스트에서 음식 이름 추출
+    print(state.isLike);
+    String foodName = await _getFoodNameUseCase.execute(item.recipe);
+
+    item.foodName = foodName;
+    item.recipe = item.recipe.replaceFirst(foodName, '').trim();
+
+    LikeModel likeModel = LikeModel(
+      recipe: item.recipe,
+      id: item.id,
+      imageUrl: item.imageUrl,
+      isLiked: item.isLiked,
+      foodName: item.foodName, // 수정된 foodName으로 전달
+      time: item.time,
+    );
+    await _likeAddRecipeUseCase.execute(likeModel);
+    _state = state.copyWith(foodName: foodName);
+
+    notifyListeners();
   }
-
-
 
   Future<void> removeLikeItem(LikeItem item) async {
     await _likeRemoveRecipeUseCase.execute(item);
@@ -144,8 +158,10 @@ class RecipeViewModel with ChangeNotifier {
     required GetRecipeUseCase getRecipeUseCase,
     required LikeAddRecipeUseCase likeAddRecipeUseCase,
     required LikeRemoveRecipeUseCase likeRemoveRecipeUseCase,
+    required GetFoodNameUseCase getFoodNameUseCase,
   })  : _getPictureUseCase = getPictureUseCase,
         _getRecipeUseCase = getRecipeUseCase,
         _likeAddRecipeUseCase = likeAddRecipeUseCase,
-        _likeRemoveRecipeUseCase = likeRemoveRecipeUseCase;
+        _likeRemoveRecipeUseCase = likeRemoveRecipeUseCase,
+        _getFoodNameUseCase = getFoodNameUseCase;
 }

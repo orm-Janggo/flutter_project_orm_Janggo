@@ -1,10 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_orm_janggo/data/db/like_hive/like_item.dart';
-import 'package:flutter_project_orm_janggo/data/gpt_data_source/gpt_data_source.dart';
-import 'package:flutter_project_orm_janggo/data/repository/chat_gpt_repository_impl.dart';
 import 'package:flutter_project_orm_janggo/data/repository/auth_repository_impl.dart';
 import 'package:flutter_project_orm_janggo/data/repository/like_recipe_repository_impl.dart';
+import 'package:flutter_project_orm_janggo/data/repository/recipe_repository_impl.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/auth_use_case/auth_state_changes_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/auth_use_case/send_password_reset_email_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/auth_use_case/sign_in_with_email_password_use_case.dart';
@@ -39,8 +38,10 @@ import 'package:flutter_project_orm_janggo/presentation/splash/splash_screen_vie
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import '../data/data_source/gpt_data_source/gpt_data_source.dart';
 import '../data/data_source/picture_data_source.dart';
 import '../data/repository/picture_repository_impl.dart';
+import '../domain/use_case/get_food_name_use_case.dart';
 import '../domain/use_case/get_picture_use_case/get_picture_use_case.dart';
 
 import '../presentation/locker/recipe_like/like_recipe_screen.dart';
@@ -136,14 +137,14 @@ final router = GoRouter(
                       ),
                     ),
                     getRecipeUseCase: GetRecipeUseCase(
-                      chatGptRepositoryImpl: ChatGptRepositoryImpl(
+                      chatGptRepositoryImpl: RecipeRepositoryImpl(
                         dataSource: GptDataSource(),
                       ),
                     ),
-                    likeAddRecipeUseCase: LikeAddRecipeUseCase(
-                        likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
-                    likeRemoveRecipeUseCase: LikeRemoveRecipeUseCase(
-                        likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
+                    likeAddRecipeUseCase: LikeAddRecipeUseCase(likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
+                    likeRemoveRecipeUseCase:
+                        LikeRemoveRecipeUseCase(likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
+                    getFoodNameUseCase: GetFoodNameUseCase(),
                   ),
                   child: RecipeScreen(
                     ingredients: state.extra as String,
