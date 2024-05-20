@@ -1,11 +1,12 @@
 import 'package:flutter_project_orm_janggo/data/db/like_hive/like_item.dart';
-import 'package:flutter_project_orm_janggo/data/repository/like_recipe_repository_impl.dart';
+
+import '../../repository/like_recipe_repository.dart';
 
 class LikeRemoveRecipeUseCase{
-  final LikeRecipeRepositoryImpl _likeRecipeRepositoryImpl;
+  final LikeRecipeRepository _likeRecipeRepositoryImpl;
 
   const LikeRemoveRecipeUseCase({
-    required LikeRecipeRepositoryImpl likeRecipeRepositoryImpl,
+    required LikeRecipeRepository likeRecipeRepositoryImpl,
   }) : _likeRecipeRepositoryImpl = likeRecipeRepositoryImpl;
 
   Future<void> execute(LikeItem item) async{

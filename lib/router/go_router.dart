@@ -4,6 +4,7 @@ import 'package:flutter_project_orm_janggo/data/db/like_hive/like_item.dart';
 import 'package:flutter_project_orm_janggo/data/repository/auth_repository_impl.dart';
 import 'package:flutter_project_orm_janggo/data/repository/like_recipe_repository_impl.dart';
 import 'package:flutter_project_orm_janggo/data/repository/recipe_repository_impl.dart';
+import 'package:flutter_project_orm_janggo/di/di_setup.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/auth_use_case/auth_state_changes_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/auth_use_case/send_password_reset_email_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/auth_use_case/sign_in_with_email_password_use_case.dart';
@@ -12,7 +13,6 @@ import 'package:flutter_project_orm_janggo/domain/use_case/auth_use_case/sign_up
 import 'package:flutter_project_orm_janggo/domain/use_case/auth_use_case/update_display_name_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/auth_use_case/update_password_use_case.dart';
 
-import 'package:flutter_project_orm_janggo/domain/use_case/get_recipe_use_case.dart';
 import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history/recipe_history_view_model.dart';
 import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_detail/recipe_history_detail_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_detail/recipe_history_detail_view_model.dart';
@@ -41,9 +41,10 @@ import 'package:provider/provider.dart';
 import '../data/data_source/gpt_data_source/gpt_data_source.dart';
 import '../data/data_source/picture_data_source.dart';
 import '../data/repository/picture_repository_impl.dart';
-import '../domain/use_case/get_food_name_use_case.dart';
 import '../domain/use_case/get_picture_use_case/get_picture_use_case.dart';
 
+import '../domain/use_case/recipe_use_case/get_food_name_use_case.dart';
+import '../domain/use_case/recipe_use_case/get_recipe_use_case.dart';
 import '../presentation/locker/recipe_like/like_recipe_screen.dart';
 import '../presentation/main/main_screen.dart';
 import '../presentation/main/main_view_model.dart';
@@ -58,12 +59,7 @@ final router = GoRouter(
       path: '/',
       builder: (context, state) {
         return ChangeNotifierProvider(
-          create: (_) => SplashScreenViewModel(
-            authStateChangesUseCase: AuthStateChangesUseCase(
-              authRepository,
-            ),
-            signOutUseCase: SignOutUseCase(authRepository),
-          ),
+          create: (_) => getIt<SplashScreenViewModel>(),
           child: const SplashScreen(),
         );
       },
@@ -72,14 +68,7 @@ final router = GoRouter(
           path: 'sign-in',
           builder: (context, state) {
             return ChangeNotifierProvider(
-              create: (_) => SignInViewModel(
-                signInWithEmailPasswordUseCase: SignInWithEmailPasswordUseCase(
-                  authRepository,
-                ),
-                authStateChangesUseCase:
-                    AuthStateChangesUseCase(authRepository),
-                kakaoLoginService: KakaoLoginService(),
-              ),
+              create: (_) => getIt<SignInViewModel>(),
               child: const SignInScreen(),
             );
           },
@@ -88,12 +77,7 @@ final router = GoRouter(
               path: 'forgot-password',
               builder: (context, state) {
                 return ChangeNotifierProvider(
-                  create: (_) => ForgotPasswordViewModel(
-                    sendPasswordResetEmailUseCase:
-                        SendPasswordResetEmailUseCase(
-                      authRepository,
-                    ),
-                  ),
+                  create: (_) => getIt<ForgotPasswordViewModel>(),
                   child: const ForgotPasswordScreen(),
                 );
               },
@@ -104,11 +88,7 @@ final router = GoRouter(
           path: 'sign-up',
           builder: (context, state) {
             return ChangeNotifierProvider(
-              create: (_) => SignUpViewModel(
-                signUpWithEmailPasswordUseCase: SignUpWithEmailPasswordUseCase(
-                  authRepository,
-                ),
-              ),
+              create: (_) => getIt<SignUpViewModel>(),
               child: const SignUpScreen(),
             );
           },
@@ -117,11 +97,7 @@ final router = GoRouter(
           path: 'main',
           builder: (context, state) {
             return ChangeNotifierProvider(
-              create: (_) => MainViewModel(
-                authStateChangesUseCase: AuthStateChangesUseCase(
-                  authRepository,
-                ),
-              ),
+              create: (_) => getIt<MainViewModel>(),
               child: const MainScreen(),
             );
           },
@@ -130,22 +106,7 @@ final router = GoRouter(
               path: 'recipe',
               builder: (context, state) {
                 return ChangeNotifierProvider(
-                  create: (_) => RecipeViewModel(
-                    getPictureUseCase: GetPictureUseCase(
-                      repository: PictureRepositoryImpl(
-                        pictureDataSource: PictureDataSource(),
-                      ),
-                    ),
-                    getRecipeUseCase: GetRecipeUseCase(
-                      chatGptRepositoryImpl: RecipeRepositoryImpl(
-                        dataSource: GptDataSource(),
-                      ),
-                    ),
-                    likeAddRecipeUseCase: LikeAddRecipeUseCase(likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
-                    likeRemoveRecipeUseCase:
-                        LikeRemoveRecipeUseCase(likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
-                    getFoodNameUseCase: GetFoodNameUseCase(),
-                  ),
+                  create: (_) => getIt<RecipeViewModel>(),
                   child: RecipeScreen(
                     ingredients: state.extra as String,
                   ),
@@ -156,11 +117,7 @@ final router = GoRouter(
                 path: 'recipe-like',
                 builder: (context, state) {
                   return ChangeNotifierProvider(
-                    create: (_) => LikeRecipeViewModel(
-                      likeRemoveRecipeUseCase: LikeRemoveRecipeUseCase(
-                        likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl(),
-                      ),
-                    ),
+                    create: (_) => getIt<LikeRecipeViewModel>(),
                     child: const LikeRecipeScreen(),
                   );
                 },
@@ -178,7 +135,7 @@ final router = GoRouter(
               path: 'recipe-history',
               builder: (context, state) {
                 return ChangeNotifierProvider(
-                  create: (_) => RecipeHistoryViewModel(),
+                  create: (_) => getIt<RecipeHistoryViewModel>(),
                   child: const RecipeHistoryScreen(),
                 );
               },
@@ -187,7 +144,7 @@ final router = GoRouter(
               path: 'recipe-history-detail',
               builder: (context, state) {
                 return ChangeNotifierProvider(
-                    create: (_) => RecipeHistoryDetailViewModel(),
+                    create: (_) => getIt<RecipeHistoryDetailViewModel>(),
                     child: RecipeHistoryDetailScreen(
                       id: state.extra as int,
                     ));
@@ -197,20 +154,7 @@ final router = GoRouter(
               path: 'my-page',
               builder: (context, state) {
                 return ChangeNotifierProvider(
-                  create: (_) => MyPageViewModel(
-                    authStateChangesUseCase: AuthStateChangesUseCase(
-                      authRepository,
-                    ),
-                    updateDisplayNameUseCase: UpdateDisplayNameUseCase(
-                      authRepository,
-                    ),
-                    updatePasswordUseCase: UpdatePasswordUseCase(
-                      authRepository,
-                    ),
-                    signOutUseCase: SignOutUseCase(
-                      authRepository,
-                    ),
-                  ),
+                  create: (_) => getIt<MyPageViewModel>(),
                   child: const MyPageScreen(),
                 );
               },

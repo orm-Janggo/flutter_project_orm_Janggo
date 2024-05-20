@@ -1,10 +1,10 @@
-import 'package:flutter_project_orm_janggo/data/repository/recipe_repository_impl.dart';
+import '../../repository/recipe_repository.dart';
 
 class GetRecipeUseCase {
-  final RecipeRepositoryImpl _chatGptRepositoryImpl;
+  final RecipeRepository _chatGptRepositoryImpl;
 
   const GetRecipeUseCase({
-    required RecipeRepositoryImpl chatGptRepositoryImpl,
+    required RecipeRepository chatGptRepositoryImpl,
   }) : _chatGptRepositoryImpl = chatGptRepositoryImpl;
 
   Future<List<String>> execute(String ingredients) async {
