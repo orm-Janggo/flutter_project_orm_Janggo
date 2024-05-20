@@ -47,24 +47,14 @@ class LikeWidget extends StatelessWidget {
                     Positioned(
                       top: 10,
                       right: 10,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white, // 테두리 안쪽 배경색
-                          border: Border.all(
-                            color: Colors.black, // 테두리 색상
-                            width: 2, // 테두리 두께
-                          ),
-                          borderRadius: BorderRadius.circular(8), // 테두리의 둥근 모서리 반경
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0), // 테두리 안쪽의 패딩
-                          child: GestureDetector(
-                            onTap: onTap,
-                            child: Icon(
-                              Icons.close,
-                              color: Colors.black, // 아이콘의 색상 설정
-                              size: 24, // 아이콘의 크기 설정
-                            ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0), // 테두리 안쪽의 패딩
+                        child: GestureDetector(
+                          onTap: onTap,
+                          child: Icon(
+                            Icons.close,
+                            color: Colors.black, // 아이콘의 색상 설정
+                            size: 24, // 아이콘의 크기 설정
                           ),
                         ),
                       ),

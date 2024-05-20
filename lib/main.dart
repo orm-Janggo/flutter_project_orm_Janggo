@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_project_orm_janggo/data/db/history/history_recipe_data.dart';
+import 'package:flutter_project_orm_janggo/di/di_setup.dart';
 import 'package:flutter_project_orm_janggo/router/go_router.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -27,8 +28,10 @@ void main() async {
   Hive.registerAdapter(HistoryRecipeDataAdapter());
 
   await dotenv.load(fileName: '.env');
+
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  diSetUp();
   // runApp() 호출 전 Flutter SDK 초기화
   KakaoSdk.init(
     nativeAppKey: KakaoConfig.nativeAppKey,
