@@ -32,6 +32,7 @@ import '../presentation/main/main_view_model.dart';
 import '../presentation/my_page/my_page_view_model.dart';
 import '../presentation/recipe_screen/recipe_view_model.dart';
 import '../presentation/sign/forgot_password/forgot_password_view_model.dart';
+import '../presentation/sign/sign_in/kakao/social_login/kakao_login/kakao_login_service.dart';
 import '../presentation/sign/sign_in/sign_in_view_model.dart';
 import '../presentation/sign/sign_up/sign_up_view_model.dart';
 import '../presentation/splash/splash_screen_view_model.dart';
@@ -72,6 +73,8 @@ void diSetUp() {
   getIt.registerSingleton<GetFoodNameUseCase>(GetFoodNameUseCase());
   getIt.registerSingleton<GetRecipeUseCase>(
       GetRecipeUseCase(chatGptRepositoryImpl: getIt()));
+
+  getIt.registerLazySingleton<KakaoLoginService>(() => KakaoLoginService());
 
   getIt.registerFactory(() => MainViewModel(authStateChangesUseCase: getIt()));
   getIt.registerFactory(() => MyPageViewModel(
