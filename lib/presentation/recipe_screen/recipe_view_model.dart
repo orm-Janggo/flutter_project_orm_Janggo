@@ -30,7 +30,7 @@ class RecipeViewModel with ChangeNotifier {
     List<String> images = [];
     try {
       for (String recipe in query) {
-        final recipeTitle = recipe.split('\n')[0].trim();
+        final recipeTitle = await _getFoodNameUseCase.execute(recipe);
         final pic = await _getPictureUseCase.execute(recipeTitle);
 
         if (pic == null || pic.url.isEmpty) {
