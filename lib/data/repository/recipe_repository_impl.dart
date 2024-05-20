@@ -1,10 +1,12 @@
-import 'package:flutter_project_orm_janggo/data/gpt_data_source/gpt_data_source.dart';
+
 import 'package:flutter_project_orm_janggo/domain/repository/chat_gpt_repository.dart';
 
-class ChatGptRepositoryImpl implements ChatGptrepository {
+import '../data_source/gpt_data_source/gpt_data_source.dart';
+
+class RecipeRepositoryImpl implements RecipeRepository {
   final GptDataSource _dataSource;
 
-  const ChatGptRepositoryImpl({
+  const RecipeRepositoryImpl({
     required GptDataSource dataSource,
   }) : _dataSource = dataSource;
 

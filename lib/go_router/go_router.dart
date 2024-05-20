@@ -1,8 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_orm_janggo/data/db/like_hive/like_item.dart';
-import 'package:flutter_project_orm_janggo/data/gpt_data_source/gpt_data_source.dart';
-import 'package:flutter_project_orm_janggo/data/repository/chat_gpt_repository_impl.dart';
+import 'package:flutter_project_orm_janggo/data/repository/recipe_repository_impl.dart';
 import 'package:flutter_project_orm_janggo/data/repository/firebase_auth_repository/firebase_auth_repository_impl.dart';
 import 'package:flutter_project_orm_janggo/data/repository/like_recipe_repository_impl.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_case/auth_state_changes_use_case.dart';
@@ -12,6 +11,7 @@ import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_cas
 import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_case/sign_up_with_email_password_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_case/update_display_name_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_case/update_password_use_case.dart';
+import 'package:flutter_project_orm_janggo/domain/use_case/get_food_name_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/get_recipe_use_case.dart';
 import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_detail/recipe_history_detail_screen.dart';
 import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_detail/recipe_history_detail_view_model.dart';
@@ -37,6 +37,7 @@ import 'package:flutter_project_orm_janggo/presentation/splash/splash_screen_vie
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
+import '../data/data_source/gpt_data_source/gpt_data_source.dart';
 import '../data/data_source/picture_data_source.dart';
 import '../data/repository/picture_repository_impl.dart';
 import '../domain/use_case/get_picture_use_case.dart';
@@ -129,13 +130,14 @@ final router = GoRouter(
                       ),
                     ),
                     getRecipeUseCase: GetRecipeUseCase(
-                      chatGptRepositoryImpl: ChatGptRepositoryImpl(
+                      chatGptRepositoryImpl: RecipeRepositoryImpl(
                         dataSource: GptDataSource(),
                       ),
                     ),
                     likeAddRecipeUseCase: LikeAddRecipeUseCase(likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
                     likeRemoveRecipeUseCase:
                         LikeRemoveRecipeUseCase(likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl()),
+                    getFoodNameUseCase: GetFoodNameUseCase(),
                   ),
                   child: RecipeScreen(
                     ingredients: state.extra as String,
@@ -144,28 +146,27 @@ final router = GoRouter(
               },
             ),
             GoRoute(
-              path: 'recipe-like',
-              builder: (context, state) {
-                return ChangeNotifierProvider(
-                  create: (_) => LikeRecipeViewModel(
-                    likeRemoveRecipeUseCase: LikeRemoveRecipeUseCase(
-                      likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl(),
+                path: 'recipe-like',
+                builder: (context, state) {
+                  return ChangeNotifierProvider(
+                    create: (_) => LikeRecipeViewModel(
+                      likeRemoveRecipeUseCase: LikeRemoveRecipeUseCase(
+                        likeRecipeRepositoryImpl: LikeRecipeRepositoryImpl(),
+                      ),
                     ),
+                    child: const LikeRecipeScreen(),
+                  );
+                },
+                routes: [
+                  GoRoute(
+                    path: 'recipe-like-detail',
+                    builder: (context, state) {
+                      return LikeRecipeDetailScreen(
+                        recipe: state.extra as LikeItem,
+                      );
+                    },
                   ),
-                  child: const LikeRecipeScreen(),
-                );
-              },
-              routes: [
-                GoRoute(
-                  path: 'recipe-like-detail',
-                  builder: (context, state) {
-                    return LikeRecipeDetailScreen(
-                      recipe: state.extra as LikeItem,
-                    );
-                  },
-                ),
-              ]
-            ),
+                ]),
             GoRoute(
               path: 'recipe-history',
               builder: (context, state) {

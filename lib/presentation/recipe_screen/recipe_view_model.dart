@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_project_orm_janggo/data/db/history/history_recipe_data.dart';
+import 'package:flutter_project_orm_janggo/domain/use_case/get_food_name_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/get_picture_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/get_recipe_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/like_recipe_use_case/like_add_recipe_use_case.dart';
@@ -7,6 +8,7 @@ import 'package:flutter_project_orm_janggo/domain/use_case/like_recipe_use_case/
 import 'package:flutter_project_orm_janggo/presentation/recipe_screen/recipe_state.dart';
 import 'package:hive/hive.dart';
 import '../../data/db/like_hive/like_item.dart';
+import '../../domain/model/like_model.dart';
 import '../../main.dart';
 
 class RecipeViewModel with ChangeNotifier {
@@ -14,6 +16,7 @@ class RecipeViewModel with ChangeNotifier {
   final GetRecipeUseCase _getRecipeUseCase;
   final LikeAddRecipeUseCase _likeAddRecipeUseCase;
   final LikeRemoveRecipeUseCase _likeRemoveRecipeUseCase;
+  final GetFoodNameUseCase _getFoodNameUseCase;
 
   RecipeState _state = const RecipeState();
 
@@ -59,48 +62,20 @@ class RecipeViewModel with ChangeNotifier {
   Future<void> addLikeItem(LikeItem item) async {
     // 레시피 텍스트에서 음식 이름 추출
     print(state.isLike);
-    String foodName = '';
+    String foodName = await _getFoodNameUseCase.execute(item.recipe);
 
-    // 레시피 텍스트를 줄 단위로 분할하여 처리
-    List<String> lines = item.recipe.split('\n');
+    item.foodName = foodName;
+    item.recipe = item.recipe.replaceFirst(foodName, '').trim();
 
-    // 레시피 이름 추출
-    for (int i = 0; i < lines.length; i++) {
-      // 현재 줄의 텍스트
-      String line = lines[i].trim();
-
-      // 음식 이름이 아니면 다음 줄로 넘어감
-      if (line.isEmpty || line.toLowerCase().contains('레시피')) {
-        continue;
-      }
-
-      // 번호가 있으면 제거
-      if (line.startsWith(RegExp(r'\d+\. '))) {
-        line = line.substring(line.indexOf(' ') + 1);
-      }
-
-      // 텍스트가 너무 길면 음식 이름이 아니라고 판단하여 루프 종료
-      if (line.length > 20) {
-        break;
-      }
-
-      // 음식 이름 추출 완료
-      foodName = line;
-      break;
-    }
-
-    final recipe = item.recipe.replaceFirst(foodName, '').trim();
-
-    final updatedItem = item.copyWith(
-      foodName: foodName,
-      recipe: recipe,
+    LikeModel likeModel = LikeModel(
+      recipe: item.recipe,
       id: item.id,
       imageUrl: item.imageUrl,
       isLiked: item.isLiked,
+      foodName: item.foodName, // 수정된 foodName으로 전달
       time: item.time,
     );
-
-    await _likeAddRecipeUseCase.execute(updatedItem);
+    await _likeAddRecipeUseCase.execute(likeModel);
     _state = state.copyWith(foodName: foodName);
 
     notifyListeners();
@@ -183,8 +158,10 @@ class RecipeViewModel with ChangeNotifier {
     required GetRecipeUseCase getRecipeUseCase,
     required LikeAddRecipeUseCase likeAddRecipeUseCase,
     required LikeRemoveRecipeUseCase likeRemoveRecipeUseCase,
+    required GetFoodNameUseCase getFoodNameUseCase,
   })  : _getPictureUseCase = getPictureUseCase,
         _getRecipeUseCase = getRecipeUseCase,
         _likeAddRecipeUseCase = likeAddRecipeUseCase,
-        _likeRemoveRecipeUseCase = likeRemoveRecipeUseCase;
+        _likeRemoveRecipeUseCase = likeRemoveRecipeUseCase,
+        _getFoodNameUseCase = getFoodNameUseCase;
 }
