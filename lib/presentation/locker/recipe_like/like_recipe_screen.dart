@@ -17,8 +17,34 @@ class LikeRecipeScreen extends StatefulWidget {
 
 class _LikeRecipeScreenState extends State<LikeRecipeScreen> {
 
+  late TextEditingController searchController = TextEditingController();
+  late List<LikeItem> filteredRecipes = [];
+
+  @override
+  void initState() {
+    super.initState();
+    searchController.addListener(onSearchChanged);
+    filteredRecipes = likeBox.values.toList();
+  }
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
+
+  void onSearchChanged() {
+    setState(() {
+      filteredRecipes = likeBox.values
+          .where((recipe) =>
+          recipe.foodName.toLowerCase().contains(searchController.text.toLowerCase()))
+          .toList();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+
     final viewModel = context.watch<LikeRecipeViewModel>();
 
     void removeFromLikedRecipes(LikeItem recipe) {
@@ -40,10 +66,14 @@ class _LikeRecipeScreenState extends State<LikeRecipeScreen> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: TextField(
+                  controller: searchController,
                   decoration: InputDecoration(
                     labelText: "좋아요 레시피 검색",
                     hintText: "레시피 이름 검색",
-                    suffixIcon: const Icon(Icons.search),
+                    suffixIcon: IconButton(
+                      onPressed: onSearchChanged, // 검색 아이콘 클릭 시 호출
+                      icon: Icon(Icons.search),
+                    ),
                     filled: true,
                     fillColor: Colors.white,
                     border: OutlineInputBorder(
@@ -59,15 +89,15 @@ class _LikeRecipeScreenState extends State<LikeRecipeScreen> {
               ),
               Expanded(
                 child: ListView.builder(
-                  itemCount: likeBox.length,
+                  itemCount: filteredRecipes.length,
                   itemBuilder: (context, index) {
-                    final recipe = likeBox.getAt(index);
+                    final recipe = filteredRecipes[index];
                     return Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: LikeWidget(
                         recipe: recipe,
                         onTap: () {
-                          removeFromLikedRecipes(recipe!);
+                          removeFromLikedRecipes(recipe);
                         },
                       ),
                     );
