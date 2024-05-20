@@ -21,13 +21,19 @@ LikeModel _$LikeModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$LikeModel {
   String get recipe => throw _privateConstructorUsedError;
+
   String get id => throw _privateConstructorUsedError;
+
   String get imageUrl => throw _privateConstructorUsedError;
+
   bool get isLiked => throw _privateConstructorUsedError;
+
   String get foodName => throw _privateConstructorUsedError;
+
   DateTime get time => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
   @JsonKey(ignore: true)
   $LikeModelCopyWith<LikeModel> get copyWith =>
       throw _privateConstructorUsedError;
@@ -37,6 +43,7 @@ mixin _$LikeModel {
 abstract class $LikeModelCopyWith<$Res> {
   factory $LikeModelCopyWith(LikeModel value, $Res Function(LikeModel) then) =
       _$LikeModelCopyWithImpl<$Res, LikeModel>;
+
   @useResult
   $Res call(
       {String recipe,
@@ -54,6 +61,7 @@ class _$LikeModelCopyWithImpl<$Res, $Val extends LikeModel>
 
   // ignore: unused_field
   final $Val _value;
+
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -102,6 +110,7 @@ abstract class _$$LikeModelImplCopyWith<$Res>
   factory _$$LikeModelImplCopyWith(
           _$LikeModelImpl value, $Res Function(_$LikeModelImpl) then) =
       __$$LikeModelImplCopyWithImpl<$Res>;
+
   @override
   @useResult
   $Res call(
@@ -240,16 +249,22 @@ abstract class _LikeModel implements LikeModel {
 
   @override
   String get recipe;
+
   @override
   String get id;
+
   @override
   String get imageUrl;
+
   @override
   bool get isLiked;
+
   @override
   String get foodName;
+
   @override
   DateTime get time;
+
   @override
   @JsonKey(ignore: true)
   _$$LikeModelImplCopyWith<_$LikeModelImpl> get copyWith =>

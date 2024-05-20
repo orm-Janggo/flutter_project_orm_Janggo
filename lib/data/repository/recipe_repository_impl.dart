@@ -1,5 +1,4 @@
-
-import 'package:flutter_project_orm_janggo/domain/repository/chat_gpt_repository.dart';
+import 'package:flutter_project_orm_janggo/domain/repository/recipe_repository.dart';
 
 import '../data_source/gpt_data_source/gpt_data_source.dart';
 
