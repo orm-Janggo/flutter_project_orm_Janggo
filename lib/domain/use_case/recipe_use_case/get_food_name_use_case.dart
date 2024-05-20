@@ -7,6 +7,13 @@ class GetFoodNameUseCase {
       // 현재 줄의 텍스트
       String line = lines[i].trim();
 
+      // '음식 이름:' 패턴이 포함되어 있으면 해당 부분을 추출
+      if (line.toLowerCase().contains('음식 이름:')) {
+        int startIndex = line.toLowerCase().indexOf('음식 이름:') + '음식 이름:'.length;
+        foodName = line.substring(startIndex).trim();
+        break;
+      }
+
       // 음식 이름이 아니면 다음 줄로 넘어감
       if (line.isEmpty || line.toLowerCase().contains('레시피')) {
         continue;
