@@ -1,9 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_project_orm_janggo/domain/model/social_login/kakao_login.dart';
+import 'package:flutter_project_orm_janggo/presentation/sign/sign_in/kakao/social_login/kakao_login/kakao_login_service.dart';
 import 'package:flutter_project_orm_janggo/presentation/splash/splash_screen_view_model.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -59,7 +60,8 @@ class _SplashScreenState extends State<SplashScreen> {
 class SplashScreenImage extends StatelessWidget {
   final String imagePath;
 
-  const SplashScreenImage({Key? key, required this.imagePath}) : super(key: key);
+  const SplashScreenImage({Key? key, required this.imagePath})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -81,8 +83,8 @@ class SplashScreen5 extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
     const double paddingValue = 16.0;
-    final viewModelForgetUser = context.watch<SplashScreenViewModel>();
-    viewModelForgetUser.getCurrentUserInfo();
+    final viewModelForFetchUser = context.watch<SplashScreenViewModel>();
+    viewModelForFetchUser.fetchCurrentUserInfo();
 
     return Scaffold(
       body: Stack(
@@ -132,46 +134,50 @@ class SplashScreen5 extends StatelessWidget {
                 borderRadius: BorderRadius.circular(24),
                 color: Colors.white70,
               ),
-              child: viewModelForgetUser.firebaseUser == null
+              child: viewModelForFetchUser.firebaseUser == null
                   ? TextButton(
-                onPressed: () {
-                  // Sign In 버튼 눌렀을 때 처리
-                  context.push('/sign-in');
-                },
-                child: const Text(
-                  "로그인",
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.black,
-                    fontFamily: 'school_font',
-                  ),
-                ),
-              )
+                      onPressed: () {
+                        // Sign In 버튼 눌렀을 때 처리
+                        context.push('/sign-in');
+                      },
+                      child: const Text(
+                        "로그인",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.black,
+                          fontFamily: 'school_font',
+                        ),
+                      ),
+                    )
                   : TextButton(
-                onPressed: () async {
-                  if (viewModelForgetUser.firebaseUser != null) {
-                    // 로그아웃 처리
-                    viewModelForgetUser.signOutCurrentUser();
-                  }
+                      onPressed: () async {
+                        if (viewModelForFetchUser.firebaseUser != null) {
+                          // 로그아웃 처리
+                          viewModelForFetchUser.signOutCurrentUser();
+                        }
 
-                  // 카카오 로그아웃
-                  KakaoLogin kakaoLogin = KakaoLogin();
-                  if (viewModelForgetUser.kakaoUser != null) {
-                    await kakaoLogin.logout();
-                  }
+                        // 카카오 로그아웃
+                        KakaoLoginService kakaoLoginService =
+                            KakaoLoginService();
+                        if (viewModelForFetchUser.kakaoUser != null) {
+                          await kakaoLoginService.logout();
+                        }
 
-                  // 홈으로 이동
-                  context.push('/');
-                },
-                child: const Text(
-                  "로그아웃",
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.black,
-                    fontFamily: 'school_font',
-                  ),
-                ),
-              ),
+                        if (!context.mounted) {
+                          // 홈으로 이동
+                          context.push('/');
+                        }
+
+                      },
+                      child: const Text(
+                        "로그아웃",
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.black,
+                          fontFamily: 'school_font',
+                        ),
+                      ),
+                    ),
             ),
           ),
           Positioned(
@@ -187,8 +193,7 @@ class SplashScreen5 extends StatelessWidget {
                 const SizedBox(width: 10),
                 const Text(
                   'or',
-                  style: TextStyle(
-                    fontFamily: 'school_font', fontSize: 14),
+                  style: TextStyle(fontFamily: 'school_font', fontSize: 14),
                 ),
                 const SizedBox(width: 10),
                 Container(

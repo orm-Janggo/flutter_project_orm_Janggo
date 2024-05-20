@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_project_orm_janggo/data/db/history/history_recipe_data.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/get_food_name_use_case.dart';
-import 'package:flutter_project_orm_janggo/domain/use_case/get_picture_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/get_recipe_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/like_recipe_use_case/like_add_recipe_use_case.dart';
 import 'package:flutter_project_orm_janggo/domain/use_case/like_recipe_use_case/like_remove_recipe_use_case.dart';
@@ -9,6 +8,7 @@ import 'package:flutter_project_orm_janggo/presentation/recipe_screen/recipe_sta
 import 'package:hive/hive.dart';
 import '../../data/db/like_hive/like_item.dart';
 import '../../domain/model/like_model.dart';
+import '../../domain/use_case/get_picture_use_case/get_picture_use_case.dart';
 import '../../main.dart';
 
 class RecipeViewModel with ChangeNotifier {

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_state.dart';
+import 'package:flutter_project_orm_janggo/data/db/history/history_recipe_data.dart';
+import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history/recipe_history_state.dart';
 import 'package:hive/hive.dart';
-
-import '../../../data/db/history/history_recipe_data.dart';
 
 class RecipeHistoryViewModel with ChangeNotifier {
   RecipeHistoryState _state = const RecipeHistoryState();
@@ -33,7 +32,8 @@ class RecipeHistoryViewModel with ChangeNotifier {
       }
     }
 
-    _state = _state.copyWith(id: ids, url: imagePaths, recipe: recipes, searchDate: dates);
+    _state = _state.copyWith(
+        id: ids, url: imagePaths, recipe: recipes, searchDate: dates);
 
     notifyListeners();
   }
@@ -44,7 +44,6 @@ class RecipeHistoryViewModel with ChangeNotifier {
     // id에 해당하는 recipe 찾기
     var recipe = box.values.firstWhere((recipe) => recipe.id == id);
 
-    // 데이터가 있는지 확인하고 삭제
     await recipe.delete();
 
     print('$id 번 레시피 삭제');
@@ -52,7 +51,7 @@ class RecipeHistoryViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> deleteAllDataFromBox() async {
+  Future<void> deleteAllDataFromHive() async {
     var box = await Hive.openBox<HistoryRecipeData>('historyRecipeBox');
 
     // 모든 데이터 삭제
@@ -63,19 +62,21 @@ class RecipeHistoryViewModel with ChangeNotifier {
     notifyListeners();
   }
 
-  String searchDateText(String date) {
-    String showDate = '';
+  String dateText(String date) {
+    String? dateTextMessage;
 
     int searchDate = int.parse(date);
-    int today = int.parse('${DateTime.now().year}${DateTime.now().month}${DateTime.now().day}');
+
+    int today = int.parse(
+        '${DateTime.now().year}${DateTime.now().month}${DateTime.now().day}');
 
     if (today == searchDate) {
-      showDate = '오늘';
+      dateTextMessage = '오늘';
     } else if (today - searchDate == 1) {
-      showDate = '하루 전';
+      dateTextMessage = '하루 전';
     } else {
-      showDate = '${today - searchDate}일 전';
+      dateTextMessage = '${today - searchDate}일 전';
     }
-    return showDate;
+    return dateTextMessage;
   }
 }

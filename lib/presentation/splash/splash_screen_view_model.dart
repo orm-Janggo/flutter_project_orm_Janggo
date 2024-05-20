@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_project_orm_janggo/domain/model/user_info_model/user_info_model.dart';
-import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_case/auth_state_changes_use_case.dart';
-import 'package:flutter_project_orm_janggo/domain/use_case/firebase_auth_use_case/sign_out_use_case.dart';
+import 'package:flutter_project_orm_janggo/domain/use_case/auth_use_case/auth_state_changes_use_case.dart';
+import 'package:flutter_project_orm_janggo/domain/use_case/auth_use_case/sign_out_use_case.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart' as kakao;
 
 class SplashScreenViewModel with ChangeNotifier {
@@ -15,7 +15,6 @@ class SplashScreenViewModel with ChangeNotifier {
         _signOutUseCase = signOutUseCase;
 
   String? _userEmail;
-  String? _userDisplayName;
   UserInfoModel? _firebaseUser;
   kakao.User? _kakaoUser;
 
@@ -23,21 +22,12 @@ class SplashScreenViewModel with ChangeNotifier {
 
   String? get userEmail => _userEmail;
 
-  String? get userDisplayName => _userDisplayName;
-
   UserInfoModel? get firebaseUser => _firebaseUser;
 
-  void getCurrentUserInfo() {
+  void fetchCurrentUserInfo() {
     _firebaseUser = _authStateChangesUseCase.execute();
-    // notifyListeners();
 
-    _userEmail = firebaseUser?.email;
-    // notifyListeners();
-
-    _userDisplayName = firebaseUser?.displayName;
-    // notifyListeners();
     _updateKaKaoUserInfo();
-    // notifyListeners();
   }
 
   void _updateKaKaoUserInfo() async {
@@ -59,6 +49,6 @@ class SplashScreenViewModel with ChangeNotifier {
   void signOutCurrentUser() async {
     await _signOutUseCase.execute();
 
-    // notifyListeners();
+    notifyListeners();
   }
 }

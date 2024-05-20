@@ -13,8 +13,6 @@ class ForgotPasswordScreen extends StatefulWidget {
 class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
   final _formKey = GlobalKey<FormState>();
 
-  String? inputEmail;
-
   @override
   Widget build(BuildContext context) {
     final viewModel = context.watch<ForgotPasswordViewModel>();
@@ -51,7 +49,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       return null;
                     },
                     onSaved: (String? value) {
-                      inputEmail = value;
+                      viewModel.changeInputEmail(value!);
                     },
                   ),
                 ),
@@ -74,7 +72,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   _formKey.currentState?.save();
                 }
 
-                viewModel.sendPasswordResetWithFirebaseAuth(inputEmail!);
+                viewModel
+                    .sendPasswordResetWithFirebaseAuth(viewModel.inputEmail!);
 
                 // check mount
                 if (!context.mounted) return;

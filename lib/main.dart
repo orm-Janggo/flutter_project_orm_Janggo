@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_project_orm_janggo/data/db/history/history_recipe_data.dart';
-import 'package:flutter_project_orm_janggo/go_router/go_router.dart';
+import 'package:flutter_project_orm_janggo/router/go_router.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hive_flutter/adapters.dart';

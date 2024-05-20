@@ -21,10 +21,13 @@ PictureModel _$PictureModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$PictureModel {
   int get id => throw _privateConstructorUsedError;
+
   String get url => throw _privateConstructorUsedError;
+
   String get tags => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
   @JsonKey(ignore: true)
   $PictureModelCopyWith<PictureModel> get copyWith =>
       throw _privateConstructorUsedError;
@@ -35,6 +38,7 @@ abstract class $PictureModelCopyWith<$Res> {
   factory $PictureModelCopyWith(
           PictureModel value, $Res Function(PictureModel) then) =
       _$PictureModelCopyWithImpl<$Res, PictureModel>;
+
   @useResult
   $Res call({int id, String url, String tags});
 }
@@ -46,6 +50,7 @@ class _$PictureModelCopyWithImpl<$Res, $Val extends PictureModel>
 
   // ignore: unused_field
   final $Val _value;
+
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -79,6 +84,7 @@ abstract class _$$PictureModelImplCopyWith<$Res>
   factory _$$PictureModelImplCopyWith(
           _$PictureModelImpl value, $Res Function(_$PictureModelImpl) then) =
       __$$PictureModelImplCopyWithImpl<$Res>;
+
   @override
   @useResult
   $Res call({int id, String url, String tags});
@@ -176,10 +182,13 @@ abstract class _PictureModel implements PictureModel {
 
   @override
   int get id;
+
   @override
   String get url;
+
   @override
   String get tags;
+
   @override
   @JsonKey(ignore: true)
   _$$PictureModelImplCopyWith<_$PictureModelImpl> get copyWith =>

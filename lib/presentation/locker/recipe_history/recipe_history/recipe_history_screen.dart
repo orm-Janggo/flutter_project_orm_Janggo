@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_view_model.dart';
+import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history/recipe_history_view_model.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -92,7 +92,7 @@ class _RecipeHistoryScreenState extends State<RecipeHistoryScreen> {
                                                 BorderRadius.circular(48.0),
                                           ),
                                           child: Text(
-                                            viewModel.searchDateText(
+                                            viewModel.dateText(
                                                 state.searchDate[index]),
                                           ),
                                         ),

@@ -1,5 +1,5 @@
 import 'package:flutter_project_orm_janggo/data/mapper/picture_mapper.dart';
-import 'package:flutter_project_orm_janggo/domain/model/picture_model.dart';
+import 'package:flutter_project_orm_janggo/domain/model/picture_model/picture_model.dart';
 import 'package:flutter_project_orm_janggo/domain/repository/picture_repository.dart';
 
 import '../data_source/picture_data_source.dart';
