@@ -4,7 +4,6 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../data/user_information/user_information.dart';
-import '../sign/sign_in/sign_in_view_model.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -17,13 +16,6 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
-    // _initKakaoUser();
-  }
-
-  Future<void> _initKakaoUser() async {
-    final signInViewModel = context.read<SignInViewModel>();
-    await signInViewModel.signInWithKakao();
-    setState(() {}); // 사용자 정보가 업데이트되었으므로 화면 갱신
   }
 
   final List<TextEditingController> _controllers = [
@@ -74,10 +66,6 @@ class _MainScreenState extends State<MainScreen> {
     viewModelForFetchUser.fetchCurrentUserInfo();
 
     final double screenWidth = MediaQuery.of(context).size.width;
-    final double screenHeight = MediaQuery.of(context).size.height;
-
-    final double centerX = screenWidth / 2;
-    final double centerY = screenHeight / 2;
 
     final userInformation = UserInformation(); // 싱글턴 인스턴스
     final loginMethod = userInformation.loginMethod; // 로그인 방식 가져오기
