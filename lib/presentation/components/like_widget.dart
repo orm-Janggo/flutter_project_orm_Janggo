@@ -3,13 +3,12 @@ import 'package:flutter_project_orm_janggo/data/db/like_hive/like_item.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
-
-
 class LikeWidget extends StatelessWidget {
   final VoidCallback? onTap;
   final LikeItem? recipe;
 
   const LikeWidget({
+    super.key,
     this.onTap,
     this.recipe,
   });
@@ -32,7 +31,9 @@ class LikeWidget extends StatelessWidget {
                 child: Stack(
                   alignment: Alignment.topLeft,
                   children: [
-                    if (recipe?.imageUrl != null && recipe!.imageUrl.isNotEmpty && recipe!.imageUrl != 'empty')
+                    if (recipe?.imageUrl != null &&
+                        recipe!.imageUrl.isNotEmpty &&
+                        recipe!.imageUrl != 'empty')
                       Image.network(
                         recipe!.imageUrl,
                         fit: BoxFit.cover,
@@ -51,7 +52,7 @@ class LikeWidget extends StatelessWidget {
                         padding: const EdgeInsets.all(8.0), // 테두리 안쪽의 패딩
                         child: GestureDetector(
                           onTap: onTap,
-                          child: Icon(
+                          child: const Icon(
                             Icons.close,
                             color: Colors.black, // 아이콘의 색상 설정
                             size: 24, // 아이콘의 크기 설정
@@ -81,13 +82,14 @@ class LikeWidget extends StatelessWidget {
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
                                 DateFormat('MM/dd HH:mm').format(recipe!.time),
-                                style: TextStyle(fontSize: 15, fontFamily: 'school_font'),
+                                style: const TextStyle(
+                                    fontSize: 15, fontFamily: 'school_font'),
                               ),
                             ),
                           ),
                         ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
+                        const Padding(
+                          padding: EdgeInsets.all(8.0),
                           child: Icon(
                             Icons.favorite,
                             color: Colors.red,
@@ -99,7 +101,8 @@ class LikeWidget extends StatelessWidget {
                       padding: const EdgeInsets.all(16.0),
                       child: Text(
                         recipe!.foodName,
-                        style: TextStyle(fontSize: 30, fontFamily: 'school_font'),
+                        style:
+                            const TextStyle(fontSize: 30, fontFamily: 'school_font'),
                       ),
                     ),
                   ],
@@ -111,5 +114,4 @@ class LikeWidget extends StatelessWidget {
       ),
     );
   }
-
 }

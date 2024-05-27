@@ -1,7 +1,7 @@
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import '../../../../../../data/user_information/user_information.dart';
 import '../social_login.dart';
-import 'package:firebase_auth/firebase_auth.dart' as Auth;
+import 'package:firebase_auth/firebase_auth.dart' as auth;
 
 class KakaoLoginService implements SocialLogin {
   bool isLogined = false;
@@ -13,7 +13,6 @@ class KakaoLoginService implements SocialLogin {
       // 카카오톡 로그인 시도
       bool isInstalled = await isKakaoTalkInstalled();
       if (isInstalled) {
-        OAuthToken token = await UserApi.instance.loginWithKakaoTalk();
         isLogined = true;
         user = await UserApi.instance.me();
         return true; // 로그인 성공 시 true 반환
@@ -41,13 +40,13 @@ class KakaoLoginService implements SocialLogin {
   Future<bool> loginWithKakaoAccount() async {
     try {
       // 카카오 계정으로 로그인 시도
-      var provider = Auth.OAuthProvider("oidc.janggo");
+      var provider = auth.OAuthProvider("oidc.janggo");
       OAuthToken token = await UserApi.instance.loginWithKakaoAccount();
       var credential = provider.credential(
         idToken: token.idToken,
         accessToken: token.accessToken,
       );
-      await Auth.FirebaseAuth.instance.signInWithCredential(credential);
+      await auth.FirebaseAuth.instance.signInWithCredential(credential);
       print('카카오계정으로 로그인 성공');
       user = await UserApi.instance.me(); // 로그인에 성공한 사용자 객체
       // 사용자 정보 업데이트

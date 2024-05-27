@@ -2,7 +2,7 @@ import 'package:hive/hive.dart';
 
 import 'like_item.dart';
 class LikeBox {
-  static String _boxName = 'likebox';
+  static const String _boxName = 'likebox';
 
   Future<void> addLikeItem(LikeItem item) async {
     final likebox = await Hive.openBox<LikeItem>(_boxName);

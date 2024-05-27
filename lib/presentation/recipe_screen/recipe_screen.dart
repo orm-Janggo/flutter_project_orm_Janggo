@@ -142,7 +142,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
       body: SafeArea(
         child: state.recipe.isEmpty
             ? Center(
-                child: Container(
+                child: SizedBox(
                   width: 300,
                   height: 150,
                   child: Column(

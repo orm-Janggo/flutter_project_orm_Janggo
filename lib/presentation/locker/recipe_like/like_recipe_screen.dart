@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_orm_janggo/main.dart';
 import 'package:flutter_project_orm_janggo/presentation/components/like_widget.dart';
@@ -72,7 +71,7 @@ class _LikeRecipeScreenState extends State<LikeRecipeScreen> {
                     hintText: "레시피 이름 검색",
                     suffixIcon: IconButton(
                       onPressed: onSearchChanged, // 검색 아이콘 클릭 시 호출
-                      icon: Icon(Icons.search),
+                      icon: const Icon(Icons.search),
                     ),
                     filled: true,
                     fillColor: Colors.white,
