@@ -77,6 +77,7 @@ class SignInViewModel with ChangeNotifier {
     }
     notifyListeners();
   }
+
   Future<void> signInWithKakao() async {
     bool isKakaoLoginSuccess = false;
     try {

@@ -1,10 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key});
+  const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -12,7 +10,7 @@ class HomeScreen extends StatelessWidget {
       body: Stack(
         children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage('assets/images/home_background.png'),
                 fit: BoxFit.cover,
@@ -20,7 +18,6 @@ class HomeScreen extends StatelessWidget {
             ),
             // 첫 번째 Container 안에 배치되는 위젯들
           ),
-
           Positioned(
             bottom: 180, // 원하는 위치로 조정
             left: 50, // 원하는 위치로 조정
@@ -35,9 +32,12 @@ class HomeScreen extends StatelessWidget {
                 onPressed: () {
                   context.push('/main');
                 },
-                child: Text(
+                child: const Text(
                   "시작하기",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color: Colors.black),
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black),
                 ),
               ),
             ),
@@ -54,9 +54,12 @@ class HomeScreen extends StatelessWidget {
               ),
               child: TextButton(
                 onPressed: () {},
-                child: Text(
+                child: const Text(
                   "로그인",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold,color: Colors.black),
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black),
                 ),
               ),
             ),

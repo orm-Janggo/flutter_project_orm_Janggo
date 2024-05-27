@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
 class PrivacyPolicyScreen extends StatelessWidget {
-  const PrivacyPolicyScreen({Key? key}) : super(key: key);
+  const PrivacyPolicyScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           '개인정보 처리 방침',
           style: TextStyle(
             fontSize: 18,
@@ -15,10 +15,11 @@ class PrivacyPolicyScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: SingleChildScrollView(
+      body: const SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.all(16.0), // 외부 여백 추가
-          child: Column( // 여러 텍스트 위젯을 포함할 수 있는 컬럼 사용
+          padding: EdgeInsets.all(16.0), // 외부 여백 추가
+          child: Column(
+            // 여러 텍스트 위젯을 포함할 수 있는 컬럼 사용
             crossAxisAlignment: CrossAxisAlignment.start, // 텍스트 정렬
             children: [
               SizedBox(height: 16), // 여백 추가

@@ -22,7 +22,7 @@ class _LikeRecipeDetailScreenState extends State<LikeRecipeDetailScreen> {
           title: Text(widget.recipe.foodName),
         ),
         body: Padding(
-          padding: EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
               SizedBox(
@@ -42,7 +42,9 @@ class _LikeRecipeDetailScreenState extends State<LikeRecipeDetailScreen> {
                         fit: BoxFit.cover,
                       ),
               ),
-              SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
               Expanded(
                 child: SingleChildScrollView(
                   scrollDirection: Axis.vertical,

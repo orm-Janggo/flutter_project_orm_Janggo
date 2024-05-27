@@ -72,7 +72,8 @@ class RecipeViewModel with ChangeNotifier {
       id: item.id,
       imageUrl: item.imageUrl,
       isLiked: item.isLiked,
-      foodName: item.foodName, // 수정된 foodName으로 전달
+      foodName: item.foodName,
+      // 수정된 foodName으로 전달
       time: item.time,
     );
     await _likeAddRecipeUseCase.execute(likeModel);
@@ -144,11 +145,11 @@ class RecipeViewModel with ChangeNotifier {
     for (int i = 0; i < imagePathList.length; i++) {
       String imagePath = imagePathList[i];
       String recipe = recipeList[i];
-      String date = '${DateTime.now().year}${DateTime.now().month}${DateTime.now().day}';
+      String date =
+          '${DateTime.now().year}${DateTime.now().month}${DateTime.now().day}';
 
       box.add(HistoryRecipeData(nextId++, imagePath, recipe, date));
     }
-
 
     print('---------------------------add 완료');
   }

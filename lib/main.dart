@@ -5,7 +5,6 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_project_orm_janggo/data/db/history/history_recipe_data.dart';
 import 'package:flutter_project_orm_janggo/di/di_setup.dart';
 import 'package:flutter_project_orm_janggo/router/go_router.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';

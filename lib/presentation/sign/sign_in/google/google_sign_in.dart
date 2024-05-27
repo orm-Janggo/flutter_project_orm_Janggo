@@ -5,13 +5,11 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 import '../../../../data/user_information/user_information.dart';
 
-
-
 final GoogleSignIn _googleSignIn = GoogleSignIn(
-  scopes: ['email', 'profile'],  // 최소 범위만 요청
+  scopes: ['email', 'profile'], // 최소 범위만 요청
 );
 
-Future<void> GoogleLogin(BuildContext context) async {
+Future<void> googleLogin(BuildContext context) async {
   GoogleSignInAccount? _currentUser;
   try {
     final GoogleSignInAccount? account = await _googleSignIn.signIn();
@@ -19,7 +17,8 @@ Future<void> GoogleLogin(BuildContext context) async {
       _currentUser = account;
 
       // 파이어베이스 인증
-      final GoogleSignInAuthentication googleAuth = await account.authentication;
+      final GoogleSignInAuthentication googleAuth =
+          await account.authentication;
       final AuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
@@ -39,6 +38,9 @@ Future<void> GoogleLogin(BuildContext context) async {
       );
 
       UserInformation().updateLoginMethod(LoginMethod.google);
+
+      if (!context.mounted) return;
+
       context.go('/main');
     }
   } catch (error) {
@@ -49,13 +51,13 @@ Future<void> GoogleLogin(BuildContext context) async {
 Widget googleLoginButton(BuildContext context) {
   return InkWell(
     onTap: () {
-      GoogleLogin(context); // 버튼을 클릭하면 구글 로그인을 실행
+      googleLogin(context); // 버튼을 클릭하면 구글 로그인을 실행
     },
     child: Container(
       width: 320,
       height: 50,
       decoration: BoxDecoration(
-        color: Color(0xFFF2F2F2),
+        color: const Color(0xFFF2F2F2),
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: Center(

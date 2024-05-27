@@ -18,5 +18,4 @@ class GetPictureUseCase {
 
     return pictures[0]; // 첫 번째 항목 반환
   }
-
 }

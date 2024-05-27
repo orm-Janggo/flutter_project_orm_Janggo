@@ -5,23 +5,22 @@ import 'package:flutter_project_orm_janggo/presentation/splash/splash_screen_vie
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+  const SplashScreen({super.key});
 
   @override
-  _SplashScreenState createState() => _SplashScreenState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
   int _currentIndex = 0;
 
   List<Widget> splashScreens = [
-    SplashScreenImage(imagePath: 'assets/images/Splash Screen - 1.png'),
-    SplashScreenImage(imagePath: 'assets/images/Splash Screen - 2.png'),
-    SplashScreenImage(imagePath: 'assets/images/Splash Screen - 3.png'),
-    SplashScreenImage(imagePath: 'assets/images/Splash Screen - 4.png'),
-    SplashScreen5(),
+    const SplashScreenImage(imagePath: 'assets/images/Splash Screen - 1.png'),
+    const SplashScreenImage(imagePath: 'assets/images/Splash Screen - 2.png'),
+    const SplashScreenImage(imagePath: 'assets/images/Splash Screen - 3.png'),
+    const SplashScreenImage(imagePath: 'assets/images/Splash Screen - 4.png'),
+    const SplashScreen5(),
   ];
 
   @override
@@ -60,8 +59,7 @@ class _SplashScreenState extends State<SplashScreen> {
 class SplashScreenImage extends StatelessWidget {
   final String imagePath;
 
-  const SplashScreenImage({Key? key, required this.imagePath})
-      : super(key: key);
+  const SplashScreenImage({super.key, required this.imagePath});
 
   @override
   Widget build(BuildContext context) {
@@ -77,7 +75,7 @@ class SplashScreenImage extends StatelessWidget {
 }
 
 class SplashScreen5 extends StatelessWidget {
-  const SplashScreen5({Key? key}) : super(key: key);
+  const SplashScreen5({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -163,11 +161,9 @@ class SplashScreen5 extends StatelessWidget {
                           await kakaoLoginService.logout();
                         }
 
-                        if (!context.mounted) {
-                          // 홈으로 이동
-                          context.push('/');
-                        }
-
+                        if (!context.mounted) return;
+                        // 홈으로 이동
+                        context.push('/');
                       },
                       child: const Text(
                         "로그아웃",

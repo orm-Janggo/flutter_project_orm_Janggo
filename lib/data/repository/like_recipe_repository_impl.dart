@@ -21,7 +21,6 @@ class LikeRecipeRepositoryImpl implements LikeRecipeRepository {
     }
   }
 
-
   @override
   Future<void> removeItem(LikeItem item) async {
     try {
@@ -47,10 +46,10 @@ class LikeRecipeRepositoryImpl implements LikeRecipeRepository {
     }
   }
 
-
   @override
   List<LikeItem> loadItem(LikeItem item) {
-   final items = Hive.box<LikeItem>('likebox').values.toList().cast<LikeItem>();
-   return items;
+    final items =
+        Hive.box<LikeItem>('likebox').values.toList().cast<LikeItem>();
+    return items;
   }
 }

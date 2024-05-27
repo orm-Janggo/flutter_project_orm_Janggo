@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_project_orm_janggo/main.dart';
 import 'package:flutter_project_orm_janggo/presentation/components/like_widget.dart';
@@ -16,7 +15,6 @@ class LikeRecipeScreen extends StatefulWidget {
 }
 
 class _LikeRecipeScreenState extends State<LikeRecipeScreen> {
-
   late TextEditingController searchController = TextEditingController();
   late List<LikeItem> filteredRecipes = [];
 
@@ -36,15 +34,15 @@ class _LikeRecipeScreenState extends State<LikeRecipeScreen> {
   void onSearchChanged() {
     setState(() {
       filteredRecipes = likeBox.values
-          .where((recipe) =>
-          recipe.foodName.toLowerCase().contains(searchController.text.toLowerCase()))
+          .where((recipe) => recipe.foodName
+              .toLowerCase()
+              .contains(searchController.text.toLowerCase()))
           .toList();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-
     final viewModel = context.watch<LikeRecipeViewModel>();
 
     void removeFromLikedRecipes(LikeItem recipe) {
@@ -72,17 +70,19 @@ class _LikeRecipeScreenState extends State<LikeRecipeScreen> {
                     hintText: "레시피 이름 검색",
                     suffixIcon: IconButton(
                       onPressed: onSearchChanged, // 검색 아이콘 클릭 시 호출
-                      icon: Icon(Icons.search),
+                      icon: const Icon(Icons.search),
                     ),
                     filled: true,
                     fillColor: Colors.white,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(color: Colors.grey, width: 2),
+                      borderSide:
+                          const BorderSide(color: Colors.grey, width: 2),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(color: Colors.blue, width: 2),
+                      borderSide:
+                          const BorderSide(color: Colors.blue, width: 2),
                     ),
                   ),
                 ),
@@ -108,36 +108,33 @@ class _LikeRecipeScreenState extends State<LikeRecipeScreen> {
           ),
           Padding(
             padding: const EdgeInsets.only(top: 40),
-            child: Positioned(
-              top: 50,
-              child: ExpansionTile(
-                backgroundColor: const Color(0xFFFDBA66),
-                title: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(width: 30),
-                    Text(
-                      "레시피 좋아요 보관함",
-                      style: TextStyle(fontFamily: 'school_font'),
-                    ),
-                  ],
-                ),
+            child: ExpansionTile(
+              backgroundColor: const Color(0xFFFDBA66),
+              title: const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  InkWell(
-                    onTap: () {
-                      context.push('/main/recipe-history');
-                    },
-                    child: const ListTile(
-                      title: Center(
-                        child: Text(
-                          "레시피 히스토리 보관함",
-                          style: TextStyle(fontFamily: 'school_font'),
-                        ),
-                      ),
-                    ),
+                  SizedBox(width: 30),
+                  Text(
+                    "레시피 좋아요 보관함",
+                    style: TextStyle(fontFamily: 'school_font'),
                   ),
                 ],
               ),
+              children: [
+                InkWell(
+                  onTap: () {
+                    context.push('/main/recipe-history');
+                  },
+                  child: const ListTile(
+                    title: Center(
+                      child: Text(
+                        "레시피 히스토리 보관함",
+                        style: TextStyle(fontFamily: 'school_font'),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],

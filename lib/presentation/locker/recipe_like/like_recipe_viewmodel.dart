@@ -11,8 +11,6 @@ class LikeRecipeViewModel with ChangeNotifier {
   }) : _likeRemoveRecipeUseCase = likeRemoveRecipeUseCase;
 
   void deleteLikeRecipe(LikeItem item) async {
-
     await _likeRemoveRecipeUseCase.execute(item);
   }
-
 }

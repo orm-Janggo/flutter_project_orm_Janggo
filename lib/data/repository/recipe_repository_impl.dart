@@ -14,5 +14,4 @@ class RecipeRepositoryImpl implements RecipeRepository {
     final recipe = await _dataSource.getRecipes(ingredients);
     return recipe;
   }
-
 }

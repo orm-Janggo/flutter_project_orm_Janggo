@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_project_orm_janggo/data/db/like_hive/like_item.dart';
 import 'package:flutter_project_orm_janggo/presentation/ads/google_ads_ids.dart';
@@ -93,7 +92,9 @@ class _RecipeScreenState extends State<RecipeScreen> {
           children: [
             const Spacer(), // 왼쪽에서 중앙으로 텍스트 이동
             Text(
-              state.recipe.isNotEmpty ? '${_currentPage + 1} / ${state.recipe.length}' : '',
+              state.recipe.isNotEmpty
+                  ? '${_currentPage + 1} / ${state.recipe.length}'
+                  : '',
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
             ),
             const Spacer(), // 오른쪽 아이콘과 간격 유지
@@ -142,7 +143,7 @@ class _RecipeScreenState extends State<RecipeScreen> {
       body: SafeArea(
         child: state.recipe.isEmpty
             ? Center(
-                child: Container(
+                child: SizedBox(
                   width: 300,
                   height: 150,
                   child: Column(
@@ -153,7 +154,8 @@ class _RecipeScreenState extends State<RecipeScreen> {
                       ),
                       const Text(
                         'Ai가 레시피를 찾고있어요 잠시만 기다려주세요!',
-                        style: TextStyle(fontFamily: 'school_font', fontSize: 12),
+                        style:
+                            TextStyle(fontFamily: 'school_font', fontSize: 12),
                       ),
                     ],
                   ),
@@ -174,7 +176,9 @@ class _RecipeScreenState extends State<RecipeScreen> {
                               width: MediaQuery.of(context).size.width / 3 - 10,
                               decoration: BoxDecoration(
                                 shape: BoxShape.rectangle,
-                                color: _currentPage == index ? const Color(0xfffb8c00) : Colors.grey.shade200,
+                                color: _currentPage == index
+                                    ? const Color(0xfffb8c00)
+                                    : Colors.grey.shade200,
                               ),
                             );
                           },
@@ -183,14 +187,18 @@ class _RecipeScreenState extends State<RecipeScreen> {
                     ),
                     Expanded(
                       child: PageView.builder(
-                        itemCount: state.recipe.length > 3 ? 3 : state.recipe.length,
+                        itemCount:
+                            state.recipe.length > 3 ? 3 : state.recipe.length,
                         controller: _pageController,
                         itemBuilder: (context, index) {
-                          final currentItem = state.recipe.isNotEmpty ? state.recipe[index] : null;
-                          final imageUrl =
-                              state.url.isNotEmpty && index < state.url.length && state.url[index] != 'empty'
-                                  ? state.url[index]
-                                  : '';
+                          final currentItem = state.recipe.isNotEmpty
+                              ? state.recipe[index]
+                              : null;
+                          final imageUrl = state.url.isNotEmpty &&
+                                  index < state.url.length &&
+                                  state.url[index] != 'empty'
+                              ? state.url[index]
+                              : '';
 
                           return Padding(
                             padding: const EdgeInsets.all(16.0),
@@ -227,10 +235,12 @@ class _RecipeScreenState extends State<RecipeScreen> {
                                       SingleChildScrollView(
                                         scrollDirection: Axis.vertical,
                                         child: Container(
-                                          width: MediaQuery.of(context).size.width,
+                                          width:
+                                              MediaQuery.of(context).size.width,
                                           decoration: BoxDecoration(
                                             color: Colors.amber[50],
-                                            borderRadius: BorderRadius.circular(10),
+                                            borderRadius:
+                                                BorderRadius.circular(10),
                                           ),
                                           padding: const EdgeInsets.all(16.0),
                                           child: Text(
@@ -250,26 +260,43 @@ class _RecipeScreenState extends State<RecipeScreen> {
                                           child: IconButton(
                                             onPressed: () {
                                               setState(() {
-                                                final currentPageIndex = _currentPage.clamp(0, state.isLike.length - 1);
-                                                final isLiked = state.isLike[currentPageIndex];
-                                                viewModel.toggleLike(currentPageIndex, !isLiked);
-                                                if (state.url.isNotEmpty && state.url[currentPageIndex] != "empty") {
+                                                final currentPageIndex =
+                                                    _currentPage.clamp(
+                                                        0,
+                                                        state.isLike.length -
+                                                            1);
+                                                final isLiked = state
+                                                    .isLike[currentPageIndex];
+                                                viewModel.toggleLike(
+                                                    currentPageIndex, !isLiked);
+                                                if (state.url.isNotEmpty &&
+                                                    state.url[
+                                                            currentPageIndex] !=
+                                                        "empty") {
                                                   // 이미지가 있을 때
                                                   if (!isLiked) {
                                                     viewModel.addLikeItem(LikeItem(
                                                         recipe: currentItem!,
-                                                        id: state.id[currentPageIndex].toString(),
-                                                        imageUrl: state.url[currentPageIndex],
+                                                        id: state.id[
+                                                                currentPageIndex]
+                                                            .toString(),
+                                                        imageUrl: state.url[
+                                                            currentPageIndex],
                                                         isLiked: true,
-                                                        foodName: state.foodName,
+                                                        foodName:
+                                                            state.foodName,
                                                         time: DateTime.now()));
                                                   } else {
                                                     viewModel.removeLikeItem(LikeItem(
                                                         recipe: currentItem!,
-                                                        id: state.id[currentPageIndex].toString(),
-                                                        imageUrl: state.url[currentPageIndex],
+                                                        id: state.id[
+                                                                currentPageIndex]
+                                                            .toString(),
+                                                        imageUrl: state.url[
+                                                            currentPageIndex],
                                                         isLiked: false,
-                                                        foodName: state.foodName,
+                                                        foodName:
+                                                            state.foodName,
                                                         time: DateTime.now()));
                                                   }
                                                 } else {
@@ -277,25 +304,36 @@ class _RecipeScreenState extends State<RecipeScreen> {
                                                   if (!isLiked) {
                                                     viewModel.addLikeItem(LikeItem(
                                                         recipe: currentItem!,
-                                                        id: state.id[currentPageIndex].toString(),
+                                                        id: state.id[
+                                                                currentPageIndex]
+                                                            .toString(),
                                                         imageUrl: '',
                                                         isLiked: true,
-                                                        foodName: state.foodName,
+                                                        foodName:
+                                                            state.foodName,
                                                         time: DateTime.now()));
                                                   } else {
-                                                    viewModel.removeLikeItem(LikeItem(
-                                                        recipe: currentItem!,
-                                                        id: state.id[currentPageIndex].toString(),
-                                                        imageUrl: '',
-                                                        isLiked: false,
-                                                        foodName: state.foodName,
-                                                        time: DateTime.now()));
+                                                    viewModel.removeLikeItem(
+                                                        LikeItem(
+                                                            recipe:
+                                                                currentItem!,
+                                                            id: state.id[
+                                                                    currentPageIndex]
+                                                                .toString(),
+                                                            imageUrl: '',
+                                                            isLiked: false,
+                                                            foodName:
+                                                                state.foodName,
+                                                            time: DateTime
+                                                                .now()));
                                                   }
                                                 }
                                               });
                                             },
                                             icon: Icon(
-                                              state.isLike[_currentPage] ? Icons.favorite : Icons.favorite_border,
+                                              state.isLike[_currentPage]
+                                                  ? Icons.favorite
+                                                  : Icons.favorite_border,
                                               color: Colors.red,
                                             ),
                                           )),

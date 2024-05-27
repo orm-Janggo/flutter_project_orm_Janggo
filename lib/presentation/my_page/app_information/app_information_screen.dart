@@ -12,8 +12,8 @@ class AppInformationScreen extends StatelessWidget {
         children: [
           Container(
             width: double.infinity,
-            padding: const EdgeInsets.symmetric(
-                vertical: 32.0, horizontal: 16.0),
+            padding:
+                const EdgeInsets.symmetric(vertical: 32.0, horizontal: 16.0),
             child: const Text(
               '앱 정보',
               style: TextStyle(
@@ -21,8 +21,8 @@ class AppInformationScreen extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: 16.0, vertical: 8.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xfff8f8f8)),
@@ -45,8 +45,8 @@ class AppInformationScreen extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: 16.0, vertical: 8.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xfff8f8f8)),
@@ -69,8 +69,8 @@ class AppInformationScreen extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(
-                horizontal: 16.0, vertical: 8.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xfff8f8f8)),

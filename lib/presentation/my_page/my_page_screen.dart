@@ -212,14 +212,14 @@ class _MyPageScreenState extends State<MyPageScreen> {
 
                             if (!context.mounted) return;
 
-                            context.push('/');
+                            context.push('/main/recipe-like');
                           },
                           child: const SizedBox(
                             height: 50,
                             width: double.infinity,
                             child: Center(
                               child: Text(
-                                '로그아웃',
+                                '레시피 보관함',
                                 style: TextStyle(
                                     fontFamily: 'school_font', fontSize: 16),
                               ),
@@ -242,7 +242,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                             width: double.infinity,
                             child: Center(
                               child: Text(
-                                '뒤로가기',
+                                '메인 화면',
                                 style: TextStyle(
                                     fontFamily: 'school_font', fontSize: 16),
                               ),
