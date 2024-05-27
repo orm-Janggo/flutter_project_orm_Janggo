@@ -17,7 +17,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
-    _initKakaoUser();
+    // _initKakaoUser();
   }
 
   Future<void> _initKakaoUser() async {
@@ -188,20 +188,6 @@ class _MainScreenState extends State<MainScreen> {
                 image: DecorationImage(
                   image: AssetImage('assets/images/main-background.png'),
                   fit: BoxFit.cover,
-                ),
-              ),
-            ),
-            Align(
-              alignment: Alignment.topCenter,
-              child: Positioned(
-                left: centerX - 50,
-                top: centerY - 50,
-                child: const Text(
-                  '재료를 넣어주세요!',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontFamily: 'school_font',
-                  ),
                 ),
               ),
             ),
