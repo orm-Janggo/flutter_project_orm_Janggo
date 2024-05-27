@@ -141,46 +141,44 @@ class _RecipeHistoryScreenState extends State<RecipeHistoryScreen> {
                 ),
           Container(
             padding: const EdgeInsets.only(top: 40),
-            child: Positioned(
-              child: Container(
-                decoration: const BoxDecoration(
-                  color: Color(0xffFB8C00),
-                ),
-                child: ExpansionTile(
-                  backgroundColor: const Color(0xFFFDBA66), // 타일의 배경색 설정
-                  title: const Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(width: 30),
-                      Text(
-                        "레시피 히스토리 보관함",
-                        style: TextStyle(
-                          fontFamily: 'school_font',
-                          fontSize: 18.0,
-                        ),
-                      ),
-                    ],
-                  ),
+            child: Container(
+              decoration: const BoxDecoration(
+                color: Color(0xffFB8C00),
+              ),
+              child: ExpansionTile(
+                backgroundColor: const Color(0xFFFDBA66), // 타일의 배경색 설정
+                title: const Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    InkWell(
-                      onTap: () {
-                        Navigator.of(context).pop();
-                        context.push('/main/recipe-like');
-                      },
-                      child: const ListTile(
-                        title: Center(
-                          child: Text(
-                            "레시피 좋아요 보관함",
-                            style: TextStyle(
-                              fontFamily: 'school_font',
-                              fontSize: 18.0,
-                            ),
-                          ),
-                        ),
+                    SizedBox(width: 30),
+                    Text(
+                      "레시피 히스토리 보관함",
+                      style: TextStyle(
+                        fontFamily: 'school_font',
+                        fontSize: 18.0,
                       ),
                     ),
                   ],
                 ),
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Navigator.of(context).pop();
+                      context.push('/main/recipe-like');
+                    },
+                    child: const ListTile(
+                      title: Center(
+                        child: Text(
+                          "레시피 좋아요 보관함",
+                          style: TextStyle(
+                            fontFamily: 'school_font',
+                            fontSize: 18.0,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
