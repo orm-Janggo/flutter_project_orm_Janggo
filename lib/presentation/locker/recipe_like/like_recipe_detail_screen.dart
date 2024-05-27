@@ -42,7 +42,9 @@ class _LikeRecipeDetailScreenState extends State<LikeRecipeDetailScreen> {
                         fit: BoxFit.cover,
                       ),
               ),
-              const SizedBox(height: 10,),
+              const SizedBox(
+                height: 10,
+              ),
               Expanded(
                 child: SingleChildScrollView(
                   scrollDirection: Axis.vertical,

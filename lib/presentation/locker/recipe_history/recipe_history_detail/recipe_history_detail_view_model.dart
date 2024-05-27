@@ -3,11 +3,10 @@ import 'package:flutter_project_orm_janggo/data/db/history/history_recipe_data.d
 import 'package:flutter_project_orm_janggo/presentation/locker/recipe_history/recipe_history_detail/recipe_history_detail_state.dart';
 import 'package:hive/hive.dart';
 
-class RecipeHistoryDetailViewModel with ChangeNotifier{
+class RecipeHistoryDetailViewModel with ChangeNotifier {
   RecipeHistoryDetailState _state = const RecipeHistoryDetailState();
 
   RecipeHistoryDetailState get state => _state;
-
 
   Future<void> getDetailDataListFromHive(int id) async {
     var box = await Hive.openBox<HistoryRecipeData>('historyRecipeBox');
@@ -26,9 +25,11 @@ class RecipeHistoryDetailViewModel with ChangeNotifier{
       }
     }
 
-    print('======================================id: $detailId, url: $detailImagePath, recipe: $detailRecipe');
+    print(
+        '======================================id: $detailId, url: $detailImagePath, recipe: $detailRecipe');
 
-    _state = _state.copyWith(id: detailId, url: detailImagePath, recipe: detailRecipe);
+    _state = _state.copyWith(
+        id: detailId, url: detailImagePath, recipe: detailRecipe);
 
     notifyListeners();
   }

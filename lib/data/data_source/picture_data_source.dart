@@ -8,8 +8,8 @@ class PictureDataSource {
   final _key = PixabayConfig.apiKey;
 
   Future<PictureDto> getPictureData(String query) async {
-    final response = await http
-        .get(Uri.parse('$_baseUrl/?key=$_key&q=$query&image_type=photo&pretty=true'));
+    final response = await http.get(Uri.parse(
+        '$_baseUrl/?key=$_key&q=$query&image_type=photo&pretty=true'));
 
     return PictureDto.fromJson(jsonDecode(response.body));
   }

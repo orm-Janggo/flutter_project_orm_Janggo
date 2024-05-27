@@ -15,7 +15,6 @@ class LikeRecipeScreen extends StatefulWidget {
 }
 
 class _LikeRecipeScreenState extends State<LikeRecipeScreen> {
-
   late TextEditingController searchController = TextEditingController();
   late List<LikeItem> filteredRecipes = [];
 
@@ -35,15 +34,15 @@ class _LikeRecipeScreenState extends State<LikeRecipeScreen> {
   void onSearchChanged() {
     setState(() {
       filteredRecipes = likeBox.values
-          .where((recipe) =>
-          recipe.foodName.toLowerCase().contains(searchController.text.toLowerCase()))
+          .where((recipe) => recipe.foodName
+              .toLowerCase()
+              .contains(searchController.text.toLowerCase()))
           .toList();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-
     final viewModel = context.watch<LikeRecipeViewModel>();
 
     void removeFromLikedRecipes(LikeItem recipe) {
@@ -77,11 +76,13 @@ class _LikeRecipeScreenState extends State<LikeRecipeScreen> {
                     fillColor: Colors.white,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(color: Colors.grey, width: 2),
+                      borderSide:
+                          const BorderSide(color: Colors.grey, width: 2),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
-                      borderSide: const BorderSide(color: Colors.blue, width: 2),
+                      borderSide:
+                          const BorderSide(color: Colors.blue, width: 2),
                     ),
                   ),
                 ),

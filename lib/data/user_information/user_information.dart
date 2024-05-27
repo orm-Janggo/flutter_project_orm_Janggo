@@ -27,11 +27,12 @@ class UserInformation {
   }
 
   void updateLoginMethod(LoginMethod method) {
-    loginMethod = method;  // 로그인 방식을 설정
+    loginMethod = method; // 로그인 방식을 설정
   }
 
   // UserInfo 객체 업데이트
-  void updateUser({String? uid, String? email, String? displayName, String? photoUrl}) {
+  void updateUser(
+      {String? uid, String? email, String? displayName, String? photoUrl}) {
     // 기존 UserInfo 객체가 있는지 확인
     if (userInfo == null) {
       userInfo = UserInfo(

@@ -11,5 +11,4 @@ class GetRecipeUseCase {
     final recipe = await _chatGptRepositoryImpl.getRecipes(ingredients);
     return recipe;
   }
-
 }

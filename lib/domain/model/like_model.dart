@@ -15,5 +15,6 @@ class LikeModel with _$LikeModel {
     required DateTime time,
   }) = _LikeModel;
 
-  factory LikeModel.fromJson(Map<String, Object?> json) => _$LikeModelFromJson(json);
+  factory LikeModel.fromJson(Map<String, Object?> json) =>
+      _$LikeModelFromJson(json);
 }

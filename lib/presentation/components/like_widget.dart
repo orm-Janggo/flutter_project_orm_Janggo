@@ -101,8 +101,8 @@ class LikeWidget extends StatelessWidget {
                       padding: const EdgeInsets.all(16.0),
                       child: Text(
                         recipe!.foodName,
-                        style:
-                            const TextStyle(fontSize: 30, fontFamily: 'school_font'),
+                        style: const TextStyle(
+                            fontSize: 30, fontFamily: 'school_font'),
                       ),
                     ),
                   ],

@@ -19,7 +19,8 @@ class KakaoLoginButton extends StatelessWidget {
     );
   }
 
-  const KakaoLoginButton({super.key,
+  const KakaoLoginButton({
+    super.key,
     required this.onTap,
   });
 }
