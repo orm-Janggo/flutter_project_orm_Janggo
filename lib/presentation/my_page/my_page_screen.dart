@@ -242,7 +242,7 @@ class _MyPageScreenState extends State<MyPageScreen> {
                             width: double.infinity,
                             child: Center(
                               child: Text(
-                                '뒤로가기',
+                                '메인 화면',
                                 style: TextStyle(
                                     fontFamily: 'school_font', fontSize: 16),
                               ),
