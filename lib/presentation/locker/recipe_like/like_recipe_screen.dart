@@ -108,36 +108,33 @@ class _LikeRecipeScreenState extends State<LikeRecipeScreen> {
           ),
           Padding(
             padding: const EdgeInsets.only(top: 40),
-            child: Positioned(
-              top: 50,
-              child: ExpansionTile(
-                backgroundColor: const Color(0xFFFDBA66),
-                title: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(width: 30),
-                    Text(
-                      "레시피 좋아요 보관함",
-                      style: TextStyle(fontFamily: 'school_font'),
-                    ),
-                  ],
-                ),
+            child: ExpansionTile(
+              backgroundColor: const Color(0xFFFDBA66),
+              title: const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  InkWell(
-                    onTap: () {
-                      context.push('/main/recipe-history');
-                    },
-                    child: const ListTile(
-                      title: Center(
-                        child: Text(
-                          "레시피 히스토리 보관함",
-                          style: TextStyle(fontFamily: 'school_font'),
-                        ),
-                      ),
-                    ),
+                  SizedBox(width: 30),
+                  Text(
+                    "레시피 좋아요 보관함",
+                    style: TextStyle(fontFamily: 'school_font'),
                   ),
                 ],
               ),
+              children: [
+                InkWell(
+                  onTap: () {
+                    context.push('/main/recipe-history');
+                  },
+                  child: const ListTile(
+                    title: Center(
+                      child: Text(
+                        "레시피 히스토리 보관함",
+                        style: TextStyle(fontFamily: 'school_font'),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],
