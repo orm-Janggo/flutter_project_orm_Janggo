@@ -24,6 +24,7 @@ class SignInViewModel with ChangeNotifier {
   String? _inputPassword;
   bool _isChecked = true;
   bool _isObscure = true;
+  UserInfoModel? _firebaseUser;
 
   String? get inputEmail => _inputEmail;
 
@@ -32,8 +33,6 @@ class SignInViewModel with ChangeNotifier {
   bool get isChecked => _isChecked;
 
   bool get isObscure => _isObscure;
-
-  UserInfoModel? _firebaseUser;
 
   UserInfoModel? get firebaseUser => _firebaseUser;
 
