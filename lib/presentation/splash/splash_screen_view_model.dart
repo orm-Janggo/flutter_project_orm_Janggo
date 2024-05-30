@@ -34,9 +34,9 @@ class SplashScreenViewModel with ChangeNotifier {
     try {
       _kakaoUser = await kakao.UserApi.instance.me();
       print('사용자 정보 요청 성공'
-          '\n회원번호: ${kakaoUser?.id}'
-          '\n닉네임: ${kakaoUser?.kakaoAccount?.profile?.nickname}'
-          '\n이메일: ${kakaoUser?.kakaoAccount?.email}');
+          '\n회원번호: ${_kakaoUser?.id}'
+          '\n닉네임: ${_kakaoUser?.kakaoAccount?.profile?.nickname}'
+          '\n이메일: ${_kakaoUser?.kakaoAccount?.email}');
       if (_firebaseUser?.email == null &&
           _kakaoUser?.kakaoAccount?.email != null) {
         _userEmail = _kakaoUser?.kakaoAccount?.email;
