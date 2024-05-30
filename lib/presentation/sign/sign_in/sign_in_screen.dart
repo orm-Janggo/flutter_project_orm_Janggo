@@ -270,11 +270,10 @@ class _SignInScreenState extends State<SignInScreen> {
                 child: KakaoLoginButton(
                   onTap: () async {
                     await viewModel.signInWithKakao();
-                    if (viewModel.isKakaoLogined) {
-                      if (!context.mounted) return;
 
-                      context.push('/main');
-                    }
+                    if (!context.mounted) return;
+
+                    context.push('/main');
                   },
                 ),
               ),

@@ -74,9 +74,14 @@ class SplashScreenImage extends StatelessWidget {
   }
 }
 
-class SplashScreen5 extends StatelessWidget {
+class SplashScreen5 extends StatefulWidget {
   const SplashScreen5({super.key});
 
+  @override
+  State<SplashScreen5> createState() => _SplashScreen5State();
+}
+
+class _SplashScreen5State extends State<SplashScreen5> {
   @override
   Widget build(BuildContext context) {
     final Size screenSize = MediaQuery.of(context).size;
